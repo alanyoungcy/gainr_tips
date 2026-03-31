@@ -1,0 +1,2384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gainr Protocol — Tipster EPIC Wireframes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* ═══════════════════════════════════════════════
+       GAINR DESIGN TOKENS — extracted from gainr.pro
+    ═══════════════════════════════════════════════ */
+    :root {
+      --brand:           #FF5A00;
+      --brand-hover:     #E64E00;
+      --brand-light:     rgba(255,90,0,0.12);
+      --brand-glow:      rgba(255,90,0,0.25);
+      --black:           #1B0B0C;
+      --dark-gray:       #333333;
+      --gray:            #5B616E;
+      --mid-gray:        #7A7F8C;
+      --light-gray:      #EFEFF1;
+      --border:          #E2E4EA;
+      --white:           #FEFEFE;
+      --bg:              #F6F8FC;
+      --card-bg:         #FFFFFF;
+      --card-shadow:     0 2px 16px rgba(15,23,42,0.08), 0 1px 4px rgba(15,23,42,0.04);
+      --card-radius:     16px;
+      --nav-bg:          linear-gradient(140deg,rgba(246,248,252,0.92) 0%,rgba(226,231,240,0.85) 48%,rgba(210,216,228,0.88) 100%);
+      --nav-shadow:      0 18px 52px rgba(15,23,42,0.18), inset 0 1px 0 rgba(255,255,255,0.92), inset 0 -1px 0 rgba(255,255,255,0.35);
+      --green:           #1F7A39;
+      --green-light:     rgba(31,122,57,0.12);
+      --red:             #D93025;
+      --red-light:       rgba(217,48,37,0.12);
+      --gold:            #F59E0B;
+      --gold-light:      rgba(245,158,11,0.15);
+      --silver:          #94A3B8;
+      --bronze:          #CD7F32;
+      --pro-badge:       #FF5A00;
+      --font:            'Figtree', ui-sans-serif, system-ui, sans-serif;
+      --radius-sm:       8px;
+      --radius-md:       12px;
+      --radius-lg:       16px;
+      --radius-xl:       24px;
+      --radius-pill:     9999px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--black);
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── NAVIGATION ── */
+    .top-nav {
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+      margin: 16px 24px 0;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: var(--nav-bg);
+      box-shadow: var(--nav-shadow);
+      border-radius: var(--radius-pill);
+      backdrop-filter: blur(24px) saturate(150%);
+      -webkit-backdrop-filter: blur(24px) saturate(150%);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--black);
+    }
+    .nav-logo-icon {
+      width: 36px;
+      height: 36px;
+    }
+    .nav-logo-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: -0.5px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: none;
+      transition: color 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--brand); }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-icon {
+      width: 38px; height: 38px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      color: var(--gray);
+      transition: all 0.15s;
+    }
+    .btn-icon:hover { border-color: var(--brand); color: var(--brand); }
+    .btn-primary {
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-primary:hover { background: var(--brand-hover); transform: translateY(-1px); }
+    .btn-secondary {
+      background: var(--white);
+      color: var(--black);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--brand); color: var(--brand); }
+    .btn-outline-brand {
+      background: transparent;
+      color: var(--brand);
+      border: 1.5px solid var(--brand);
+      border-radius: var(--radius-pill);
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-outline-brand:hover { background: var(--brand); color: #fff; }
+
+    /* ── SCREEN TABS (wireframe navigation) ── */
+    .screen-tabs-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 14px 24px 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .screen-tabs-bar::-webkit-scrollbar { display: none; }
+    .screen-tab {
+      flex-shrink: 0;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      font-size: 12px;
+      font-weight: 600;
+      font-family: var(--font);
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .screen-tab:hover { border-color: var(--brand); color: var(--brand); }
+    .screen-tab.active {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+    .screen-label {
+      padding: 10px 24px 0;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--mid-gray);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── SCREENS ── */
+    .screen { display: none; padding: 20px 24px 40px; }
+    .screen.active { display: block; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--border);
+    }
+    .card-sm { border-radius: var(--radius-md); }
+
+    /* ── BADGES ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .badge-pro { background: var(--brand); color: #fff; }
+    .badge-free { background: var(--green-light); color: var(--green); border: 1px solid rgba(31,122,57,0.2); }
+    .badge-gold { background: var(--gold-light); color: #92400E; border: 1px solid rgba(245,158,11,0.3); }
+    .badge-silver { background: rgba(148,163,184,0.15); color: #475569; border: 1px solid rgba(148,163,184,0.3); }
+    .badge-bronze { background: rgba(205,127,50,0.15); color: #7C3F00; border: 1px solid rgba(205,127,50,0.3); }
+    .badge-verified { background: rgba(59,130,246,0.1); color: #1D4ED8; border: 1px solid rgba(59,130,246,0.2); }
+    .badge-locked { background: rgba(100,116,139,0.1); color: var(--gray); }
+
+    /* ── STAT CARD ── */
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--mid-gray);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .stat-value {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--black);
+      line-height: 1.1;
+    }
+    .stat-value.positive { color: var(--green); }
+    .stat-value.negative { color: var(--red); }
+    .stat-value.brand { color: var(--brand); }
+
+    /* ── TABLE ── */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--mid-gray);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .data-table td {
+      padding: 13px 14px;
+      font-size: 13px;
+      color: var(--dark-gray);
+      border-bottom: 1px solid rgba(226,228,234,0.5);
+      vertical-align: middle;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(255,90,0,0.02); }
+    .data-table .positive { color: var(--green); font-weight: 600; }
+    .data-table .negative { color: var(--red); font-weight: 600; }
+
+    /* ── TIPSTER ROW ── */
+    .tipster-avatar {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-glow));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700;
+      color: var(--brand);
+      border: 2px solid rgba(255,90,0,0.2);
+      flex-shrink: 0;
+    }
+    .tipster-name-cell { display: flex; align-items: center; gap: 10px; }
+    .tipster-name { font-size: 14px; font-weight: 700; color: var(--black); }
+    .tipster-meta { font-size: 11px; color: var(--mid-gray); margin-top: 1px; }
+
+    /* ── SPARKLINE ── */
+    .sparkline { width: 80px; height: 32px; }
+
+    /* ── FILTER SIDEBAR ── */
+    .filter-sidebar {
+      width: 200px;
+      flex-shrink: 0;
+    }
+    .filter-group { margin-bottom: 20px; }
+    .filter-group-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--mid-gray);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .filter-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--dark-gray);
+    }
+    .filter-item input[type="checkbox"] {
+      accent-color: var(--brand);
+      width: 14px; height: 14px;
+    }
+
+    /* ── TABS (within screen) ── */
+    .tab-bar {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .tab-item {
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--mid-gray);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .tab-item:hover { color: var(--brand); }
+    .tab-item.active { color: var(--brand); border-bottom-color: var(--brand); }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--black);
+    }
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--mid-gray);
+      margin-top: 2px;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+      height: 6px;
+      border-radius: var(--radius-pill);
+      background: var(--light-gray);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: var(--radius-pill);
+      background: var(--brand);
+      transition: width 0.3s;
+    }
+    .progress-fill.green { background: var(--green); }
+    .progress-fill.gold { background: var(--gold); }
+
+    /* ── TOGGLE ── */
+    .toggle-group {
+      display: flex;
+      background: var(--light-gray);
+      border-radius: var(--radius-pill);
+      padding: 3px;
+      gap: 2px;
+    }
+    .toggle-option {
+      padding: 7px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--mid-gray);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .toggle-option.active {
+      background: var(--white);
+      color: var(--black);
+      box-shadow: 0 1px 4px rgba(15,23,42,0.1);
+    }
+
+    /* ── CHIP FILTERS ── */
+    .chip-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .chip {
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chip:hover { border-color: var(--brand); color: var(--brand); }
+    .chip.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+
+    /* ── TREND CARD (leaderboard hero) ── */
+    .trend-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .trend-card:hover { box-shadow: 0 8px 32px rgba(255,90,0,0.12); transform: translateY(-2px); }
+    .trend-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--brand);
+      border-radius: var(--card-radius) var(--card-radius) 0 0;
+    }
+
+    /* ── MATCH CARD ── */
+    .match-header {
+      background: linear-gradient(135deg, var(--black) 0%, #2D1A1B 100%);
+      border-radius: var(--card-radius) var(--card-radius) 0 0;
+      padding: 16px 20px;
+      color: #fff;
+    }
+    .odds-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+      font-family: var(--font);
+    }
+    .odds-btn:hover, .odds-btn.selected {
+      background: var(--brand);
+      border-color: var(--brand);
+    }
+
+    /* ── SIDEBAR PROFILE ── */
+    .profile-sidebar {
+      width: 220px;
+      flex-shrink: 0;
+    }
+    .profile-avatar-lg {
+      width: 72px; height: 72px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-glow));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; font-weight: 800;
+      color: var(--brand);
+      border: 3px solid rgba(255,90,0,0.25);
+      margin: 0 auto 12px;
+    }
+    .stars { color: var(--gold); font-size: 13px; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(27,11,12,0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+    .modal-box {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      width: 480px;
+      max-width: 95vw;
+      box-shadow: 0 32px 80px rgba(15,23,42,0.25);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 32px; height: 32px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      color: var(--gray);
+    }
+    .modal-close:hover { border-color: var(--brand); color: var(--brand); }
+
+    /* ── CHECKLIST ── */
+    .checklist { list-style: none; }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 0;
+      font-size: 13px;
+      color: var(--dark-gray);
+      border-bottom: 1px solid rgba(226,228,234,0.4);
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .check-icon { color: var(--brand); font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── FEE BREAKDOWN ── */
+    .fee-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(226,228,234,0.4);
+    }
+    .fee-row:last-child { border-bottom: none; }
+    .fee-row.total {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--black);
+      border-top: 2px solid var(--border);
+      margin-top: 4px;
+      padding-top: 12px;
+    }
+
+    /* ── BET SLIP ── */
+    .bet-slip {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      padding: 20px;
+    }
+    .stake-quick-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+    .stake-btn {
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all 0.15s;
+    }
+    .stake-btn:hover, .stake-btn.active {
+      border-color: var(--brand);
+      color: var(--brand);
+      background: var(--brand-light);
+    }
+    .visibility-toggle {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .vis-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      background: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray);
+      cursor: pointer;
+      text-align: center;
+      font-family: var(--font);
+      transition: all 0.15s;
+    }
+    .vis-btn.active-free { border-color: var(--green); color: var(--green); background: var(--green-light); }
+    .vis-btn.active-premium { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+
+    /* ── DASHBOARD SIDEBAR ── */
+    .dash-sidebar {
+      width: 220px;
+      flex-shrink: 0;
+    }
+    .dash-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+    .dash-nav-item:hover { background: var(--light-gray); color: var(--black); }
+    .dash-nav-item.active { background: var(--brand-light); color: var(--brand); font-weight: 700; }
+    .dash-nav-icon { font-size: 16px; width: 20px; text-align: center; }
+
+    /* ── REVENUE CARD ── */
+    .revenue-card {
+      background: linear-gradient(135deg, var(--black) 0%, #2D1A1B 100%);
+      border-radius: var(--card-radius);
+      padding: 20px;
+      color: #fff;
+    }
+    .revenue-card .label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+    .revenue-card .value { font-size: 28px; font-weight: 800; color: var(--brand); }
+    .revenue-card .sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+    /* ── TIP CARD (feed) ── */
+    .tip-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      padding: 16px 18px;
+      transition: box-shadow 0.15s;
+    }
+    .tip-card:hover { box-shadow: 0 4px 20px rgba(255,90,0,0.08); }
+    .tip-card.locked { opacity: 0.75; }
+    .tip-pick {
+      background: var(--brand-light);
+      border: 1px solid rgba(255,90,0,0.2);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--brand);
+      margin-top: 10px;
+    }
+    .tip-pick.locked-pick {
+      background: var(--light-gray);
+      border-color: var(--border);
+      color: var(--mid-gray);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── DISTRIBUTION BAR ── */
+    .dist-bar { display: flex; border-radius: var(--radius-sm); overflow: hidden; height: 28px; }
+    .dist-seg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ── INPUTS ── */
+    .form-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-family: var(--font);
+      color: var(--black);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .form-input:focus { border-color: var(--brand); }
+    .form-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--mid-gray);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+    textarea.form-input { resize: vertical; min-height: 80px; }
+
+    /* ── UTILITY ── */
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .items-start { align-items: flex-start; }
+    .justify-between { justify-content: space-between; }
+    .justify-center { justify-content: center; }
+    .gap-4 { gap: 4px; }
+    .gap-6 { gap: 6px; }
+    .gap-8 { gap: 8px; }
+    .gap-10 { gap: 10px; }
+    .gap-12 { gap: 12px; }
+    .gap-16 { gap: 16px; }
+    .gap-20 { gap: 20px; }
+    .gap-24 { gap: 24px; }
+    .w-full { width: 100%; }
+    .text-sm { font-size: 12px; }
+    .text-xs { font-size: 11px; }
+    .text-base { font-size: 14px; }
+    .text-lg { font-size: 16px; }
+    .text-xl { font-size: 18px; }
+    .text-2xl { font-size: 22px; }
+    .font-bold { font-weight: 700; }
+    .font-semibold { font-weight: 600; }
+    .font-medium { font-weight: 500; }
+    .text-brand { color: var(--brand); }
+    .text-green { color: var(--green); }
+    .text-red { color: var(--red); }
+    .text-muted { color: var(--mid-gray); }
+    .text-black { color: var(--black); }
+    .mt-4 { margin-top: 4px; }
+    .mt-6 { margin-top: 6px; }
+    .mt-8 { margin-top: 8px; }
+    .mt-12 { margin-top: 12px; }
+    .mt-16 { margin-top: 16px; }
+    .mt-20 { margin-top: 20px; }
+    .mb-4 { margin-bottom: 4px; }
+    .mb-8 { margin-bottom: 8px; }
+    .mb-12 { margin-bottom: 12px; }
+    .mb-16 { margin-bottom: 16px; }
+    .mb-20 { margin-bottom: 20px; }
+    .p-16 { padding: 16px; }
+    .p-20 { padding: 20px; }
+    .p-24 { padding: 24px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .divider { height: 1px; background: var(--border); margin: 16px 0; }
+    .rounded-full { border-radius: var(--radius-pill); }
+    .overflow-hidden { overflow: hidden; }
+    .relative { position: relative; }
+    .absolute { position: absolute; }
+    .inset-0 { inset: 0; }
+    .z-10 { z-index: 10; }
+    .cursor-pointer { cursor: pointer; }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .shrink-0 { flex-shrink: 0; }
+    .grow { flex-grow: 1; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     TOP NAVIGATION
+═══════════════════════════════════════════════════ -->
+<nav class="top-nav">
+  <a class="nav-logo" href="#">
+    <svg class="nav-logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="36" height="36" rx="10" fill="#FF5A00"/>
+      <path d="M8 26L14 14L20 20L26 10" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="26" cy="10" r="3" fill="white"/>
+    </svg>
+    <span class="nav-logo-text">GAINR</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" class="active">Analysts</a></li>
+    <li><a href="#">Markets</a></li>
+    <li><a href="#">Portfolio</a></li>
+    <li><a href="#">Auto-Betting</a></li>
+    <li><a href="#">Docs</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-icon">🔔</button>
+    <button class="btn-secondary">My Account</button>
+    <button class="btn-primary">Deposit USDC</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     SCREEN NAVIGATION TABS
+═══════════════════════════════════════════════════ -->
+<div class="screen-tabs-bar">
+  <button class="screen-tab active" onclick="showScreen('s1', this)">① Analyst Leaderboard</button>
+  <button class="screen-tab" onclick="showScreen('s2', this)">② Analyst Profile</button>
+  <button class="screen-tab" onclick="showScreen('s3', this)">③ Subscribe Modal</button>
+  <button class="screen-tab" onclick="showScreen('s4', this)">④ Post a Tip</button>
+  <button class="screen-tab" onclick="showScreen('s5', this)">⑤ Analyst Dashboard</button>
+  <button class="screen-tab" onclick="showScreen('s6', this)">⑥ Tips Feed</button>
+  <button class="screen-tab" onclick="showScreen('s7', this)">⑦ Analyst Onboarding</button>
+  <button class="screen-tab" onclick="showScreen('s8', this)">⑧ Auto-Betting Setup</button>
+</div>
+<div class="screen-label" id="screen-label">Screen 1 of 8 — Analyst Leaderboard (Investor Discovery)</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SCREEN 1 — ANALYST LEADERBOARD
+════════════════════════════════════════════════════════════════ -->
+<div class="screen active" id="s1">
+
+  <!-- Hero: Top Performers -->
+  <div class="section-header mt-4">
+    <div>
+      <div class="section-title">Top Performers <span class="text-muted font-medium text-sm">— last 30 days</span></div>
+      <div class="section-subtitle">Verified on-chain track records. Sorted by risk-adjusted yield.</div>
+    </div>
+    <div class="flex gap-8 items-center">
+      <span class="text-xs text-muted">ⓘ Performance is independently verified via Pinnacle closing odds</span>
+    </div>
+  </div>
+
+  <div class="grid-4 mb-20">
+    <!-- Trend Card 1 -->
+    <div class="trend-card">
+      <div class="flex items-center gap-10 mb-12">
+        <div class="tipster-avatar">A</div>
+        <div>
+          <div class="flex items-center gap-6">
+            <span class="tipster-name">AiTips</span>
+            <span class="badge badge-pro">PRO</span>
+            <span class="badge badge-gold">🥇 GOLD</span>
+          </div>
+          <div class="stars mt-4">★★★★★ <span class="text-xs text-muted font-medium">4.9</span></div>
+          <div class="text-xs text-muted mt-2">49 followers</div>
+        </div>
+      </div>
+      <div class="grid-2 gap-8">
+        <div><div class="text-xs text-muted mb-4">Yield</div><div class="font-bold text-green">+8.46%</div></div>
+        <div><div class="text-xs text-muted mb-4">1U Profit</div><div class="font-bold text-green">+250.10U</div></div>
+        <div><div class="text-xs text-muted mb-4">CLV</div><div class="font-bold text-green">+0.13%</div></div>
+        <div><div class="text-xs text-muted mb-4">Subscribers</div><div class="font-bold">5</div></div>
+      </div>
+      <canvas id="spark1" class="sparkline mt-12" width="80" height="32"></canvas>
+    </div>
+
+    <!-- Trend Card 2 -->
+    <div class="trend-card">
+      <div class="flex items-center gap-10 mb-12">
+        <div class="tipster-avatar" style="background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(59,130,246,0.2));color:#1D4ED8">L</div>
+        <div>
+          <div class="flex items-center gap-6">
+            <span class="tipster-name">Luminaar</span>
+            <span class="badge badge-pro">PRO</span>
+            <span class="badge badge-gold">🥇 GOLD</span>
+          </div>
+          <div class="stars mt-4">★★★★☆ <span class="text-xs text-muted font-medium">3.9</span></div>
+          <div class="text-xs text-muted mt-2">210 followers</div>
+        </div>
+      </div>
+      <div class="grid-2 gap-8">
+        <div><div class="text-xs text-muted mb-4">Yield</div><div class="font-bold text-green">+8.61%</div></div>
+        <div><div class="text-xs text-muted mb-4">1U Profit</div><div class="font-bold text-green">+242.42U</div></div>
+        <div><div class="text-xs text-muted mb-4">CLV</div><div class="font-bold text-red">-9.10%</div></div>
+        <div><div class="text-xs text-muted mb-4">Subscribers</div><div class="font-bold">23</div></div>
+      </div>
+      <canvas id="spark2" class="sparkline mt-12" width="80" height="32"></canvas>
+    </div>
+
+    <!-- Trend Card 3 -->
+    <div class="trend-card">
+      <div class="flex items-center gap-10 mb-12">
+        <div class="tipster-avatar" style="background:rgba(16,185,129,0.1);color:#059669">T</div>
+        <div>
+          <div class="flex items-center gap-6">
+            <span class="tipster-name">TennisLove</span>
+            <span class="badge badge-pro">PRO</span>
+            <span class="badge badge-silver">🥈 SILVER</span>
+          </div>
+          <div class="stars mt-4">★★★★☆ <span class="text-xs text-muted font-medium">3.5</span></div>
+          <div class="text-xs text-muted mt-2">8 followers</div>
+        </div>
+      </div>
+      <div class="grid-2 gap-8">
+        <div><div class="text-xs text-muted mb-4">Yield</div><div class="font-bold text-green">+5.88%</div></div>
+        <div><div class="text-xs text-muted mb-4">1U Profit</div><div class="font-bold text-green">+13.48U</div></div>
+        <div><div class="text-xs text-muted mb-4">CLV</div><div class="font-bold text-green">+1.59%</div></div>
+        <div><div class="text-xs text-muted mb-4">Subscribers</div><div class="font-bold">0</div></div>
+      </div>
+      <canvas id="spark3" class="sparkline mt-12" width="80" height="32"></canvas>
+    </div>
+
+    <!-- Trend Card 4 -->
+    <div class="trend-card">
+      <div class="flex items-center gap-10 mb-12">
+        <div class="tipster-avatar" style="background:rgba(139,92,246,0.1);color:#7C3AED">D</div>
+        <div>
+          <div class="flex items-center gap-6">
+            <span class="tipster-name">DarkYonder</span>
+            <span class="badge badge-pro">PRO</span>
+            <span class="badge badge-bronze">🥉 BRONZE</span>
+          </div>
+          <div class="stars mt-4">★★★★☆ <span class="text-xs text-muted font-medium">4.6</span></div>
+          <div class="text-xs text-muted mt-2">55 followers</div>
+        </div>
+      </div>
+      <div class="grid-2 gap-8">
+        <div><div class="text-xs text-muted mb-4">Yield</div><div class="font-bold text-green">+5.20%</div></div>
+        <div><div class="text-xs text-muted mb-4">1U Profit</div><div class="font-bold text-green">+57.53U</div></div>
+        <div><div class="text-xs text-muted mb-4">CLV</div><div class="font-bold text-green">+1.38%</div></div>
+        <div><div class="text-xs text-muted mb-4">Subscribers</div><div class="font-bold">10</div></div>
+      </div>
+      <canvas id="spark4" class="sparkline mt-12" width="80" height="32"></canvas>
+    </div>
+  </div>
+
+  <!-- Category Quick-Filters -->
+  <div class="grid-4 mb-20">
+    <div class="card p-16 cursor-pointer flex items-center gap-12" style="border-left:3px solid var(--brand)">
+      <span style="font-size:24px">📊</span>
+      <div><div class="font-bold text-sm">Major Markets</div><div class="text-xs text-muted">Football, Tennis, Basketball</div></div>
+    </div>
+    <div class="card p-16 cursor-pointer flex items-center gap-12">
+      <span style="font-size:24px">🆓</span>
+      <div><div class="font-bold text-sm">Top Free Analysts</div><div class="text-xs text-muted">No subscription needed</div></div>
+    </div>
+    <div class="card p-16 cursor-pointer flex items-center gap-12">
+      <span style="font-size:24px">⚽</span>
+      <div><div class="font-bold text-sm">Premier League</div><div class="text-xs text-muted">English top-flight specialists</div></div>
+    </div>
+    <div class="card p-16 cursor-pointer flex items-center gap-12">
+      <span style="font-size:24px">🌍</span>
+      <div><div class="font-bold text-sm">Football Worldwide</div><div class="text-xs text-muted">All football leagues</div></div>
+    </div>
+  </div>
+
+  <!-- Filters + Table -->
+  <div class="flex gap-20">
+    <!-- Filters -->
+    <div class="filter-sidebar">
+      <div class="card p-16">
+        <div class="filter-group">
+          <div class="filter-group-title">Search</div>
+          <input type="text" class="form-input" placeholder="🔍 Find an analyst..." style="font-size:13px;padding:8px 12px" />
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-title">Sport</div>
+          <label class="filter-item"><input type="checkbox" checked /> All sports</label>
+          <label class="filter-item"><input type="checkbox" /> ⚽ Soccer</label>
+          <label class="filter-item"><input type="checkbox" /> 🏀 Basketball</label>
+          <label class="filter-item"><input type="checkbox" /> 🎾 Tennis</label>
+          <label class="filter-item"><input type="checkbox" /> ⚾ Baseball</label>
+          <label class="filter-item"><input type="checkbox" /> 🏈 US Football</label>
+          <label class="filter-item"><input type="checkbox" /> 🎯 Martial Arts</label>
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-title">Tier</div>
+          <label class="filter-item"><input type="checkbox" checked /> All tiers</label>
+          <label class="filter-item"><input type="checkbox" /> 🥇 Gold (50k+ $GAINR)</label>
+          <label class="filter-item"><input type="checkbox" /> 🥈 Silver (10k+)</label>
+          <label class="filter-item"><input type="checkbox" /> 🥉 Bronze (1k+)</label>
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-title">Tip Type</div>
+          <label class="filter-item"><input type="checkbox" checked /> All</label>
+          <label class="filter-item"><input type="checkbox" /> PRO only</label>
+          <label class="filter-item"><input type="checkbox" /> Free only</label>
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-title">Min Bets</div>
+          <label class="filter-item"><input type="checkbox" /> At least 200</label>
+          <label class="filter-item"><input type="checkbox" /> At least 500</label>
+          <label class="filter-item"><input type="checkbox" /> At least 1000</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="grow">
+      <!-- Sort chips -->
+      <div class="flex items-center justify-between mb-12">
+        <div class="chip-filters">
+          <div class="chip active">Most Relevant</div>
+          <div class="chip">Top ROI</div>
+          <div class="chip">Top CLV</div>
+          <div class="chip">Most Bets</div>
+          <div class="chip">Newest</div>
+        </div>
+        <button class="btn-secondary" style="font-size:12px;padding:7px 14px">⚙ More Stats</button>
+      </div>
+
+      <div class="card overflow-hidden">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Analyst</th>
+              <th>1U Profit ↕</th>
+              <th>ROI ↕</th>
+              <th>CLV ↕</th>
+              <th>Bets ↕</th>
+              <th>Subscribers ↕</th>
+              <th>Since</th>
+              <th>Last 200 bets</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="tipster-name-cell">
+                  <div class="tipster-avatar" style="width:36px;height:36px;font-size:13px">A</div>
+                  <div>
+                    <div class="flex items-center gap-6">
+                      <span class="tipster-name">AiTips</span>
+                      <span class="badge badge-pro" style="font-size:10px;padding:2px 7px">PRO</span>
+                      <span class="badge badge-gold" style="font-size:10px;padding:2px 7px">🥇</span>
+                      <span class="badge badge-verified" style="font-size:10px;padding:2px 7px">✓ On-chain</span>
+                    </div>
+                    <div class="tipster-meta">★ 4.9 · 49 followers</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="positive">+114.89U ↑</span></td>
+              <td><span class="positive">+8.46% ↑</span></td>
+              <td><span class="positive">+0.13% ↓</span></td>
+              <td>1,669</td>
+              <td>5</td>
+              <td class="text-muted">2025</td>
+              <td><canvas id="tbl_spark1" width="80" height="28"></canvas></td>
+              <td><button class="btn-primary" style="font-size:11px;padding:7px 14px" onclick="showScreen('s2', document.querySelectorAll('.screen-tab')[1])">View Profile</button></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="tipster-name-cell">
+                  <div class="tipster-avatar" style="width:36px;height:36px;font-size:13px;background:rgba(59,130,246,0.1);color:#1D4ED8">N</div>
+                  <div>
+                    <div class="flex items-center gap-6">
+                      <span class="tipster-name">NG1</span>
+                      <span class="badge badge-pro" style="font-size:10px;padding:2px 7px">PRO</span>
+                      <span class="badge badge-gold" style="font-size:10px;padding:2px 7px">🥇</span>
+                    </div>
+                    <div class="tipster-meta">★ 4.7 · 12 followers</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="positive">+39.71U ↓</span></td>
+              <td><span class="positive">+17.90% ↑</span></td>
+              <td><span class="negative">-0.57% ↑</span></td>
+              <td>427</td>
+              <td>0</td>
+              <td class="text-muted">2026</td>
+              <td><canvas id="tbl_spark2" width="80" height="28"></canvas></td>
+              <td><button class="btn-secondary" style="font-size:11px;padding:7px 14px">View Profile</button></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="tipster-name-cell">
+                  <div class="tipster-avatar" style="width:36px;height:36px;font-size:13px;background:rgba(139,92,246,0.1);color:#7C3AED">D</div>
+                  <div>
+                    <div class="flex items-center gap-6">
+                      <span class="tipster-name">DarkYonder</span>
+                      <span class="badge badge-pro" style="font-size:10px;padding:2px 7px">PRO</span>
+                      <span class="badge badge-bronze" style="font-size:10px;padding:2px 7px">🥉</span>
+                    </div>
+                    <div class="tipster-meta">★ 4.6 · 55 followers</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="positive">+57.53U ↑</span></td>
+              <td><span class="positive">+5.20% ↑</span></td>
+              <td><span class="positive">+1.38% ↑</span></td>
+              <td>1,487</td>
+              <td>10</td>
+              <td class="text-muted">2023</td>
+              <td><canvas id="tbl_spark3" width="80" height="28"></canvas></td>
+              <td><button class="btn-secondary" style="font-size:11px;padding:7px 14px">View Profile</button></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="tipster-name-cell">
+                  <div class="tipster-avatar" style="width:36px;height:36px;font-size:13px;background:rgba(16,185,129,0.1);color:#059669">S</div>
+                  <div>
+                    <div class="flex items-center gap-6">
+                      <span class="tipster-name">Sportbettingfund</span>
+                      <span class="badge badge-free" style="font-size:10px;padding:2px 7px">FREE</span>
+                      <span class="badge badge-silver" style="font-size:10px;padding:2px 7px">🥈</span>
+                    </div>
+                    <div class="tipster-meta">★ 4.2 · 31 followers</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="positive">+28.40U ↑</span></td>
+              <td><span class="positive">+4.10% ↑</span></td>
+              <td><span class="positive">+0.82% ↑</span></td>
+              <td>692</td>
+              <td>0</td>
+              <td class="text-muted">2024</td>
+              <td><canvas id="tbl_spark4" width="80" height="28"></canvas></td>
+              <td><button class="btn-secondary" style="font-size:11px;padding:7px 14px">View Profile</button></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="tipster-name-cell">
+                  <div class="tipster-avatar" style="width:36px;height:36px;font-size:13px;background:rgba(245,158,11,0.1);color:#92400E">J</div>
+                  <div>
+                    <div class="flex items-center gap-6">
+                      <span class="tipster-name">JAHF5</span>
+                      <span class="badge badge-free" style="font-size:10px;padding:2px 7px">FREE</span>
+                    </div>
+                    <div class="tipster-meta">★ 3.8 · 7 followers</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="positive">+12.20U ↑</span></td>
+              <td><span class="positive">+3.80% ↑</span></td>
+              <td><span class="negative">-0.22% ↓</span></td>
+              <td>321</td>
+              <td>0</td>
+              <td class="text-muted">2025</td>
+              <td><canvas id="tbl_spark5" width="80" height="28"></canvas></td>
+              <td><button class="btn-secondary" style="font-size:11px;padding:7px 14px">View Profile</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex justify-center mt-16">
+        <button class="btn-secondary">Load More Analysts</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SCREEN 2 — ANALYST PUBLIC PROFILE
+════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="s2">
+  <div class="flex gap-20 items-start">
+
+    <!-- Left Sidebar -->
+    <div class="profile-sidebar">
+      <div class="card p-20 text-center mb-12">
+        <div class="profile-avatar-lg">A</div>
+        <div class="flex items-center justify-center gap-8 mb-4">
+          <span class="text-xl font-bold">AiTips</span>
+          <span class="badge badge-pro">PRO</span>
+          <span class="badge badge-verified">✓</span>
+        </div>
+        <div class="stars mb-4">★★★★★ <span class="text-xs text-muted">4.9</span></div>
+        <div class="flex flex-col gap-8 mt-16">
+          <button class="btn-secondary w-full">Follow <span class="badge badge-free" style="margin-left:6px">Free</span></button>
+          <button class="btn-secondary w-full">Subscribe</button>
+          <button class="btn-primary w-full" onclick="showScreen('s3', document.querySelectorAll('.screen-tab')[2])">Buy Tips</button>
+          <button class="btn-secondary w-full">Follow with Auto-Betting</button>
+        </div>
+        <div class="mt-12 text-left">
+          <div class="text-xs text-muted mb-4">Auto-Betting Capacity</div>
+          <div class="flex justify-between text-xs mb-4"><span>0 / 23 slots used</span><span class="text-brand font-bold">22% full</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:22%"></div></div>
+        </div>
+        <div class="grid-2 gap-8 mt-16">
+          <div class="card p-16 text-center card-sm">
+            <div class="text-2xl font-bold">5</div>
+            <div class="text-xs text-muted mt-4">Subscribers</div>
+          </div>
+          <div class="card p-16 text-center card-sm" style="border-color:var(--brand)">
+            <div class="text-2xl font-bold text-brand">49</div>
+            <div class="text-xs text-muted mt-4">Followers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- $GAINR Tier -->
+      <div class="card p-16 mb-12" style="border:1.5px solid var(--gold);background:var(--gold-light)">
+        <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">$GAINR Stake Tier</div>
+        <div class="flex items-center gap-8 mb-8">
+          <span style="font-size:20px">🥇</span>
+          <span class="badge badge-gold" style="font-size:13px;padding:5px 14px">GOLD TIER</span>
+        </div>
+        <div class="text-xs text-muted">50,000+ $GAINR staked</div>
+        <div class="divider"></div>
+        <div class="text-xs" style="color:#92400E">
+          <div class="flex justify-between mb-4"><span>Execution queue</span><span class="font-bold">1st priority</span></div>
+          <div class="flex justify-between"><span>Platform fee</span><span class="font-bold">0% discount</span></div>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="card p-16">
+        <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">About</div>
+        <div class="text-sm" style="color:var(--dark-gray);line-height:1.6">
+          AI-powered sports trading model specialising in football and tennis. Uses machine learning to identify value bets with positive CLV. Verified track record since 2025.
+        </div>
+        <div class="divider"></div>
+        <div class="text-xs text-muted">
+          <div class="flex justify-between mb-6"><span>Sports</span><span class="font-semibold text-black">Football, Tennis</span></div>
+          <div class="flex justify-between mb-6"><span>Avg stake</span><span class="font-semibold text-black">2U</span></div>
+          <div class="flex justify-between"><span>Avg odds</span><span class="font-semibold text-black">2.10</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="grow">
+      <div class="flex items-center justify-between mb-16">
+        <div>
+          <div class="text-xl font-bold">AiTips's Statistics <span style="font-size:16px">📋</span></div>
+          <a href="#" class="text-xs text-brand" style="text-decoration:none">Access my public profile →</a>
+        </div>
+        <div class="flex items-center gap-10">
+          <select class="form-input" style="width:auto;padding:8px 12px;font-size:13px">
+            <option>Bankroll: Public</option>
+            <option>Bankroll: Private</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid-3 mb-12">
+        <div class="stat-card">
+          <div class="stat-label">🧮 Bets <span style="color:var(--brand);cursor:pointer">ⓘ</span></div>
+          <div class="stat-value">1,669</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">📈 Profit <span style="color:var(--brand);cursor:pointer">ⓘ</span></div>
+          <div class="stat-value positive">+250.10</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">🚀 Yield <span style="color:var(--brand);cursor:pointer">ⓘ</span></div>
+          <div class="stat-value positive">+8.46%</div>
+        </div>
+      </div>
+      <div class="grid-3 mb-20">
+        <div class="stat-card">
+          <div class="stat-label">💰 AVG BM. <span style="color:var(--brand);cursor:pointer">ⓘ</span></div>
+          <div class="stat-value">$4,537</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">🔍 O. AVG <span style="color:var(--brand);cursor:pointer">ⓘ</span></div>
+          <div class="stat-value">2.10</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">📊 CLV <span style="color:var(--brand);cursor:pointer">ⓘ</span></div>
+          <div class="stat-value positive">+0.13%</div>
+        </div>
+      </div>
+
+      <!-- Betting Summary + Equity Chart -->
+      <div class="flex gap-16 mb-20">
+        <div class="card p-20" style="width:280px;flex-shrink:0">
+          <div class="text-sm font-bold mb-12">BETTING SUMMARY <span style="color:var(--mid-gray);cursor:pointer;font-weight:400">⚙</span></div>
+          <canvas id="donutChart" width="200" height="200"></canvas>
+          <div class="mt-12">
+            <div class="flex items-center gap-8 mb-6"><span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block"></span><span class="text-xs">Bets won: <strong>817</strong></span></div>
+            <div class="flex items-center gap-8 mb-6"><span style="width:10px;height:10px;border-radius:50%;background:#86EFAC;display:inline-block"></span><span class="text-xs">Half won: <strong>2</strong></span></div>
+            <div class="flex items-center gap-8 mb-6"><span style="width:10px;height:10px;border-radius:50%;background:var(--border);display:inline-block"></span><span class="text-xs">Refunded: <strong>56</strong></span></div>
+            <div class="flex items-center gap-8 mb-6"><span style="width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block"></span><span class="text-xs">Lost: <strong>793</strong></span></div>
+            <div class="flex items-center gap-8"><span style="width:10px;height:10px;border-radius:50%;background:#FCA5A5;display:inline-block"></span><span class="text-xs">Half lost: <strong>1</strong></span></div>
+          </div>
+        </div>
+        <div class="card p-20 grow">
+          <div class="tab-bar">
+            <div class="tab-item active">Real Odds Summary</div>
+            <div class="tab-item">Opening Odds</div>
+            <div class="tab-item">Closing Odds</div>
+            <div class="tab-item">Flat Stakes (1U)</div>
+            <div class="tab-item">CLV Summary</div>
+          </div>
+          <div class="text-xs text-muted mb-8">Max consecutive wins: 17 · Max consecutive losses: 19 · Max draw down: 76.18U</div>
+          <canvas id="equityChart" width="500" height="200"></canvas>
+        </div>
+      </div>
+
+      <!-- Active Bets / History -->
+      <div class="card overflow-hidden">
+        <div class="tab-bar p-20" style="margin-bottom:0;padding-bottom:0">
+          <div class="tab-item active">Active Bets (0)</div>
+          <div class="tab-item">History (1,669)</div>
+        </div>
+        <div class="p-20 text-center" style="padding:40px 20px;background:var(--bg)">
+          <div style="font-size:32px;margin-bottom:12px">🔒</div>
+          <div class="font-bold mb-8">Subscribe to see the active bets of this analyst</div>
+          <div class="text-sm text-muted mb-16">Unlock real-time picks, analysis, and Auto-Betting access</div>
+          <button class="btn-primary" onclick="showScreen('s3', document.querySelectorAll('.screen-tab')[2])">Buy Tips — from $34.95/mo</button>
+        </div>
+      </div>
+
+      <!-- Sport Breakdown -->
+      <div class="card mt-16 overflow-hidden">
+        <div class="p-20" style="padding-bottom:0">
+          <div class="text-sm font-bold mb-12">Performance Breakdown</div>
+          <div class="tab-bar" style="margin-bottom:0">
+            <div class="tab-item active">Sports</div>
+            <div class="tab-item">Pre-match / Live</div>
+            <div class="tab-item">Leagues</div>
+            <div class="tab-item">Stakes</div>
+            <div class="tab-item">Price Range</div>
+            <div class="tab-item">Betting Hour</div>
+            <div class="tab-item">Monthly Archives</div>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Sport</th><th>Bets</th><th>Win Rate</th><th>Profit</th><th>Yield</th><th>CLV</th><th>CLEV</th><th>O. AVG</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>⚽ Football</strong></td><td>1,329</td><td>48.83%</td><td class="positive">+147.01</td><td class="positive">+6.03%</td><td class="positive">+0.24%</td><td class="positive">+1.49%</td><td>2.09</td></tr>
+            <tr><td><strong>🎾 Tennis</strong></td><td>202</td><td>49.01%</td><td class="positive">+89.35</td><td class="positive">+29.73%</td><td class="negative">-0.78%</td><td class="negative">-3.76%</td><td>2.21</td></tr>
+            <tr><td><strong>🏀 Basketball</strong></td><td>96</td><td>52.08%</td><td class="positive">+29.27</td><td class="positive">+20.19%</td><td class="positive">+0.42%</td><td class="negative">-2.52%</td><td>2.17</td></tr>
+            <tr><td><strong>⚾ Baseball</strong></td><td>35</td><td>48.57%</td><td class="negative">-19.02</td><td class="negative">-31.56%</td><td class="negative">-0.50%</td><td class="positive">+0.71%</td><td>1.78</td></tr>
+            <tr><td><strong>🏈 US Football</strong></td><td>7</td><td>57.14%</td><td class="positive">+3.48</td><td class="positive">+33.15%</td><td class="negative">-0.92%</td><td class="negative">-5.43%</td><td>1.94</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SCREEN 3 — SUBSCRIBE / BUY TIPS MODAL
+════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="s3">
+  <div class="flex justify-center" style="padding:20px 0">
+    <div class="modal-box" style="position:relative;max-width:520px;width:100%">
+      <button class="modal-close" onclick="showScreen('s2', document.querySelectorAll('.screen-tab')[1])">✕</button>
+
+      <div class="text-xl font-bold mb-16">Subscribe to AiTips</div>
+
+      <!-- Tipster mini-card -->
+      <div class="flex items-center justify-between p-16 mb-16" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
+        <div class="flex items-center gap-12">
+          <div class="tipster-avatar" style="width:44px;height:44px">A</div>
+          <div>
+            <div class="flex items-center gap-6"><span class="font-bold">AiTips</span><span class="badge badge-pro">PRO</span></div>
+            <div class="text-xs text-muted mt-4">★ 4.9 · +8.46% Yield · 1,669 bets</div>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-xs text-muted mb-4">Current ROI Tier</div>
+          <div class="badge badge-gold" style="font-size:12px;padding:4px 10px">Tier 1 (4–6%)</div>
+        </div>
+      </div>
+
+      <!-- Pricing Toggle -->
+      <div class="toggle-group mb-16">
+        <div class="toggle-option active" id="tog-monthly" onclick="selectPlan('monthly')">
+          <div class="font-bold text-brand" style="font-size:20px">$34.95</div>
+          <div class="text-xs text-muted">Monthly · Cancel anytime</div>
+        </div>
+        <div class="toggle-option" id="tog-single" onclick="selectPlan('single')">
+          <div class="font-bold" style="font-size:20px">$4.99</div>
+          <div class="text-xs text-muted">Single Tip · One-time</div>
+        </div>
+      </div>
+
+      <!-- Benefits -->
+      <ul class="checklist mb-16">
+        <li><span class="check-icon">✓</span> Unlock all active tips immediately</li>
+        <li><span class="check-icon">✓</span> Instant Telegram + Email alerts on new tips</li>
+        <li><span class="check-icon">✓</span> Enable Auto-Betting to mirror bets automatically</li>
+        <li><span class="check-icon">✓</span> Full analysis &amp; reasoning for each pick</li>
+        <li><span class="check-icon">✓</span> Pro-rated refund if analyst ROI drops below 4%</li>
+      </ul>
+
+      <!-- Wallet + Fee Breakdown -->
+      <div class="p-16 mb-16" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
+        <div class="flex justify-between text-xs text-muted mb-8">
+          <span>Wallet Balance</span>
+          <span>After Payment</span>
+        </div>
+        <div class="flex justify-between font-bold mb-12">
+          <span>2,450.00 USDC</span>
+          <span class="text-green">2,415.05 USDC</span>
+        </div>
+        <div class="divider"></div>
+        <div class="fee-row"><span class="text-muted">Subscription fee</span><span class="font-semibold">$34.95</span></div>
+        <div class="fee-row"><span class="text-muted">Platform fee (33%)</span><span class="font-semibold">$11.53</span></div>
+        <div class="fee-row"><span class="text-muted">Analyst receives (67%)</span><span class="font-semibold text-green">$23.42</span></div>
+        <div class="fee-row total"><span>Total charged</span><span class="text-brand">$34.95 USDC</span></div>
+      </div>
+
+      <!-- CTA -->
+      <button class="btn-primary w-full" style="padding:14px;font-size:15px;border-radius:var(--radius-md)">
+        Pay $34.95 USDC · Subscribe Now
+      </button>
+      <div class="text-center text-xs text-muted mt-8">Secured by Gainr Smart Contract · Cancel anytime</div>
+
+      <!-- Auto-Betting Upsell -->
+      <div class="mt-16 p-16" style="background:var(--brand-light);border:1.5px solid rgba(255,90,0,0.2);border-radius:var(--radius-md)">
+        <div class="text-sm font-bold mb-8">⚡ Also enable Auto-Betting?</div>
+        <div class="text-xs text-muted mb-12">Automatically mirror this analyst's bets to your connected sportsbook account.</div>
+        <div class="grid-2 gap-8 mb-12">
+          <div>
+            <label class="form-label">Capital to allocate (USDC)</label>
+            <input type="number" class="form-input" value="500" style="font-size:13px;padding:8px 12px" />
+          </div>
+          <div>
+            <label class="form-label">Stake per bet (Units)</label>
+            <input type="number" class="form-input" value="2" style="font-size:13px;padding:8px 12px" />
+          </div>
+        </div>
+        <div class="flex gap-8">
+          <button class="btn-primary" style="flex:1;font-size:13px;padding:10px">Enable Auto-Betting</button>
+          <button class="btn-secondary" style="flex:1;font-size:13px;padding:10px">Skip — I'll bet manually</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SCREEN 4 — POST A TIP (ANALYST VIEW)
+════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="s4">
+  <div class="flex gap-16">
+
+    <!-- Match Browser -->
+    <div style="width:220px;flex-shrink:0">
+      <div class="card p-16 mb-12">
+        <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">Search Fixture</div>
+        <input type="text" class="form-input" placeholder="🔍 Search team or player..." style="font-size:13px;padding:8px 12px" />
+      </div>
+      <div class="card overflow-hidden">
+        <div class="tab-bar p-12" style="padding-bottom:0;margin-bottom:0">
+          <div class="tab-item active" style="padding:8px 10px;font-size:12px">Pre-match</div>
+          <div class="tab-item" style="padding:8px 10px;font-size:12px">Live</div>
+          <div class="tab-item" style="padding:8px 10px;font-size:12px">Futures</div>
+        </div>
+        <div style="max-height:480px;overflow-y:auto;padding:8px 0">
+          <div style="padding:6px 12px;font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.06em;text-transform:uppercase;background:var(--bg)">🌍 FIFA World Cup Qualifiers</div>
+          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)" class="hover-brand">🇸🇪 Sweden vs Poland →</div>
+          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)">🇨🇿 Czechia vs Denmark →</div>
+          <div style="padding:6px 12px;font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.06em;text-transform:uppercase;background:var(--bg)">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</div>
+          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)">Arsenal vs Chelsea →</div>
+          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)">Man City vs Liverpool →</div>
+          <div style="padding:6px 12px;font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.06em;text-transform:uppercase;background:var(--bg)">🎾 WTA Charleston Open</div>
+          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)">Krunic / Zhang vs Sutjiadi →</div>
+          <div style="padding:6px 12px;font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.06em;text-transform:uppercase;background:var(--bg)">🏀 NBA</div>
+          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)">Lakers vs Celtics →</div>
+          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer">Warriors vs Heat →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Match Odds Panel -->
+    <div class="grow">
+      <!-- Match Header -->
+      <div class="card mb-12 overflow-hidden">
+        <div class="match-header">
+          <div class="text-xs" style="color:rgba(255,255,255,0.6);margin-bottom:4px">FIFA — World Cup Qualifiers Europe</div>
+          <div class="flex items-center justify-between">
+            <div class="text-xl font-bold">Sweden <span style="color:var(--brand)">vs</span> Poland</div>
+            <div class="text-right">
+              <div class="text-xs" style="color:rgba(255,255,255,0.6)">Starts in</div>
+              <div class="font-bold text-brand">4h 12m</div>
+            </div>
+          </div>
+          <div class="text-xs mt-4" style="color:rgba(255,255,255,0.5)">Wednesday, April 1, 2026 · 2:45 AM</div>
+        </div>
+        <div class="p-16">
+          <div class="tab-bar" style="margin-bottom:12px">
+            <div class="tab-item active">Match</div>
+            <div class="tab-item">1st Half</div>
+            <div class="tab-item">To Qualify</div>
+            <div class="tab-item">Corners</div>
+            <div class="tab-item">Cards</div>
+          </div>
+
+          <!-- 1X2 -->
+          <div class="mb-12">
+            <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">1X2</div>
+            <div class="grid-3 gap-8">
+              <button class="odds-btn selected" style="background:var(--brand);border-color:var(--brand)">
+                <div class="text-xs mb-2" style="opacity:0.8">Sweden (1)</div>
+                <div>2.10</div>
+                <div class="text-xs mt-1" style="opacity:0.6">— stable</div>
+              </button>
+              <button class="odds-btn">
+                <div class="text-xs mb-2" style="opacity:0.8">Draw (X)</div>
+                <div>3.39</div>
+                <div class="text-xs mt-1" style="opacity:0.6">— stable</div>
+              </button>
+              <button class="odds-btn">
+                <div class="text-xs mb-2" style="opacity:0.8">Poland (2)</div>
+                <div>3.82</div>
+                <div class="text-xs mt-1 text-brand">↑ rising</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Handicap -->
+          <div class="mb-12">
+            <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">Handicap</div>
+            <div class="grid-2 gap-8">
+              <button class="odds-btn" style="background:rgba(255,255,255,0.05)">
+                <div class="text-xs mb-2" style="opacity:0.8">Sweden -0.50</div>
+                <div>2.11</div>
+              </button>
+              <button class="odds-btn" style="background:rgba(255,255,255,0.05)">
+                <div class="text-xs mb-2" style="opacity:0.8">Poland +0.50</div>
+                <div>1.82</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Total Goals -->
+          <div>
+            <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">Total Goals</div>
+            <div class="grid-2 gap-8">
+              <button class="odds-btn" style="background:rgba(255,255,255,0.05)">
+                <div class="text-xs mb-2" style="opacity:0.8">Over 2.5</div>
+                <div>2.04 <span style="color:#F87171;font-size:11px">↓</span></div>
+              </button>
+              <button class="odds-btn" style="background:rgba(255,255,255,0.05)">
+                <div class="text-xs mb-2" style="opacity:0.8">Under 2.5</div>
+                <div>1.85</div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bet Slip -->
+    <div style="width:280px;flex-shrink:0">
+      <div class="bet-slip">
+        <div class="text-sm font-bold mb-12">🎯 My Bet Slip</div>
+
+        <!-- Selected bet -->
+        <div class="p-12 mb-12" style="background:var(--brand-light);border:1.5px solid rgba(255,90,0,0.25);border-radius:var(--radius-md)">
+          <div class="text-xs text-muted mb-4">Sweden vs Poland</div>
+          <div class="font-bold">Sweden (1X2)</div>
+          <div class="text-xl font-bold text-brand mt-4">@ 2.10</div>
+        </div>
+
+        <!-- Stake -->
+        <label class="form-label">Stake (Units) <span style="color:var(--brand);cursor:pointer">ⓘ</span></label>
+        <input type="number" class="form-input mb-8" value="2" style="font-size:16px;font-weight:700;padding:10px 14px" />
+        <div class="stake-quick-btns mb-12">
+          <button class="stake-btn">0.5U</button>
+          <button class="stake-btn active">1U</button>
+          <button class="stake-btn">2U</button>
+          <button class="stake-btn">5U</button>
+          <button class="stake-btn">10U</button>
+        </div>
+
+        <!-- Analysis -->
+        <label class="form-label">Analysis (Optional)</label>
+        <textarea class="form-input mb-12" style="font-size:12px;min-height:72px">Sweden have strong home form and Poland are missing key midfielders. Value at 2.10 with positive CLV expected.</textarea>
+
+        <!-- Visibility -->
+        <label class="form-label">Tip Visibility <span class="badge badge-gold" style="margin-left:4px;font-size:10px">Key Feature</span></label>
+        <div class="visibility-toggle">
+          <button class="vis-btn">🆓 Free Tip<br/><span style="font-size:10px;font-weight:400">Visible to all</span></button>
+          <button class="vis-btn active-premium">🔒 Premium Tip<br/><span style="font-size:10px;font-weight:400">Subscribers only</span></button>
+        </div>
+
+        <!-- Summary -->
+        <div class="p-12 mb-12" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
+          <div class="fee-row" style="font-size:12px"><span class="text-muted">Stake</span><span>2 Units</span></div>
+          <div class="fee-row" style="font-size:12px"><span class="text-muted">Odds</span><span>2.10</span></div>
+          <div class="fee-row" style="font-size:12px"><span class="text-muted">Gross Return</span><span>4.20 Units</span></div>
+          <div class="fee-row" style="font-size:12px"><span class="text-muted">Execution Fee (0.3%)</span><span class="text-red">-0.006U</span></div>
+          <div class="fee-row total" style="font-size:13px"><span>Net Profit (if won)</span><span class="text-green">+2.19 Units</span></div>
+        </div>
+
+        <button class="btn-primary w-full" style="padding:14px;font-size:14px;border-radius:var(--radius-md)">
+          🚀 Publish Premium Tip
+        </button>
+        <div class="text-center text-xs text-muted mt-6">Subscribers will be notified instantly</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SCREEN 5 — ANALYST DASHBOARD
+════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="s5">
+  <div class="flex gap-20">
+
+    <!-- Dashboard Sidebar -->
+    <div class="dash-sidebar">
+      <div class="card p-12">
+        <a class="dash-nav-item" href="#"><span class="dash-nav-icon">👤</span> My Account</a>
+        <a class="dash-nav-item active" href="#"><span class="dash-nav-icon">📈</span> Statistics</a>
+        <a class="dash-nav-item" href="#"><span class="dash-nav-icon">🏦</span> Bankrolls</a>
+        <a class="dash-nav-item" href="#"><span class="dash-nav-icon">🤖</span> Auto Betting</a>
+        <a class="dash-nav-item" href="#"><span class="dash-nav-icon">⭐</span> Analysts I Follow</a>
+        <a class="dash-nav-item" href="#"><span class="dash-nav-icon">📅</span> Opening Odds</a>
+        <a class="dash-nav-item" href="#"><span class="dash-nav-icon">🚀</span> Premium</a>
+        <a class="dash-nav-item" href="#"><span class="dash-nav-icon">💳</span> Subscriptions &amp; Payments</a>
+        <div class="divider"></div>
+        <a class="dash-nav-item" href="#" onclick="showScreen('s4', document.querySelectorAll('.screen-tab')[3])"><span class="dash-nav-icon">✏️</span> Post New Tip</a>
+      </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="grow">
+      <div class="flex items-center justify-between mb-16">
+        <div>
+          <div class="text-xl font-bold">My Statistics 📋</div>
+          <a href="#" class="text-xs text-brand" style="text-decoration:none">Access my public profile →</a>
+        </div>
+        <div class="flex items-center gap-10">
+          <select class="form-input" style="width:auto;padding:8px 12px;font-size:13px">
+            <option>Bankroll: Public</option>
+            <option>Bankroll: Private</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Revenue + Status Cards -->
+      <div class="grid-3 mb-16">
+        <div class="revenue-card">
+          <div class="label">💰 Revenue This Month</div>
+          <div class="value">$234.65</div>
+          <div class="sub">5 active subscribers × $34.95 × 67%</div>
+        </div>
+        <div class="card p-20">
+          <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">👥 Active Subscribers</div>
+          <div class="text-2xl font-bold">5</div>
+          <div class="text-xs text-green mt-4">+2 this month</div>
+          <div class="divider"></div>
+          <div class="text-xs text-muted">Subscription price: <span class="font-bold text-black">$34.95/mo</span></div>
+        </div>
+        <div class="card p-20" style="border:1.5px solid var(--brand)">
+          <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">🏆 PRO Status</div>
+          <div class="badge badge-pro" style="font-size:13px;padding:6px 14px;margin-bottom:8px">PRO ACTIVE</div>
+          <div class="text-xs text-muted">ROI: 8.46% · Tier 3 pricing</div>
+          <div class="divider"></div>
+          <div class="text-xs text-muted">Next review: <span class="font-bold text-black">May 1, 2026</span></div>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid-3 mb-12">
+        <div class="stat-card"><div class="stat-label">🧮 Bets</div><div class="stat-value">1,669</div></div>
+        <div class="stat-card"><div class="stat-label">📈 Profit</div><div class="stat-value positive">+250.10</div></div>
+        <div class="stat-card" style="position:relative">
+          <div class="stat-label">BETTING SUMMARY</div>
+          <canvas id="donutChart2" width="120" height="120"></canvas>
+          <div class="absolute" style="top:50%;right:16px;transform:translateY(-50%);font-size:11px">
+            <div class="flex items-center gap-6 mb-4"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span>Won: 817</div>
+            <div class="flex items-center gap-6 mb-4"><span style="width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block"></span>Lost: 793</div>
+            <div class="flex items-center gap-6"><span style="width:8px;height:8px;border-radius:50%;background:var(--border);display:inline-block"></span>Refunded: 56</div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-3 mb-20">
+        <div class="stat-card"><div class="stat-label">🚀 Yield</div><div class="stat-value positive">+8.46%</div></div>
+        <div class="stat-card"><div class="stat-label">💰 AVG BM.</div><div class="stat-value">$4,537</div></div>
+        <div class="stat-card"><div class="stat-label">📊 CLV</div><div class="stat-value positive">+0.13%</div></div>
+      </div>
+
+      <!-- Equity Chart -->
+      <div class="card p-20 mb-16">
+        <div class="tab-bar mb-12">
+          <div class="tab-item active">Real Odds Summary</div>
+          <div class="tab-item">Opening Odds Summary</div>
+          <div class="tab-item">Closing Odds Summary</div>
+          <div class="tab-item">Flat Stakes (1U)</div>
+          <div class="tab-item">CLV Summary</div>
+        </div>
+        <canvas id="equityChart2" width="800" height="180"></canvas>
+      </div>
+
+      <!-- Recent Tips Table -->
+      <div class="card overflow-hidden">
+        <div class="flex items-center justify-between p-20" style="padding-bottom:0">
+          <div class="text-sm font-bold">Recent Tips</div>
+          <button class="btn-primary" style="font-size:12px;padding:8px 16px" onclick="showScreen('s4', document.querySelectorAll('.screen-tab')[3])">+ Post New Tip</button>
+        </div>
+        <table class="data-table mt-12">
+          <thead>
+            <tr><th>Date</th><th>Match</th><th>Pick</th><th>Odds</th><th>Stake</th><th>Type</th><th>Status</th><th>P&amp;L</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-muted">Mar 31</td>
+              <td>Sweden vs Poland</td>
+              <td>Sweden (1X2)</td>
+              <td>2.10</td>
+              <td>2U</td>
+              <td><span class="badge badge-pro" style="font-size:10px">PRO</span></td>
+              <td><span class="badge" style="background:rgba(245,158,11,0.1);color:#92400E;font-size:10px">Pending</span></td>
+              <td class="text-muted">—</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Mar 30</td>
+              <td>Arsenal vs Chelsea</td>
+              <td>Over 2.5 Goals</td>
+              <td>1.95</td>
+              <td>3U</td>
+              <td><span class="badge badge-pro" style="font-size:10px">PRO</span></td>
+              <td><span class="badge badge-free" style="font-size:10px">Won ✓</span></td>
+              <td class="positive">+2.85U</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Mar 29</td>
+              <td>Djokovic vs Alcaraz</td>
+              <td>Alcaraz ML</td>
+              <td>2.40</td>
+              <td>1U</td>
+              <td><span class="badge badge-free" style="font-size:10px">FREE</span></td>
+              <td><span class="badge" style="background:var(--red-light);color:var(--red);font-size:10px">Lost ✗</span></td>
+              <td class="negative">-1.00U</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Mar 28</td>
+              <td>Lakers vs Celtics</td>
+              <td>Lakers -3.5</td>
+              <td>1.90</td>
+              <td>2U</td>
+              <td><span class="badge badge-pro" style="font-size:10px">PRO</span></td>
+              <td><span class="badge badge-free" style="font-size:10px">Won ✓</span></td>
+              <td class="positive">+1.80U</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SCREEN 6 — TIPS FEED
+════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="s6">
+  <div class="flex gap-20">
+
+    <!-- Filter Sidebar -->
+    <div class="filter-sidebar">
+      <div class="card p-16">
+        <div class="filter-group">
+          <div class="filter-group-title">Tipsters</div>
+          <label class="filter-item"><input type="checkbox" checked /> All tipsters</label>
+          <label class="filter-item"><input type="checkbox" /> Only my subscriptions</label>
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-title">Sports</div>
+          <label class="filter-item"><input type="checkbox" checked /> All sports</label>
+          <label class="filter-item"><input type="checkbox" /> ⚽ Soccer</label>
+          <label class="filter-item"><input type="checkbox" /> 🏀 Basketball</label>
+          <label class="filter-item"><input type="checkbox" /> 🎾 Tennis</label>
+          <label class="filter-item"><input type="checkbox" /> ⚾ Baseball</label>
+          <button class="btn-secondary mt-8" style="font-size:11px;padding:5px 12px;width:100%">+ See more</button>
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-title">Analysis</div>
+          <label class="filter-item"><input type="checkbox" checked /> All</label>
+          <label class="filter-item"><input type="checkbox" /> With analysis only</label>
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-title">Bet Type</div>
+          <label class="filter-item"><input type="checkbox" checked /> All</label>
+          <label class="filter-item"><input type="checkbox" /> Only PRO</label>
+          <label class="filter-item"><input type="checkbox" /> Only Free</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feed Main -->
+    <div class="grow">
+      <!-- Featured Match -->
+      <div class="card mb-20 overflow-hidden">
+        <div class="match-header">
+          <div class="text-xs" style="color:rgba(255,255,255,0.6);margin-bottom:4px">FIFA — World Cup Qualifiers Europe</div>
+          <div class="flex items-center justify-between">
+            <div class="text-xl font-bold">Sweden vs Poland</div>
+            <div class="text-right">
+              <div class="text-xs" style="color:rgba(255,255,255,0.6)">Starts in 4 hours · April 1, 2:45 AM</div>
+            </div>
+          </div>
+        </div>
+        <div class="p-20">
+          <div class="flex items-center gap-16 mb-12">
+            <button class="btn-secondary" style="font-size:13px;padding:8px 16px">Sweden 2.10</button>
+            <button class="btn-secondary" style="font-size:13px;padding:8px 16px">Draw 3.39</button>
+            <button class="btn-secondary" style="font-size:13px;padding:8px 16px">Poland 3.82</button>
+          </div>
+          <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">Distribution of Tips</div>
+          <div class="dist-bar mb-8">
+            <div class="dist-seg" style="width:71%;background:var(--green)">71%</div>
+            <div class="dist-seg" style="width:14%;background:var(--dark-gray)">14%</div>
+            <div class="dist-seg" style="width:15%;background:#3B82F6">15%</div>
+          </div>
+          <div class="flex gap-16 text-xs">
+            <span><span style="color:var(--green)">●</span> Sweden 71%</span>
+            <span><span style="color:var(--dark-gray)">●</span> Draw 14%</span>
+            <span><span style="color:#3B82F6">●</span> Poland 14%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Latest Tips -->
+      <div class="section-header">
+        <div class="section-title">Latest Tips</div>
+        <div class="flex gap-8">
+          <div class="chip active">All</div>
+          <div class="chip">PRO</div>
+          <div class="chip">Free</div>
+        </div>
+      </div>
+      <div class="grid-3 gap-16 mb-16">
+
+        <!-- Tip 1 — Free visible -->
+        <div class="tip-card">
+          <div class="text-xs text-muted mb-8">Tuesday, March 31 · 10:40 PM</div>
+          <div class="flex items-center gap-10 mb-8">
+            <div class="tipster-avatar" style="width:36px;height:36px;font-size:13px">S</div>
+            <div>
+              <div class="font-bold text-sm">Sportbettingfund</div>
+              <div class="text-xs text-muted">⚽ WTA Charleston Open · Apr 1, 3:30 AM</div>
+            </div>
+          </div>
+          <div class="text-sm mb-8">Aleksandra Krunic / Shuai Zhang <strong>vs</strong> Aldila Sutjiadi / Janice Tjen</div>
+          <div class="tip-pick">Match - ML: Aldila Sutjiadi / Janice Tjen @ 2.84 (2U)</div>
+          <div class="flex items-center justify-between mt-8">
+            <span class="badge badge-free">FREE</span>
+            <span class="text-xs text-muted">❤</span>
+          </div>
+        </div>
+
+        <!-- Tip 2 — PRO locked -->
+        <div class="tip-card locked">
+          <div class="text-xs text-muted mb-8">Tuesday, March 31 · 10:39 PM</div>
+          <div class="flex items-center gap-10 mb-8">
+            <div class="tipster-avatar" style="width:36px;height:36px;font-size:13px">J</div>
+            <div>
+              <div class="font-bold text-sm">JAHF5</div>
+              <div class="text-xs text-muted">⚾ MLB · Apr 1, 7:07 AM</div>
+            </div>
+          </div>
+          <div class="text-sm mb-8">Toronto Blue Jays <strong>vs</strong> Colorado Rockies</div>
+          <div class="tip-pick locked-pick">🔒 Subscribe to see this tip</div>
+          <div class="flex items-center justify-between mt-8">
+            <span class="badge badge-pro">PRO</span>
+            <button class="btn-primary" style="font-size:11px;padding:5px 12px" onclick="showScreen('s3', document.querySelectorAll('.screen-tab')[2])">Subscribe</button>
+          </div>
+        </div>
+
+        <!-- Tip 3 — PRO subscriber only -->
+        <div class="tip-card">
+          <div class="text-xs text-muted mb-8">Tuesday, March 31 · 10:39 PM</div>
+          <div class="flex items-center gap-10 mb-8">
+            <div class="tipster-avatar" style="width:36px;height:36px;font-size:13px">S</div>
+            <div>
+              <div class="font-bold text-sm">Sportbettingfund <span class="badge badge-pro" style="font-size:10px">PRO</span></div>
+              <div class="text-xs text-muted">🏀 ABA - Adriatic League · Apr 1, 12:30 AM</div>
+            </div>
+          </div>
+          <div class="text-sm mb-8">KK FMP Beograd <strong>vs</strong> KK Zadar</div>
+          <div class="tip-pick locked-pick">🔒 PRO Subscribers only</div>
+          <div class="flex items-center justify-between mt-8">
+            <span class="badge badge-pro">PRO</span>
+            <span class="text-xs text-muted">❤</span>
+          </div>
+        </div>
+
+        <!-- Tip 4 — Free visible -->
+        <div class="tip-card">
+          <div class="text-xs text-muted mb-8">Tuesday, March 31 · 10:35 PM</div>
+          <div class="flex items-center gap-10 mb-8">
+            <div class="tipster-avatar" style="width:36px;height:36px;font-size:13px;background:rgba(139,92,246,0.1);color:#7C3AED">D</div>
+            <div>
+              <div class="font-bold text-sm">DarkYonder <span class="badge badge-pro" style="font-size:10px">PRO</span></div>
+              <div class="text-xs text-muted">⚽ Premier League · Apr 1, 7:45 PM</div>
+            </div>
+          </div>
+          <div class="text-sm mb-8">Arsenal <strong>vs</strong> Chelsea</div>
+          <div class="tip-pick">Game - HDP: Arsenal -0.5 @ 2.05 (1U)</div>
+          <div class="flex items-center justify-between mt-8">
+            <span class="badge badge-free">FREE</span>
+            <span class="text-xs text-muted">❤</span>
+          </div>
+        </div>
+
+        <!-- Tip 5 — PRO locked -->
+        <div class="tip-card locked">
+          <div class="text-xs text-muted mb-8">Tuesday, March 31 · 10:30 PM</div>
+          <div class="flex items-center gap-10 mb-8">
+            <div class="tipster-avatar" style="width:36px;height:36px;font-size:13px">A</div>
+            <div>
+              <div class="font-bold text-sm">AiTips <span class="badge badge-pro" style="font-size:10px">PRO</span></div>
+              <div class="text-xs text-muted">🎾 ATP Monte-Carlo · Apr 2, 2:00 PM</div>
+            </div>
+          </div>
+          <div class="text-sm mb-8">Novak Djokovic <strong>vs</strong> Carlos Alcaraz</div>
+          <div class="tip-pick locked-pick">🔒 Subscribe to see this tip</div>
+          <div class="flex items-center justify-between mt-8">
+            <span class="badge badge-pro">PRO</span>
+            <button class="btn-primary" style="font-size:11px;padding:5px 12px" onclick="showScreen('s3', document.querySelectorAll('.screen-tab')[2])">Subscribe</button>
+          </div>
+        </div>
+
+        <!-- Tip 6 — Free visible -->
+        <div class="tip-card">
+          <div class="text-xs text-muted mb-8">Tuesday, March 31 · 10:25 PM</div>
+          <div class="flex items-center gap-10 mb-8">
+            <div class="tipster-avatar" style="width:36px;height:36px;font-size:13px;background:rgba(16,185,129,0.1);color:#059669">T</div>
+            <div>
+              <div class="font-bold text-sm">TennisLove <span class="badge badge-pro" style="font-size:10px">PRO</span></div>
+              <div class="text-xs text-muted">🎾 WTA Stuttgart · Apr 2, 11:00 AM</div>
+            </div>
+          </div>
+          <div class="text-sm mb-8">Iga Swiatek <strong>vs</strong> Elena Rybakina</div>
+          <div class="tip-pick">Match - ML: Swiatek @ 1.65 (2U)</div>
+          <div class="flex items-center justify-between mt-8">
+            <span class="badge badge-free">FREE</span>
+            <span class="text-xs text-muted">❤</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <button class="btn-secondary">Load More Tips</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SCREEN 7 — ANALYST ONBOARDING
+════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="s7">
+  <div class="flex justify-center" style="padding:20px 0">
+    <div style="max-width:640px;width:100%">
+
+      <!-- Progress Steps -->
+      <div class="card p-24 mb-20">
+        <div class="text-xl font-bold mb-4">Become a Gainr Analyst</div>
+        <div class="text-sm text-muted mb-20">Share your edge. Earn when others follow your verified picks.</div>
+
+        <div class="flex items-center gap-0 mb-24" style="position:relative">
+          <div style="position:absolute;top:16px;left:0;right:0;height:2px;background:var(--border);z-index:0"></div>
+          <div style="position:absolute;top:16px;left:0;width:25%;height:2px;background:var(--brand);z-index:1"></div>
+          <!-- Step 1 -->
+          <div style="flex:1;text-align:center;position:relative;z-index:2">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 8px">1</div>
+            <div class="text-xs font-bold text-brand">Profile Setup</div>
+          </div>
+          <!-- Step 2 -->
+          <div style="flex:1;text-align:center;position:relative;z-index:2">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--mid-gray);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 8px">2</div>
+            <div class="text-xs text-muted">KYC Verification</div>
+          </div>
+          <!-- Step 3 -->
+          <div style="flex:1;text-align:center;position:relative;z-index:2">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--mid-gray);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 8px">3</div>
+            <div class="text-xs text-muted">Post Free Tips</div>
+          </div>
+          <!-- Step 4 -->
+          <div style="flex:1;text-align:center;position:relative;z-index:2">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--mid-gray);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 8px">4</div>
+            <div class="text-xs text-muted">PRO Qualification</div>
+          </div>
+          <!-- Step 5 -->
+          <div style="flex:1;text-align:center;position:relative;z-index:2">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--mid-gray);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 8px">5</div>
+            <div class="text-xs text-muted">Earn Revenue</div>
+          </div>
+        </div>
+
+        <!-- Step 1 Form -->
+        <div class="text-sm font-bold mb-16" style="color:var(--brand)">Step 1: Create Your Analyst Profile</div>
+        <div class="grid-2 gap-16 mb-16">
+          <div>
+            <label class="form-label">Display Name</label>
+            <input type="text" class="form-input" placeholder="e.g. AiTips, FootballPro" />
+          </div>
+          <div>
+            <label class="form-label">Primary Sport</label>
+            <select class="form-input">
+              <option>⚽ Football / Soccer</option>
+              <option>🎾 Tennis</option>
+              <option>🏀 Basketball</option>
+              <option>⚾ Baseball</option>
+              <option>🏈 US Football</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-16">
+          <label class="form-label">Bio / Strategy Description</label>
+          <textarea class="form-input" placeholder="Describe your betting strategy, specialisation, and edge..."></textarea>
+        </div>
+        <div class="mb-16">
+          <label class="form-label">Subscription Type</label>
+          <div class="grid-2 gap-12">
+            <div class="p-16 cursor-pointer" style="border:2px solid var(--brand);border-radius:var(--radius-md);background:var(--brand-light)">
+              <div class="font-bold mb-4 text-brand">PRO Analyst</div>
+              <div class="text-xs text-muted">Charge subscribers. Earn 67% of revenue. Requires 400+ bets &amp; 4%+ ROI.</div>
+            </div>
+            <div class="p-16 cursor-pointer" style="border:1.5px solid var(--border);border-radius:var(--radius-md)">
+              <div class="font-bold mb-4">Free Analyst</div>
+              <div class="text-xs text-muted">Share tips freely. Build reputation. Upgrade to PRO anytime.</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary w-full" style="padding:14px;font-size:15px;border-radius:var(--radius-md)">Continue to KYC →</button>
+      </div>
+
+      <!-- PRO Requirements Info -->
+      <div class="card p-24">
+        <div class="text-sm font-bold mb-16">PRO Analyst Requirements</div>
+        <div class="grid-2 gap-12">
+          <div class="p-16" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
+            <div style="font-size:24px;margin-bottom:8px">📊</div>
+            <div class="font-bold text-sm mb-4">400+ Verified Bets</div>
+            <div class="text-xs text-muted">Minimum bet history required for statistical significance</div>
+          </div>
+          <div class="p-16" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
+            <div style="font-size:24px;margin-bottom:8px">📈</div>
+            <div class="font-bold text-sm mb-4">4%+ ROI (Yield)</div>
+            <div class="text-xs text-muted">Sustained positive return on investment over the sample</div>
+          </div>
+          <div class="p-16" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
+            <div style="font-size:24px;margin-bottom:8px">✅</div>
+            <div class="font-bold text-sm mb-4">KYC Verified</div>
+            <div class="text-xs text-muted">Identity verification via zkMe privacy-preserving protocol</div>
+          </div>
+          <div class="p-16" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
+            <div style="font-size:24px;margin-bottom:8px">🔗</div>
+            <div class="font-bold text-sm mb-4">On-Chain Verified Stats</div>
+            <div class="text-xs text-muted">All bets hashed to Solana blockchain for tamper-proof records</div>
+          </div>
+        </div>
+
+        <!-- Revenue Tiers -->
+        <div class="divider"></div>
+        <div class="text-sm font-bold mb-12">Revenue Tiers (Auto-Calculated by ROI)</div>
+        <table class="data-table">
+          <thead>
+            <tr><th>Tier</th><th>ROI Range</th><th>Monthly Price</th><th>Analyst Earns (67%)</th><th>Single Tip</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-bronze">Tier 1</span></td>
+              <td>4% – 6%</td>
+              <td class="font-bold">$34.95/mo</td>
+              <td class="positive">$23.42/subscriber</td>
+              <td>$4.99</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-silver">Tier 2</span></td>
+              <td>6% – 8%</td>
+              <td class="font-bold">$44.95/mo</td>
+              <td class="positive">$30.12/subscriber</td>
+              <td>$6.99</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-gold">Tier 3</span></td>
+              <td>8%+</td>
+              <td class="font-bold">$59.95/mo</td>
+              <td class="positive">$40.17/subscriber</td>
+              <td>$9.99</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SCREEN 8 — AUTO-BETTING SETUP
+════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="s8">
+  <div class="flex justify-center" style="padding:20px 0">
+    <div style="max-width:700px;width:100%">
+      <div class="text-xl font-bold mb-4">Auto-Betting Setup</div>
+      <div class="text-sm text-muted mb-20">Automatically mirror an analyst's bets to your connected sportsbook. Powered by Gainr's ZK Stealth Execution engine.</div>
+
+      <!-- Analyst Selection -->
+      <div class="card p-24 mb-16">
+        <div class="text-sm font-bold mb-12">1. Select Analyst to Follow</div>
+        <div class="flex gap-12">
+          <div class="grow card p-16 cursor-pointer" style="border:2px solid var(--brand)">
+            <div class="flex items-center gap-10">
+              <div class="tipster-avatar">A</div>
+              <div>
+                <div class="flex items-center
+ gap-6">
+                      <span class="font-bold">AiTips</span>
+                      <span class="badge badge-pro">PRO</span>
+                    </div>
+                    <div class="text-xs text-muted">★ 4.9 · +8.46% Yield · 5 subscribers</div>
+                  </div>
+                </div>
+              </div>
+              <div class="grow card p-16 cursor-pointer">
+                <div class="flex items-center gap-10">
+                  <div class="tipster-avatar" style="background:rgba(139,92,246,0.1);color:#7C3AED">D</div>
+                  <div>
+                    <div class="flex items-center gap-6">
+                      <span class="font-bold">DarkYonder</span>
+                      <span class="badge badge-pro">PRO</span>
+                    </div>
+                    <div class="text-xs text-muted">★ 4.6 · +5.20% Yield · 10 subscribers</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sportsbook Connection -->
+          <div class="card p-24 mb-16">
+            <div class="text-sm font-bold mb-12">2. Connect Your Sportsbook</div>
+            <div class="grid-3 gap-12 mb-16">
+              <div class="p-16 cursor-pointer text-center" style="border:2px solid var(--brand);border-radius:var(--radius-md);background:var(--brand-light)">
+                <div style="font-size:24px;margin-bottom:6px">🎯</div>
+                <div class="font-bold text-sm text-brand">Pinnacle</div>
+                <div class="text-xs text-muted">Connected ✓</div>
+              </div>
+              <div class="p-16 cursor-pointer text-center" style="border:1.5px solid var(--border);border-radius:var(--radius-md)">
+                <div style="font-size:24px;margin-bottom:6px">⚡</div>
+                <div class="font-bold text-sm">Betfair</div>
+                <div class="text-xs text-muted">Click to connect</div>
+              </div>
+              <div class="p-16 cursor-pointer text-center" style="border:1.5px solid var(--border);border-radius:var(--radius-md)">
+                <div style="font-size:24px;margin-bottom:6px">🏆</div>
+                <div class="font-bold text-sm">Bet365</div>
+                <div class="text-xs text-muted">Click to connect</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Betting Parameters -->
+          <div class="card p-24 mb-16">
+            <div class="text-sm font-bold mb-12">3. Configure Betting Parameters</div>
+            <div class="grid-2 gap-16 mb-16">
+              <div>
+                <label class="form-label">Capital to Allocate (USDC)</label>
+                <input type="number" class="form-input" value="1000" />
+                <div class="text-xs text-muted mt-4">Max exposure from your wallet</div>
+              </div>
+              <div>
+                <label class="form-label">Stake per Bet (Units)</label>
+                <input type="number" class="form-input" value="2" />
+                <div class="text-xs text-muted mt-4">1U = 1% of allocated capital</div>
+              </div>
+              <div>
+                <label class="form-label">Max Odds</label>
+                <input type="number" class="form-input" value="5.00" step="0.1" />
+                <div class="text-xs text-muted mt-4">Skip bets above this price</div>
+              </div>
+              <div>
+                <label class="form-label">Min Odds</label>
+                <input type="number" class="form-input" value="1.50" step="0.1" />
+                <div class="text-xs text-muted mt-4">Skip bets below this price</div>
+              </div>
+            </div>
+            <div class="mb-16">
+              <label class="form-label">Sports Filter</label>
+              <div class="chip-filters">
+                <div class="chip active">All Sports</div>
+                <div class="chip">⚽ Football</div>
+                <div class="chip">🎾 Tennis</div>
+                <div class="chip">🏀 Basketball</div>
+              </div>
+            </div>
+            <div class="p-16 mb-16" style="background:var(--brand-light);border:1.5px solid rgba(255,90,0,0.2);border-radius:var(--radius-md)">
+              <div class="text-sm font-bold mb-8">⚡ ZK Stealth Execution</div>
+              <div class="text-xs text-muted mb-8">Your bets are executed via zero-knowledge proofs — preventing front-running and protecting your edge.</div>
+              <div class="flex items-center gap-8">
+                <div style="width:36px;height:20px;background:var(--brand);border-radius:var(--radius-pill);position:relative;cursor:pointer">
+                  <div style="width:16px;height:16px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"></div>
+                </div>
+                <span class="text-xs font-bold">ZK Stealth Enabled</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Summary -->
+          <div class="card p-24">
+            <div class="text-sm font-bold mb-12">4. Review &amp; Activate</div>
+            <div class="p-16 mb-16" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
+              <div class="fee-row"><span class="text-muted">Following analyst</span><span class="font-bold">AiTips (PRO)</span></div>
+              <div class="fee-row"><span class="text-muted">Sportsbook</span><span class="font-bold">Pinnacle</span></div>
+              <div class="fee-row"><span class="text-muted">Capital allocated</span><span class="font-bold">1,000 USDC</span></div>
+              <div class="fee-row"><span class="text-muted">Stake per bet</span><span class="font-bold">2U (20 USDC)</span></div>
+              <div class="fee-row"><span class="text-muted">Execution fee</span><span class="font-bold">0.3% per bet</span></div>
+              <div class="fee-row"><span class="text-muted">ZK Stealth</span><span class="font-bold text-brand">Enabled ✓</span></div>
+            </div>
+            <button class="btn-primary w-full" style="padding:14px;font-size:15px;border-radius:var(--radius-md)">
+              🤖 Activate Auto-Betting
+            </button>
+            <div class="text-center text-xs text-muted mt-8">You can pause or stop at any time from your dashboard</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT — Screen switching + Charts
+═══════════════════════════════════════════════════ -->
+<script>
+  // ── Screen switching ──
+  function showScreen(id, btn) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.screen-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if (btn) btn.classList.add('active');
+
+    const labels = {
+      s1: 'Screen 1 of 8 — Analyst Leaderboard (Investor Discovery)',
+      s2: 'Screen 2 of 8 — Analyst Public Profile',
+      s3: 'Screen 3 of 8 — Subscribe / Buy Tips Modal',
+      s4: 'Screen 4 of 8 — Post a Tip (Analyst View)',
+      s5: 'Screen 5 of 8 — Analyst Dashboard (My Statistics)',
+      s6: 'Screen 6 of 8 — Tips Feed (Investor View)',
+      s7: 'Screen 7 of 8 — Analyst Onboarding & PRO Qualification',
+      s8: 'Screen 8 of 8 — Auto-Betting Setup'
+    };
+    document.getElementById('screen-label').textContent = labels[id] || '';
+    window.scrollTo(0, 0);
+    setTimeout(initCharts, 100);
+  }
+
+  // ── Subscribe plan toggle ──
+  function selectPlan(plan) {
+    document.getElementById('tog-monthly').classList.toggle('active', plan === 'monthly');
+    document.getElementById('tog-single').classList.toggle('active', plan === 'single');
+  }
+
+  // ── Charts ──
+  let chartsInit = {};
+
+  function sparkline(id, data, color) {
+    const canvas = document.getElementById(id);
+    if (!canvas || chartsInit[id]) return;
+    chartsInit[id] = true;
+    new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: data.map((_, i) => i),
+        datasets: [{ data, borderColor: color, borderWidth: 2, pointRadius: 0, tension: 0.4, fill: false }]
+      },
+      options: {
+        animation: false,
+        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+        scales: { x: { display: false }, y: { display: false } },
+        responsive: false
+      }
+    });
+  }
+
+  function initCharts() {
+    // Sparklines — leaderboard hero
+    sparkline('spark1', [10,18,22,19,28,32,38,35,42,48,52,58,62,68,72,78,82,88,92,98], '#1F7A39');
+    sparkline('spark2', [5,12,8,15,20,18,25,22,30,28,35,32,38,42,48,52,55,60,65,70], '#1F7A39');
+    sparkline('spark3', [2,5,8,6,10,12,15,13,18,20,22,25,28,30,32,35,38,40,42,45], '#1F7A39');
+    sparkline('spark4', [8,12,10,15,18,22,20,25,28,32,30,35,38,42,40,45,48,52,50,55], '#1F7A39');
+
+    // Sparklines — table
+    sparkline('tbl_spark1', [10,18,22,19,28,32,38,35,42,48,52,58,62,68,72,78,82,88,92,98], '#1F7A39');
+    sparkline('tbl_spark2', [5,8,6,10,12,15,13,18,20,22,25,28,30,32,35,38,40,42,45,48], '#1F7A39');
+    sparkline('tbl_spark3', [8,12,10,15,18,22,20,25,28,32,30,35,38,42,40,45,48,52,50,55], '#1F7A39');
+    sparkline('tbl_spark4', [2,5,8,6,10,12,15,13,18,20,22,25,28,30,32,35,38,40,42,45], '#1F7A39');
+    sparkline('tbl_spark5', [3,6,4,8,10,12,10,14,16,18,20,22,24,26,28,30,32,34,36,38], '#1F7A39');
+
+    // Donut chart — profile
+    if (!chartsInit['donutChart']) {
+      chartsInit['donutChart'] = true;
+      new Chart(document.getElementById('donutChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Won', 'Half Won', 'Refunded', 'Lost', 'Half Lost'],
+          datasets: [{
+            data: [817, 2, 56, 793, 1],
+            backgroundColor: ['#1F7A39', '#86EFAC', '#E2E4EA', '#D93025', '#FCA5A5'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          animation: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true }
+          },
+          cutout: '70%'
+        }
+      });
+    }
+
+    // Donut chart — dashboard
+    if (!chartsInit['donutChart2']) {
+      chartsInit['donutChart2'] = true;
+      new Chart(document.getElementById('donutChart2'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Won', 'Refunded', 'Lost'],
+          datasets: [{
+            data: [817, 56, 793],
+            backgroundColor: ['#1F7A39', '#E2E4EA', '#D93025'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          animation: false,
+          plugins: { legend: { display: false } },
+          cutout: '65%'
+        }
+      });
+    }
+
+    // Equity curve — profile
+    if (!chartsInit['equityChart']) {
+      chartsInit['equityChart'] = true;
+      const pts = [];
+      let v = 0;
+      for (let i = 0; i <= 100; i++) {
+        v += (Math.random() - 0.42) * 6;
+        pts.push(Math.max(0, v + i * 0.8));
+      }
+      new Chart(document.getElementById('equityChart'), {
+        type: 'line',
+        data: {
+          labels: pts.map((_, i) => i * 16),
+          datasets: [{
+            data: pts,
+            borderColor: '#1F7A39',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.3,
+            fill: { target: 'origin', above: 'rgba(31,122,57,0.08)' }
+          }]
+        },
+        options: {
+          animation: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { color: 'rgba(226,228,234,0.5)' }, ticks: { font: { size: 10 }, color: '#7A7F8C', maxTicksLimit: 8 } },
+            y: { grid: { color: 'rgba(226,228,234,0.5)' }, ticks: { font: { size: 10 }, color: '#7A7F8C' } }
+          }
+        }
+      });
+    }
+
+    // Equity curve — dashboard
+    if (!chartsInit['equityChart2']) {
+      chartsInit['equityChart2'] = true;
+      const pts2 = [];
+      let v2 = 0;
+      for (let i = 0; i <= 120; i++) {
+        v2 += (Math.random() - 0.41) * 5;
+        pts2.push(Math.max(0, v2 + i * 0.75));
+      }
+      new Chart(document.getElementById('equityChart2'), {
+        type: 'line',
+        data: {
+          labels: pts2.map((_, i) => i * 14),
+          datasets: [{
+            data: pts2,
+            borderColor: '#FF5A00',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.3,
+            fill: { target: 'origin', above: 'rgba(255,90,0,0.06)' }
+          }]
+        },
+        options: {
+          animation: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { color: 'rgba(226,228,234,0.5)' }, ticks: { font: { size: 10 }, color: '#7A7F8C', maxTicksLimit: 10 } },
+            y: { grid: { color: 'rgba(226,228,234,0.5)' }, ticks: { font: { size: 10 }, color: '#7A7F8C' } }
+          }
+        }
+      });
+    }
+  }
+
+  // Init on load
+  window.addEventListener('load', initCharts);
+</script>
+</body>
+</html>
