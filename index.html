@@ -1954,10 +1954,10 @@
             </div>
           </div>
           <div class="text-sm mb-8">Aleksandra Krunic / Shuai Zhang <strong>vs</strong> Aldila Sutjiadi / Janice Tjen</div>
-          <div class="tip-pick">Match - ML: Aldila Sutjiadi / Janice Tjen @ 2.84 (2U)</div>
+          <div class="tip-pick locked-pick">🔒 Subscribe to Sportbettingfund to see this pick</div>
           <div class="flex items-center justify-between mt-8">
             <span class="badge badge-free">FREE</span>
-            <span class="text-xs text-muted">❤</span>
+            <button class="btn-primary" style="font-size:11px;padding:5px 12px" onclick="showScreen('s3', document.querySelectorAll('.screen-tab')[2])">Follow Free</button>
           </div>
         </div>
 
@@ -2008,10 +2008,10 @@
             </div>
           </div>
           <div class="text-sm mb-8">Arsenal <strong>vs</strong> Chelsea</div>
-          <div class="tip-pick">Game - HDP: Arsenal -0.5 @ 2.05 (1U)</div>
+          <div class="tip-pick locked-pick">🔒 Subscribe to DarkYonder to see this pick</div>
           <div class="flex items-center justify-between mt-8">
             <span class="badge badge-free">FREE</span>
-            <span class="text-xs text-muted">❤</span>
+            <button class="btn-primary" style="font-size:11px;padding:5px 12px" onclick="showScreen('s3', document.querySelectorAll('.screen-tab')[2])">Follow Free</button>
           </div>
         </div>
 
@@ -2044,10 +2044,10 @@
             </div>
           </div>
           <div class="text-sm mb-8">Iga Swiatek <strong>vs</strong> Elena Rybakina</div>
-          <div class="tip-pick">Match - ML: Swiatek @ 1.65 (2U)</div>
+          <div class="tip-pick locked-pick">🔒 Subscribe to TennisLove to see this pick</div>
           <div class="flex items-center justify-between mt-8">
             <span class="badge badge-free">FREE</span>
-            <span class="text-xs text-muted">❤</span>
+            <button class="btn-primary" style="font-size:11px;padding:5px 12px" onclick="showScreen('s3', document.querySelectorAll('.screen-tab')[2])">Follow Free</button>
           </div>
         </div>
       </div>
@@ -2333,60 +2333,58 @@
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════
-     SCREEN 9 — MARKETS (Kalshi-style sports prediction markets)
+     SCREEN 9 — MARKETS (SPORTS PREDICTION MARKETS)
 ════════════════════════════════════════════════════════════════ -->
 <div class="screen" id="s9">
-  <div style="display:flex;gap:0;min-height:calc(100vh - 160px)">
+  <div style="display:flex;gap:0;min-height:calc(100vh - 120px)">
 
-    <!-- LEFT SIDEBAR: Sport categories -->
-    <div style="width:200px;flex-shrink:0;background:var(--card-bg);border-right:1px solid var(--border);padding:16px 12px;position:sticky;top:100px;height:fit-content">
-      <div style="font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:10px">Sports</div>
-      <div style="display:flex;flex-direction:column;gap:2px">
-        <div onclick="filterMarket(this,'all')" class="mkt-cat active" data-cat="all">⚽ All Sports <span class="mkt-count">1,670</span></div>
-        <div onclick="filterMarket(this,'soccer')" class="mkt-cat" data-cat="soccer">⚽ Soccer <span class="mkt-count">367</span></div>
-        <div onclick="filterMarket(this,'tennis')" class="mkt-cat" data-cat="tennis">🎾 Tennis <span class="mkt-count">155</span></div>
-        <div onclick="filterMarket(this,'basketball')" class="mkt-cat" data-cat="basketball">🏀 Basketball <span class="mkt-count">224</span></div>
-        <div onclick="filterMarket(this,'baseball')" class="mkt-cat" data-cat="baseball">⚾ Baseball <span class="mkt-count">236</span></div>
-        <div onclick="filterMarket(this,'football')" class="mkt-cat" data-cat="football">🏈 US Football <span class="mkt-count">133</span></div>
-        <div onclick="filterMarket(this,'golf')" class="mkt-cat" data-cat="golf">⛳ Golf <span class="mkt-count">29</span></div>
-        <div onclick="filterMarket(this,'mma')" class="mkt-cat" data-cat="mma">🥊 MMA <span class="mkt-count">21</span></div>
-        <div onclick="filterMarket(this,'cricket')" class="mkt-cat" data-cat="cricket">🏏 Cricket <span class="mkt-count">6</span></div>
-        <div onclick="filterMarket(this,'esports')" class="mkt-cat" data-cat="esports">🎮 Esports <span class="mkt-count">353</span></div>
-        <div onclick="filterMarket(this,'hockey')" class="mkt-cat" data-cat="hockey">🏒 Hockey <span class="mkt-count">88</span></div>
-        <div onclick="filterMarket(this,'motorsport')" class="mkt-cat" data-cat="motorsport">🏎️ Motorsport <span class="mkt-count">13</span></div>
+    <!-- LEFT SIDEBAR: Sport Categories -->
+    <div style="width:200px;flex-shrink:0;border-right:1px solid var(--border);padding:16px 12px;background:#fafafa">
+      <div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">Sports</div>
+      <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:20px">
+        <div class="mkt-sport-item active" onclick="filterMarkets('all')">⚽ All Sports <span class="mkt-count">1,670</span></div>
+        <div class="mkt-sport-item" onclick="filterMarkets('soccer')">⚽ Soccer <span class="mkt-count">367</span></div>
+        <div class="mkt-sport-item" onclick="filterMarkets('tennis')">🎾 Tennis <span class="mkt-count">155</span></div>
+        <div class="mkt-sport-item" onclick="filterMarkets('basketball')">🏀 Basketball <span class="mkt-count">224</span></div>
+        <div class="mkt-sport-item" onclick="filterMarkets('baseball')">⚾ Baseball <span class="mkt-count">236</span></div>
+        <div class="mkt-sport-item" onclick="filterMarkets('football')">🏈 US Football <span class="mkt-count">133</span></div>
+        <div class="mkt-sport-item" onclick="filterMarkets('golf')">⛳ Golf <span class="mkt-count">29</span></div>
+        <div class="mkt-sport-item" onclick="filterMarkets('mma')">🥊 MMA <span class="mkt-count">21</span></div>
+        <div class="mkt-sport-item" onclick="filterMarkets('cricket')">🏏 Cricket <span class="mkt-count">6</span></div>
+        <div class="mkt-sport-item" onclick="filterMarkets('esports')">🎮 Esports <span class="mkt-count">353</span></div>
+        <div class="mkt-sport-item" onclick="filterMarkets('hockey')">🏒 Hockey <span class="mkt-count">88</span></div>
+        <div class="mkt-sport-item" onclick="filterMarkets('motorsport')">🏎️ Motorsport <span class="mkt-count">13</span></div>
       </div>
-
-      <div style="font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.07em;text-transform:uppercase;margin:18px 0 10px">Market Type</div>
-      <div style="display:flex;flex-direction:column;gap:2px">
-        <div onclick="filterType(this,'games')" class="mkt-type active" data-type="games">🎯 Games <span class="mkt-count">856</span></div>
-        <div onclick="filterType(this,'props')" class="mkt-type" data-type="props">📊 Props</div>
-        <div onclick="filterType(this,'futures')" class="mkt-type" data-type="futures">🔮 Futures <span class="mkt-count">183</span></div>
-        <div onclick="filterType(this,'live')" class="mkt-type" data-type="live">🔴 Live Now <span class="mkt-count">44</span></div>
+      <div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">Market Type</div>
+      <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:20px">
+        <div class="mkt-sport-item active">🎯 Games <span class="mkt-count">856</span></div>
+        <div class="mkt-sport-item">📊 Props</div>
+        <div class="mkt-sport-item">🔮 Futures <span class="mkt-count">183</span></div>
+        <div class="mkt-sport-item">🏆 Tournament Props <span class="mkt-count">6</span></div>
+        <div class="mkt-sport-item">🔴 Live Now <span class="mkt-count">44</span></div>
       </div>
-
-      <div style="font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.07em;text-transform:uppercase;margin:18px 0 10px">Analyst Tips</div>
+      <div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">Analyst Tips</div>
       <div style="display:flex;flex-direction:column;gap:2px">
-        <div class="mkt-cat active">🔍 All Markets</div>
-        <div class="mkt-cat">💡 With Analyst Tips</div>
-        <div class="mkt-cat">🔒 PRO Tips Only</div>
+        <div class="mkt-sport-item active">All markets</div>
+        <div class="mkt-sport-item">💡 With tips only</div>
+        <div class="mkt-sport-item">🔒 PRO tips only</div>
       </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div style="flex:1;padding:20px 20px 20px 20px;min-width:0">
-
-      <!-- Sub-filter pills -->
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-        <div class="chip active">🎯 Games (856)</div>
-        <div class="chip">📊 Props</div>
-        <div class="chip">🔮 Futures (183)</div>
-        <div class="chip">🏆 Tournament Props (6)</div>
-        <div class="chip">🥇 Awards (46)</div>
-        <div class="chip">📅 Divisions (16)</div>
-        <div class="chip">🎓 Draft (71)</div>
-        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+    <!-- MAIN CONTENT: Market Cards -->
+    <div style="flex:1;padding:16px 20px;overflow-y:auto" id="mkt-main">
+      <!-- Sub-type filter pills -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center">
+        <div class="mkt-pill active">🎯 Games (856)</div>
+        <div class="mkt-pill">📊 Props</div>
+        <div class="mkt-pill">🔮 Futures (183)</div>
+        <div class="mkt-pill">🏆 Tournament Props (6)</div>
+        <div class="mkt-pill">🥇 Awards (46)</div>
+        <div class="mkt-pill">🏅 Divisions (16)</div>
+        <div class="mkt-pill">📋 Draft (71)</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
           <span style="font-size:12px;color:var(--mid-gray)">Sort:</span>
-          <select style="font-family:var(--font);font-size:12px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:5px 8px;background:var(--white);color:var(--black);cursor:pointer">
+          <select style="font-size:12px;padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff">
             <option>Most Volume</option>
             <option>Starts Soon</option>
             <option>Most Tips</option>
@@ -2395,294 +2393,270 @@
         </div>
       </div>
 
-      <!-- LIVE section header -->
+      <!-- Live Markets header -->
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-        <span style="width:8px;height:8px;background:#D93025;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite"></span>
-        <span style="font-size:13px;font-weight:700;color:var(--black)">Live Markets</span>
-        <span style="font-size:11px;font-weight:600;color:var(--white);background:#D93025;border-radius:var(--radius-pill);padding:2px 8px">44 LIVE</span>
+        <div style="width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse 1.5s infinite"></div>
+        <span style="font-size:13px;font-weight:700">Live Markets</span>
+        <span style="background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:var(--radius-pill)">44 LIVE</span>
       </div>
 
-      <!-- Market Cards Grid -->
-      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px" id="market-cards">
-
-        <!-- Card 1: Soccer LIVE -->
-        <div class="mkt-card" data-sport="soccer">
-          <div class="mkt-card-header">
-            <span class="mkt-sport-badge" style="background:rgba(31,122,57,0.12);color:#1F7A39">⚽ SOCCER</span>
-            <span class="mkt-league">FIFA World Cup Qualifiers Europe</span>
-            <span class="mkt-live-badge">🔴 LIVE · 1st - 12'</span>
-            <span style="margin-left:auto;font-size:11px;color:var(--mid-gray)">$2,645,544 vol</span>
+      <!-- Market Card: Soccer -->
+      <div class="mkt-card" data-sport="soccer">
+        <div class="mkt-card-header">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="mkt-sport-badge soccer">⚽ SOCCER</span>
+            <span style="font-size:12px;color:var(--mid-gray)">FIFA World Cup Qualifiers Europe</span>
+            <span class="mkt-live-badge">🔴 LIVE · 1st · 12'</span>
           </div>
-          <div class="mkt-card-title">Sweden vs Poland</div>
-          <div class="mkt-card-body">
-            <div class="mkt-team-row">
-              <div class="mkt-team-info">
-                <span class="mkt-team-flag">🇸🇪</span>
-                <span class="mkt-team-name">Sweden</span>
-                <span class="mkt-score">0</span>
-              </div>
-              <div class="mkt-odds-group">
-                <button class="mkt-odds-btn" onclick="selectOdds(this,'Sweden Win','2.10')"><span class="mkt-prob-pct">46%</span><span class="mkt-odds-val">2.10</span></button>
-              </div>
-              <div class="mkt-prob-bar-wrap"><div class="mkt-prob-bar" style="width:46%;background:var(--green)"></div></div>
+          <div style="font-size:12px;color:var(--mid-gray)">$2,645,544 vol</div>
+        </div>
+        <div class="mkt-card-title">Sweden vs Poland</div>
+        <div class="mkt-card-body">
+          <div class="mkt-outcome">
+            <div class="mkt-team">
+              <img src="https://flagcdn.com/16x12/se.png" alt="SE" style="border-radius:2px"> Sweden
             </div>
-            <div class="mkt-team-row">
-              <div class="mkt-team-info">
-                <span class="mkt-team-flag">🇵🇱</span>
-                <span class="mkt-team-name">Poland</span>
-                <span class="mkt-score">0</span>
-              </div>
-              <div class="mkt-odds-group">
-                <button class="mkt-odds-btn" onclick="selectOdds(this,'Poland Win','3.82')"><span class="mkt-prob-pct">25%</span><span class="mkt-odds-val">3.82</span></button>
-              </div>
-              <div class="mkt-prob-bar-wrap"><div class="mkt-prob-bar" style="width:25%;background:var(--red)"></div></div>
-            </div>
-            <div class="mkt-team-row">
-              <div class="mkt-team-info">
-                <span style="width:24px"></span>
-                <span class="mkt-team-name" style="color:var(--mid-gray)">Draw</span>
-              </div>
-              <div class="mkt-odds-group">
-                <button class="mkt-odds-btn" onclick="selectOdds(this,'Draw','3.39')"><span class="mkt-prob-pct">29%</span><span class="mkt-odds-val">3.39</span></button>
-              </div>
-              <div class="mkt-prob-bar-wrap"><div class="mkt-prob-bar" style="width:29%;background:var(--mid-gray)"></div></div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">46%</div>
+              <div class="mkt-odds-display">2.10</div>
             </div>
           </div>
-          <div class="mkt-card-footer">
-            <div class="mkt-analyst-tip">💡 <strong>5 analysts</strong> tipped Sweden Win · <span style="color:var(--brand)">View Tips →</span></div>
-            <a class="mkt-markets-link">3 markets ›</a>
+          <div class="mkt-outcome">
+            <div class="mkt-team">Draw</div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">28%</div>
+              <div class="mkt-odds-display">3.39</div>
+            </div>
+          </div>
+          <div class="mkt-outcome">
+            <div class="mkt-team">
+              <img src="https://flagcdn.com/16x12/pl.png" alt="PL" style="border-radius:2px"> Poland
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">25%</div>
+              <div class="mkt-odds-display">3.82</div>
+            </div>
           </div>
         </div>
+        <div class="mkt-card-footer">
+          <div class="mkt-tip-badge">💡 <strong>5 analysts</strong> have tips on this match · <span style="color:var(--brand);cursor:pointer" onclick="showScreen('s2', document.querySelectorAll('.screen-tab')[1])">Subscribe to view</span></div>
+          <a style="font-size:12px;color:var(--brand);text-decoration:none" href="#">3 markets ›</a>
+        </div>
+      </div>
 
-        <!-- Card 2: Tennis LIVE -->
-        <div class="mkt-card" data-sport="tennis">
-          <div class="mkt-card-header">
-            <span class="mkt-sport-badge" style="background:rgba(234,179,8,0.12);color:#B45309">🎾 TENNIS</span>
-            <span class="mkt-league">ATP Marrakech</span>
+      <!-- Market Card: Tennis -->
+      <div class="mkt-card" data-sport="tennis">
+        <div class="mkt-card-header">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="mkt-sport-badge tennis">🎾 TENNIS</span>
+            <span style="font-size:12px;color:var(--mid-gray)">ATP Marrakech</span>
             <span class="mkt-live-badge">🔴 LIVE · Set 2</span>
-            <span style="margin-left:auto;font-size:11px;color:var(--mid-gray)">$1,095,151 vol</span>
           </div>
-          <div class="mkt-card-title">Berrettini vs Buse</div>
-          <div class="mkt-card-body">
-            <div class="mkt-team-row">
-              <div class="mkt-team-info">
-                <div class="mkt-player-avatar" style="background:rgba(255,90,0,0.1);color:var(--brand)">B</div>
-                <span class="mkt-team-name">Matteo Berrettini</span>
-                <span class="mkt-score">1 - 0</span>
-              </div>
-              <div class="mkt-odds-group">
-                <button class="mkt-odds-btn" onclick="selectOdds(this,'Berrettini Win','1.52')"><span class="mkt-prob-pct">66%</span><span class="mkt-odds-val">1.52</span></button>
-              </div>
-              <div class="mkt-prob-bar-wrap"><div class="mkt-prob-bar" style="width:66%;background:var(--green)"></div></div>
+          <div style="font-size:12px;color:var(--mid-gray)">$1,095,151 vol</div>
+        </div>
+        <div class="mkt-card-title">Berrettini vs Buse</div>
+        <div class="mkt-card-body">
+          <div class="mkt-outcome">
+            <div class="mkt-team">
+              <span style="background:#1a56db;color:#fff;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px">B</span>
+              Matteo Berrettini <span style="font-size:11px;color:var(--mid-gray)">1 - 0</span>
             </div>
-            <div class="mkt-team-row">
-              <div class="mkt-team-info">
-                <div class="mkt-player-avatar" style="background:rgba(100,116,139,0.1);color:var(--gray)">B</div>
-                <span class="mkt-team-name">Ignacio Buse</span>
-                <span class="mkt-score">0 - 1</span>
-              </div>
-              <div class="mkt-odds-group">
-                <button class="mkt-odds-btn" onclick="selectOdds(this,'Buse Win','2.62')"><span class="mkt-prob-pct">34%</span><span class="mkt-odds-val">2.62</span></button>
-              </div>
-              <div class="mkt-prob-bar-wrap"><div class="mkt-prob-bar" style="width:34%;background:var(--red)"></div></div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">66%</div>
+              <div class="mkt-odds-display">1.52</div>
             </div>
           </div>
-          <div class="mkt-card-footer">
-            <div class="mkt-analyst-tip">💡 <strong>2 analysts</strong> tipped Berrettini · <span style="color:var(--brand)">View Tips →</span></div>
-            <a class="mkt-markets-link">2 markets ›</a>
+          <div class="mkt-outcome">
+            <div class="mkt-team">
+              <span style="background:#6b7280;color:#fff;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px">8</span>
+              Ignacio Buse <span style="font-size:11px;color:var(--mid-gray)">0 - 1</span>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">34%</div>
+              <div class="mkt-odds-display">2.62</div>
+            </div>
           </div>
         </div>
-
-        <!-- Card 3: Basketball -->
-        <div class="mkt-card" data-sport="basketball">
-          <div class="mkt-card-header">
-            <span class="mkt-sport-badge" style="background:rgba(234,88,12,0.12);color:#C2410C">🏀 NBA</span>
-            <span class="mkt-league">NBA Regular Season</span>
-            <span style="font-size:11px;color:var(--mid-gray)">Apr 1 · 7:30 PM</span>
-            <span style="margin-left:auto;font-size:11px;color:var(--mid-gray)">$424,881 vol</span>
-          </div>
-          <div class="mkt-card-title">Boston Celtics vs Miami Heat</div>
-          <div class="mkt-card-body">
-            <div class="mkt-team-row">
-              <div class="mkt-team-info">
-                <span class="mkt-team-flag">🍀</span>
-                <span class="mkt-team-name">Boston Celtics</span>
-              </div>
-              <div class="mkt-odds-group">
-                <button class="mkt-odds-btn" onclick="selectOdds(this,'Celtics Win','1.65')"><span class="mkt-prob-pct">61%</span><span class="mkt-odds-val">1.65</span></button>
-              </div>
-              <div class="mkt-prob-bar-wrap"><div class="mkt-prob-bar" style="width:61%;background:var(--green)"></div></div>
-            </div>
-            <div class="mkt-team-row">
-              <div class="mkt-team-info">
-                <span class="mkt-team-flag">🔥</span>
-                <span class="mkt-team-name">Miami Heat</span>
-              </div>
-              <div class="mkt-odds-group">
-                <button class="mkt-odds-btn" onclick="selectOdds(this,'Heat Win','2.30')"><span class="mkt-prob-pct">39%</span><span class="mkt-odds-val">2.30</span></button>
-              </div>
-              <div class="mkt-prob-bar-wrap"><div class="mkt-prob-bar" style="width:39%;background:var(--red)"></div></div>
-            </div>
-          </div>
-          <div class="mkt-card-footer">
-            <div class="mkt-analyst-tip">🔒 <span style="color:var(--mid-gray)">PRO tip available — <strong>Subscribe to AiTips</strong></span></div>
-            <a class="mkt-markets-link">Spread &amp; Total · 4 markets ›</a>
-          </div>
+        <div class="mkt-card-footer">
+          <div class="mkt-tip-badge">💡 <strong>2 analysts</strong> have tips on this match · <span style="color:var(--brand);cursor:pointer" onclick="showScreen('s2', document.querySelectorAll('.screen-tab')[1])">Subscribe to view</span></div>
+          <a style="font-size:12px;color:var(--brand);text-decoration:none" href="#">2 markets ›</a>
         </div>
-
-        <!-- Card 4: Golf Futures -->
-        <div class="mkt-card" data-sport="golf">
-          <div class="mkt-card-header">
-            <span class="mkt-sport-badge" style="background:rgba(16,185,129,0.12);color:#047857">⛳ GOLF</span>
-            <span class="mkt-league">The Masters Tournament</span>
-            <span style="font-size:11px;color:var(--mid-gray)">Apr 9 · Final Round</span>
-            <span style="margin-left:auto;font-size:11px;color:var(--mid-gray)">$28,097,316 vol</span>
-          </div>
-          <div class="mkt-card-title">Masters Champion — Outright Winner</div>
-          <div class="mkt-card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <button class="mkt-futures-btn" onclick="selectOdds(this,'Scottie Scheffler','5.90')"><span class="mkt-futures-name">Scottie Scheffler</span><span class="mkt-futures-odds">5.90x</span><span class="mkt-futures-pct">16%</span></button>
-            <button class="mkt-futures-btn" onclick="selectOdds(this,'Rory McIlroy','8.00')"><span class="mkt-futures-name">Rory McIlroy</span><span class="mkt-futures-odds">8.00x</span><span class="mkt-futures-pct">12%</span></button>
-            <button class="mkt-futures-btn" onclick="selectOdds(this,'Bryson DeChambeau','11.7')"><span class="mkt-futures-name">Bryson DeChambeau</span><span class="mkt-futures-odds">11.7x</span><span class="mkt-futures-pct">8%</span></button>
-            <button class="mkt-futures-btn" onclick="selectOdds(this,'Ludvig Åberg','15.6')"><span class="mkt-futures-name">Ludvig Åberg</span><span class="mkt-futures-odds">15.6x</span><span class="mkt-futures-pct">6%</span></button>
-            <button class="mkt-futures-btn" onclick="selectOdds(this,'Tommy Fleetwood','15.6')"><span class="mkt-futures-name">Tommy Fleetwood</span><span class="mkt-futures-odds">15.6x</span><span class="mkt-futures-pct">6%</span></button>
-            <button class="mkt-futures-btn" onclick="selectOdds(this,'View All','—')"><span class="mkt-futures-name" style="color:var(--brand)">+ 93 more players</span><span class="mkt-futures-odds" style="color:var(--mid-gray)">98 markets</span></button>
-          </div>
-          <div class="mkt-card-footer">
-            <div class="mkt-analyst-tip">💡 <strong>AiTips</strong> tipped Scheffler · <span style="color:var(--brand)">View Analysis →</span></div>
-            <a class="mkt-markets-link">98 markets ›</a>
-          </div>
-        </div>
-
-        <!-- Card 5: Esports -->
-        <div class="mkt-card" data-sport="esports">
-          <div class="mkt-card-header">
-            <span class="mkt-sport-badge" style="background:rgba(139,92,246,0.12);color:#7C3AED">🎮 ESPORTS</span>
-            <span class="mkt-league">League of Legends · LFL</span>
-            <span class="mkt-live-badge">🔴 LIVE · G2 13:52</span>
-            <span style="margin-left:auto;font-size:11px;color:var(--mid-gray)">$34,761 vol</span>
-          </div>
-          <div class="mkt-card-title">Solary vs Galions</div>
-          <div class="mkt-card-body">
-            <div class="mkt-team-row">
-              <div class="mkt-team-info">
-                <div class="mkt-player-avatar" style="background:rgba(139,92,246,0.1);color:#7C3AED">S</div>
-                <span class="mkt-team-name">Solary</span>
-                <span class="mkt-score">0 - 4</span>
-              </div>
-              <div class="mkt-odds-group">
-                <button class="mkt-odds-btn" onclick="selectOdds(this,'Solary Win','2.08')"><span class="mkt-prob-pct">48%</span><span class="mkt-odds-val">2.08</span></button>
-              </div>
-              <div class="mkt-prob-bar-wrap"><div class="mkt-prob-bar" style="width:48%;background:var(--green)"></div></div>
-            </div>
-            <div class="mkt-team-row">
-              <div class="mkt-team-info">
-                <div class="mkt-player-avatar" style="background:rgba(139,92,246,0.1);color:#7C3AED">G</div>
-                <span class="mkt-team-name">Galions</span>
-                <span class="mkt-score">1 - 0</span>
-              </div>
-              <div class="mkt-odds-group">
-                <button class="mkt-odds-btn" onclick="selectOdds(this,'Galions Win','1.96')"><span class="mkt-prob-pct">51%</span><span class="mkt-odds-val">1.96</span></button>
-              </div>
-              <div class="mkt-prob-bar-wrap"><div class="mkt-prob-bar" style="width:51%;background:var(--red)"></div></div>
-            </div>
-          </div>
-          <div class="mkt-card-footer">
-            <div class="mkt-analyst-tip" style="color:var(--mid-gray)">No analyst tips yet for this match</div>
-            <a class="mkt-markets-link">2 markets ›</a>
-          </div>
-        </div>
-
-        <!-- Card 6: Cricket LIVE -->
-        <div class="mkt-card" data-sport="cricket">
-          <div class="mkt-card-header">
-            <span class="mkt-sport-badge" style="background:rgba(5,150,105,0.12);color:#065F46">🏏 CRICKET</span>
-            <span class="mkt-league">IPL 2026</span>
-            <span class="mkt-live-badge">🔴 LIVE · 2nd Inn</span>
-            <span style="margin-left:auto;font-size:11px;color:var(--mid-gray)">$2,645,544 vol</span>
-          </div>
-          <div class="mkt-card-title">Punjab Kings vs Gujarat Titans</div>
-          <div class="mkt-card-body">
-            <div class="mkt-team-row">
-              <div class="mkt-team-info">
-                <span class="mkt-team-flag">🔴</span>
-                <span class="mkt-team-name">Punjab Kings</span>
-                <span class="mkt-score">0/0</span>
-              </div>
-              <div class="mkt-odds-group">
-                <button class="mkt-odds-btn" onclick="selectOdds(this,'Punjab Kings Win','1.35')"><span class="mkt-prob-pct">74%</span><span class="mkt-odds-val">1.35</span></button>
-              </div>
-              <div class="mkt-prob-bar-wrap"><div class="mkt-prob-bar" style="width:74%;background:var(--green)"></div></div>
-            </div>
-            <div class="mkt-team-row">
-              <div class="mkt-team-info">
-                <span class="mkt-team-flag">🔵</span>
-                <span class="mkt-team-name">Gujarat Titans</span>
-                <span class="mkt-score">162/6</span>
-              </div>
-              <div class="mkt-odds-group">
-                <button class="mkt-odds-btn" onclick="selectOdds(this,'Gujarat Titans Win','3.57')"><span class="mkt-prob-pct">28%</span><span class="mkt-odds-val">3.57</span></button>
-              </div>
-              <div class="mkt-prob-bar-wrap"><div class="mkt-prob-bar" style="width:28%;background:var(--red)"></div></div>
-            </div>
-          </div>
-          <div class="mkt-card-footer">
-            <div class="mkt-analyst-tip">💡 <strong>3 analysts</strong> tipped Punjab Kings · <span style="color:var(--brand)">View Tips →</span></div>
-            <a class="mkt-markets-link">2 markets ›</a>
-          </div>
-        </div>
-
-      </div><!-- end market-cards -->
-
-      <div style="text-align:center;padding:16px">
-        <button class="btn-secondary" style="padding:10px 32px">Load More Markets</button>
       </div>
+
+      <!-- Market Card: NBA -->
+      <div class="mkt-card" data-sport="basketball">
+        <div class="mkt-card-header">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="mkt-sport-badge basketball">🏀 NBA</span>
+            <span style="font-size:12px;color:var(--mid-gray)">NBA Regular Season</span>
+            <span style="font-size:11px;color:var(--mid-gray)">Apr 1 · 7:30 PM</span>
+          </div>
+          <div style="font-size:12px;color:var(--mid-gray)">$424,881 vol</div>
+        </div>
+        <div class="mkt-card-title">Boston Celtics vs Miami Heat</div>
+        <div class="mkt-card-body">
+          <div class="mkt-outcome">
+            <div class="mkt-team">🍀 Boston Celtics</div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">61%</div>
+              <div class="mkt-odds-display">1.65</div>
+            </div>
+          </div>
+          <div class="mkt-outcome">
+            <div class="mkt-team">🔥 Miami Heat</div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">39%</div>
+              <div class="mkt-odds-display">2.30</div>
+            </div>
+          </div>
+        </div>
+        <div class="mkt-card-footer">
+          <div class="mkt-tip-badge" style="background:rgba(255,90,0,0.08);color:var(--brand)">🔒 <strong>PRO tip available</strong> — <span style="cursor:pointer;text-decoration:underline" onclick="showScreen('s2', document.querySelectorAll('.screen-tab')[1])">Subscribe to AiTips</span></div>
+          <a style="font-size:12px;color:var(--brand);text-decoration:none" href="#">Spread &amp; Total · 4 markets ›</a>
+        </div>
+      </div>
+
+      <!-- Market Card: Golf Futures -->
+      <div class="mkt-card" data-sport="golf">
+        <div class="mkt-card-header">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="mkt-sport-badge golf">⛳ GOLF</span>
+            <span style="font-size:12px;color:var(--mid-gray)">The Masters Tournament</span>
+            <span style="font-size:11px;color:var(--mid-gray)">Apr 9 · Final Round</span>
+          </div>
+          <div style="font-size:12px;color:var(--mid-gray)">$28,097,316 vol</div>
+        </div>
+        <div class="mkt-card-title">Masters 2026 — Tournament Winner</div>
+        <div class="mkt-card-body" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <div class="mkt-futures-row">
+            <div style="font-size:12px;font-weight:600">Scottie Scheffler</div>
+            <div class="mkt-odds-display">3.20</div>
+          </div>
+          <div class="mkt-futures-row">
+            <div style="font-size:12px;font-weight:600">Rory McIlroy</div>
+            <div class="mkt-odds-display">5.50</div>
+          </div>
+          <div class="mkt-futures-row">
+            <div style="font-size:12px;font-weight:600">Jon Rahm</div>
+            <div class="mkt-odds-display">7.00</div>
+          </div>
+          <div class="mkt-futures-row">
+            <div style="font-size:12px;font-weight:600">Xander Schauffele</div>
+            <div class="mkt-odds-display">9.00</div>
+          </div>
+          <div class="mkt-futures-row">
+            <div style="font-size:12px;font-weight:600">Collin Morikawa</div>
+            <div class="mkt-odds-display">11.00</div>
+          </div>
+          <div class="mkt-futures-row" style="cursor:pointer;color:var(--brand)">
+            <div style="font-size:12px;font-weight:600">+ 47 more</div>
+            <div style="font-size:11px">View all ›</div>
+          </div>
+        </div>
+        <div class="mkt-card-footer">
+          <div class="mkt-tip-badge">💡 <strong>1 analyst</strong> has a tip · <span style="color:var(--brand);cursor:pointer">Subscribe to view</span></div>
+          <a style="font-size:12px;color:var(--brand);text-decoration:none" href="#">Outright · 8 markets ›</a>
+        </div>
+      </div>
+
+      <!-- Market Card: Esports -->
+      <div class="mkt-card" data-sport="esports">
+        <div class="mkt-card-header">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="mkt-sport-badge esports">🎮 ESPORTS</span>
+            <span style="font-size:12px;color:var(--mid-gray)">LoL · LCK Spring 2026</span>
+            <span style="font-size:11px;color:var(--mid-gray)">Apr 1 · 11:00 AM</span>
+          </div>
+          <div style="font-size:12px;color:var(--mid-gray)">$187,432 vol</div>
+        </div>
+        <div class="mkt-card-title">T1 vs Gen.G</div>
+        <div class="mkt-card-body">
+          <div class="mkt-outcome">
+            <div class="mkt-team">🎯 T1 (Faker)</div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">58%</div>
+              <div class="mkt-odds-display">1.72</div>
+            </div>
+          </div>
+          <div class="mkt-outcome">
+            <div class="mkt-team">⚡ Gen.G</div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">42%</div>
+              <div class="mkt-odds-display">2.38</div>
+            </div>
+          </div>
+        </div>
+        <div class="mkt-card-footer">
+          <div style="font-size:12px;color:var(--mid-gray)">No analyst tips yet for this match</div>
+          <a style="font-size:12px;color:var(--brand);text-decoration:none" href="#">Maps · 3 markets ›</a>
+        </div>
+      </div>
+
+      <!-- Market Card: Cricket -->
+      <div class="mkt-card" data-sport="cricket">
+        <div class="mkt-card-header">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="mkt-sport-badge cricket">🏏 CRICKET</span>
+            <span style="font-size:12px;color:var(--mid-gray)">IPL 2026</span>
+            <span style="font-size:11px;color:var(--mid-gray)">Apr 2 · 3:30 PM IST</span>
+          </div>
+          <div style="font-size:12px;color:var(--mid-gray)">$94,210 vol</div>
+        </div>
+        <div class="mkt-card-title">Mumbai Indians vs Chennai Super Kings</div>
+        <div class="mkt-card-body">
+          <div class="mkt-outcome">
+            <div class="mkt-team">🔵 Mumbai Indians</div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">52%</div>
+              <div class="mkt-odds-display">1.92</div>
+            </div>
+          </div>
+          <div class="mkt-outcome">
+            <div class="mkt-team">🟡 Chennai Super Kings</div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">48%</div>
+              <div class="mkt-odds-display">2.08</div>
+            </div>
+          </div>
+        </div>
+        <div class="mkt-card-footer">
+          <div class="mkt-tip-badge">💡 <strong>3 analysts</strong> have tips · <span style="color:var(--brand);cursor:pointer">Subscribe to view</span></div>
+          <a style="font-size:12px;color:var(--brand);text-decoration:none" href="#">Match &amp; Innings · 6 markets ›</a>
+        </div>
+      </div>
+
+      <button class="btn-secondary" style="width:100%;margin-top:16px;padding:12px">Load More Markets</button>
     </div><!-- end main content -->
 
-    <!-- RIGHT PANEL: Bet Slip -->
+    <!-- RIGHT PANEL: How Betting Works (no self-directed betting) -->
     <div style="width:280px;flex-shrink:0;padding:16px;position:sticky;top:100px;height:fit-content">
-      <div class="card p-20" id="bet-slip-panel">
-        <div style="font-size:15px;font-weight:700;margin-bottom:4px">My Bet Slip</div>
-        <div style="font-size:12px;color:var(--mid-gray);margin-bottom:16px">Click any odds button to add a bet</div>
-
-        <!-- Empty state -->
-        <div id="bet-slip-empty" style="text-align:center;padding:24px 0">
-          <div style="font-size:32px;margin-bottom:8px">🎯</div>
-          <div style="font-size:13px;color:var(--mid-gray)">No selections yet.<br>Click odds to add.</div>
+      <div class="card p-20" style="border:2px solid var(--brand-light)">
+        <div style="font-size:15px;font-weight:700;margin-bottom:4px">How Betting Works</div>
+        <div style="font-size:12px;color:var(--mid-gray);margin-bottom:16px">Gainr is a tips-only platform</div>
+        <div style="background:var(--brand-light);border-radius:var(--radius-md);padding:14px;margin-bottom:14px">
+          <div style="font-size:13px;font-weight:700;color:var(--brand);margin-bottom:6px">🔒 No Self-Directed Betting</div>
+          <div style="font-size:12px;color:var(--dark-gray);line-height:1.6">All bets on Gainr are placed by subscribing to a verified analyst. You cannot place bets independently — this protects the integrity of analyst track records.</div>
         </div>
-
-        <!-- Active selection (hidden by default) -->
-        <div id="bet-slip-active" style="display:none">
-          <div style="background:var(--brand-light);border:1px solid rgba(255,90,0,0.2);border-radius:var(--radius-md);padding:12px;margin-bottom:12px">
-            <div style="font-size:11px;color:var(--mid-gray);margin-bottom:4px" id="slip-market">Market</div>
-            <div style="font-size:13px;font-weight:700;margin-bottom:4px" id="slip-selection">Selection</div>
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <span style="font-size:12px;color:var(--mid-gray)">Odds</span>
-              <span style="font-size:18px;font-weight:800;color:var(--brand)" id="slip-odds">—</span>
-            </div>
+        <div style="font-size:12px;font-weight:700;color:var(--black);margin-bottom:10px">To place a bet:</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+          <div style="display:flex;align-items:flex-start;gap:10px;font-size:12px">
+            <span style="background:var(--brand);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:11px">1</span>
+            <span>Subscribe to a verified analyst on the Leaderboard</span>
           </div>
-
-          <div style="margin-bottom:12px">
-            <label class="form-label">Stake (USDC)</label>
-            <input type="number" class="form-input" id="slip-stake" value="50" oninput="updateSlipCalc()" />
+          <div style="display:flex;align-items:flex-start;gap:10px;font-size:12px">
+            <span style="background:var(--brand);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:11px">2</span>
+            <span>Enable Auto-Betting or follow their Tips Feed</span>
           </div>
-
-          <div style="background:var(--bg);border-radius:var(--radius-md);padding:12px;margin-bottom:12px">
-            <div class="fee-row"><span class="text-muted">Stake</span><span id="calc-stake">$50.00</span></div>
-            <div class="fee-row"><span class="text-muted">Potential return</span><span class="text-green font-bold" id="calc-return">—</span></div>
-            <div class="fee-row"><span class="text-muted">Platform fee (2%)</span><span id="calc-fee">—</span></div>
-            <div class="divider"></div>
-            <div class="fee-row"><span class="font-bold">Net profit</span><span class="font-bold text-green" id="calc-profit">—</span></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;font-size:12px">
+            <span style="background:var(--brand);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:11px">3</span>
+            <span>Bets execute automatically via ZK Stealth Execution</span>
           </div>
-
-          <button class="btn-primary w-full" style="padding:12px;border-radius:var(--radius-md);margin-bottom:8px">Place Bet · USDC</button>
-          <button onclick="clearSlip()" style="width:100%;padding:8px;border:none;background:none;font-size:12px;color:var(--mid-gray);cursor:pointer;font-family:var(--font)">✕ Clear slip</button>
         </div>
-
-        <div class="divider"></div>
+        <button class="btn-primary w-full" style="padding:10px;border-radius:var(--radius-md)" onclick="showScreen('s1', document.querySelectorAll('.screen-tab')[0])">Browse Analysts →</button>
+        <div class="divider" style="margin:14px 0"></div>
         <div style="font-size:11px;color:var(--mid-gray);text-align:center">Wallet: <strong>2,450 USDC</strong> available</div>
       </div>
-
-      <!-- Analyst Tips Panel -->
+      <!-- Hot Analyst Tips Panel -->
       <div class="card p-16 mt-12">
         <div style="font-size:13px;font-weight:700;margin-bottom:12px">🔥 Hot Analyst Tips</div>
         <div style="display:flex;flex-direction:column;gap:10px">
@@ -2690,28 +2664,28 @@
             <div class="tipster-avatar" style="width:28px;height:28px;font-size:11px;flex-shrink:0">A</div>
             <div>
               <div style="font-size:11px;font-weight:700">AiTips <span class="badge badge-pro" style="font-size:9px">PRO</span></div>
-              <div style="font-size:11px;color:var(--mid-gray)">Sweden Win @ 2.10 (2U)</div>
-              <div style="font-size:10px;color:var(--brand);cursor:pointer">View full analysis →</div>
+              <div style="font-size:11px;color:var(--mid-gray)">🔒 Subscribe to see pick</div>
+              <div style="font-size:10px;color:var(--brand);cursor:pointer" onclick="showScreen('s2', document.querySelectorAll('.screen-tab')[1])">View profile →</div>
             </div>
           </div>
           <div style="display:flex;gap:10px;align-items:flex-start">
             <div class="tipster-avatar" style="width:28px;height:28px;font-size:11px;flex-shrink:0;background:rgba(139,92,246,0.1);color:#7C3AED">L</div>
             <div>
               <div style="font-size:11px;font-weight:700">Luminaar <span class="badge badge-pro" style="font-size:9px">PRO</span></div>
-              <div style="font-size:11px;color:var(--mid-gray)">Berrettini Win @ 1.52 (3U)</div>
-              <div style="font-size:10px;color:var(--brand);cursor:pointer">View full analysis →</div>
+              <div style="font-size:11px;color:var(--mid-gray)">🔒 Subscribe to see pick</div>
+              <div style="font-size:10px;color:var(--brand);cursor:pointer" onclick="showScreen('s2', document.querySelectorAll('.screen-tab')[1])">View profile →</div>
             </div>
           </div>
           <div style="display:flex;gap:10px;align-items:flex-start">
             <div class="tipster-avatar" style="width:28px;height:28px;font-size:11px;flex-shrink:0;background:rgba(16,185,129,0.1);color:#047857">S</div>
             <div>
               <div style="font-size:11px;font-weight:700">Sportbettingfund <span class="badge badge-free" style="font-size:9px">FREE</span></div>
-              <div style="font-size:11px;color:var(--mid-gray)">Punjab Kings Win @ 1.35 (1U)</div>
-              <div style="font-size:10px;color:var(--green);cursor:pointer">Free tip — View →</div>
+              <div style="font-size:11px;color:var(--mid-gray)">🔒 Subscribe to see pick</div>
+              <div style="font-size:10px;color:var(--green);cursor:pointer" onclick="showScreen('s3', document.querySelectorAll('.screen-tab')[2])">Subscribe free →</div>
             </div>
           </div>
         </div>
-        <button class="btn-secondary w-full mt-12" style="font-size:12px;padding:8px">Browse All Tips →</button>
+        <button class="btn-secondary w-full mt-12" style="font-size:12px;padding:8px" onclick="showScreen('s6', document.querySelectorAll('.screen-tab')[5])">Browse All Tips →</button>
       </div>
     </div><!-- end right panel -->
 
@@ -2732,7 +2706,7 @@
       </div>
       <div style="display:flex;gap:8px">
         <button class="btn-secondary">📤 Export CSV</button>
-        <button class="btn-primary">+ Place New Bet</button>
+        <div style="display:flex;align-items:center;gap:8px;background:var(--brand-light);border-radius:var(--radius-pill);padding:8px 14px;font-size:12px;font-weight:600;color:var(--brand)">🤖 Bets placed via analyst subscriptions only</div>
       </div>
     </div>
 
@@ -2823,7 +2797,7 @@
                 <div style="font-weight:600">Sweden vs Poland</div>
                 <div style="font-size:11px;color:var(--mid-gray)">⚽ FIFA WCQ · 🔴 LIVE 12'</div>
               </td>
-              <td style="padding:12px"><span style="background:var(--green-light);color:var(--green);padding:3px 8px;border-radius:var(--radius-sm);font-size:11px;font-weight:700">Sweden Win</span></td>
+              <td style="padding:12px"><span style="background:var(--light-gray);color:var(--mid-gray);padding:3px 8px;border-radius:var(--radius-sm);font-size:11px;font-weight:700">🔒 Analyst Pick</span></td>
               <td style="padding:12px;text-align:center;font-weight:700">2.10</td>
               <td style="padding:12px;text-align:right">100 USDC</td>
               <td style="padding:12px;text-align:right;color:var(--green);font-weight:600">+110 USDC</td>
@@ -2841,7 +2815,7 @@
                 <div style="font-weight:600">Berrettini vs Buse</div>
                 <div style="font-size:11px;color:var(--mid-gray)">🎾 ATP Marrakech · 🔴 LIVE Set 2</div>
               </td>
-              <td style="padding:12px"><span style="background:var(--green-light);color:var(--green);padding:3px 8px;border-radius:var(--radius-sm);font-size:11px;font-weight:700">Berrettini Win</span></td>
+              <td style="padding:12px"><span style="background:var(--light-gray);color:var(--mid-gray);padding:3px 8px;border-radius:var(--radius-sm);font-size:11px;font-weight:700">🔒 Analyst Pick</span></td>
               <td style="padding:12px;text-align:center;font-weight:700">1.52</td>
               <td style="padding:12px;text-align:right">200 USDC</td>
               <td style="padding:12px;text-align:right;color:var(--green);font-weight:600">+104 USDC</td>
@@ -2859,7 +2833,7 @@
                 <div style="font-weight:600">Boston Celtics vs Miami Heat</div>
                 <div style="font-size:11px;color:var(--mid-gray)">🏀 NBA · Apr 1 · 7:30 PM</div>
               </td>
-              <td style="padding:12px"><span style="background:var(--green-light);color:var(--green);padding:3px 8px;border-radius:var(--radius-sm);font-size:11px;font-weight:700">Celtics Win</span></td>
+              <td style="padding:12px"><span style="background:var(--light-gray);color:var(--mid-gray);padding:3px 8px;border-radius:var(--radius-sm);font-size:11px;font-weight:700">🔒 Analyst Pick</span></td>
               <td style="padding:12px;text-align:center;font-weight:700">1.65</td>
               <td style="padding:12px;text-align:right">150 USDC</td>
               <td style="padding:12px;text-align:right;color:var(--green);font-weight:600">+97.50 USDC</td>
@@ -2877,7 +2851,7 @@
                 <div style="font-weight:600">Masters Tournament</div>
                 <div style="font-size:11px;color:var(--mid-gray)">⛳ Golf · Apr 9 · Final Round</div>
               </td>
-              <td style="padding:12px"><span style="background:var(--green-light);color:var(--green);padding:3px 8px;border-radius:var(--radius-sm);font-size:11px;font-weight:700">Scheffler Win</span></td>
+              <td style="padding:12px"><span style="background:var(--light-gray);color:var(--mid-gray);padding:3px 8px;border-radius:var(--radius-sm);font-size:11px;font-weight:700">🔒 Analyst Pick</span></td>
               <td style="padding:12px;text-align:center;font-weight:700">5.90</td>
               <td style="padding:12px;text-align:right">50 USDC</td>
               <td style="padding:12px;text-align:right;color:var(--green);font-weight:600">+245 USDC</td>
