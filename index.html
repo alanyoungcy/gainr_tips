@@ -901,6 +901,36 @@
     .mkt-futures-name { font-size: 12px; font-weight: 600; color: var(--black); margin-bottom: 2px; }
     .mkt-futures-odds { font-size: 15px; font-weight: 800; color: var(--brand); }
     .mkt-futures-pct { font-size: 11px; color: var(--mid-gray); }
+  
+    /* ── Analyst Onboarding Wizard ──────────────────────────────────────── */
+    .wizard-step {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      cursor: pointer; flex: 1; position: relative;
+    }
+    .wizard-step-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--light-gray); color: var(--mid-gray);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 13px; transition: all 0.2s;
+    }
+    .wizard-step-label {
+      font-size: 11px; color: var(--mid-gray); text-align: center;
+      font-weight: 500; white-space: nowrap;
+    }
+    .wizard-step.active .wizard-step-num {
+      background: var(--brand); color: #fff;
+    }
+    .wizard-step.active .wizard-step-label { color: var(--brand); font-weight: 700; }
+    .wizard-step.completed .wizard-step-num {
+      background: var(--green); color: #fff;
+    }
+    .wizard-step.completed .wizard-step-num::after { content: '✓'; }
+    .wizard-connector {
+      flex: 1; height: 2px; background: var(--border);
+      margin: 0 4px; margin-bottom: 18px;
+    }
+    .wizard-panel { animation: fadeIn 0.2s ease; }
+
   </style>
 </head>
 <body>
@@ -1548,167 +1578,271 @@
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════
-     SCREEN 4 — POST A TIP (ANALYST VIEW)
+     SCREEN 4 — POST A SIGNAL (ANALYST TOOL)
 ════════════════════════════════════════════════════════════════ -->
 <div class="screen" id="s4">
-  <div class="flex gap-16">
+  <div style="display:flex;gap:16px;min-height:calc(100vh - 120px)">
 
-    <!-- Match Browser -->
-    <div style="width:220px;flex-shrink:0">
-      <div class="card p-16 mb-12">
-        <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">Search Fixture</div>
-        <input type="text" class="form-input" placeholder="🔍 Search team or player..." style="font-size:13px;padding:8px 12px" />
+    <!-- LEFT: Match Browser -->
+    <div style="width:280px;flex-shrink:0;border-right:1px solid var(--border);padding:16px 12px;background:#fafafa">
+      <div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Search Fixture</div>
+      <input type="text" class="form-input" placeholder="🔍 Search team or event..." style="margin-bottom:12px;font-size:13px" />
+      <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:12px">
+        <button style="flex:1;padding:7px 0;font-size:12px;font-weight:600;background:var(--brand);color:#fff;border:none;cursor:pointer">Pre-match</button>
+        <button style="flex:1;padding:7px 0;font-size:12px;font-weight:600;background:#fff;color:var(--mid-gray);border:none;cursor:pointer">🔴 Live</button>
+        <button style="flex:1;padding:7px 0;font-size:12px;font-weight:600;background:#fff;color:var(--mid-gray);border:none;cursor:pointer">Futures</button>
       </div>
-      <div class="card overflow-hidden">
-        <div class="tab-bar p-12" style="padding-bottom:0;margin-bottom:0">
-          <div class="tab-item active" style="padding:8px 10px;font-size:12px">Pre-match</div>
-          <div class="tab-item" style="padding:8px 10px;font-size:12px">Live</div>
-          <div class="tab-item" style="padding:8px 10px;font-size:12px">Futures</div>
-        </div>
-        <div style="max-height:480px;overflow-y:auto;padding:8px 0">
-          <div style="padding:6px 12px;font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.06em;text-transform:uppercase;background:var(--bg)">🌍 FIFA World Cup Qualifiers</div>
-          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)" class="hover-brand">🇸🇪 Sweden vs Poland →</div>
-          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)">🇨🇿 Czechia vs Denmark →</div>
-          <div style="padding:6px 12px;font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.06em;text-transform:uppercase;background:var(--bg)">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</div>
-          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)">Arsenal vs Chelsea →</div>
-          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)">Man City vs Liverpool →</div>
-          <div style="padding:6px 12px;font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.06em;text-transform:uppercase;background:var(--bg)">🎾 WTA Charleston Open</div>
-          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)">Krunic / Zhang vs Sutjiadi →</div>
-          <div style="padding:6px 12px;font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.06em;text-transform:uppercase;background:var(--bg)">🏀 NBA</div>
-          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer;border-bottom:1px solid var(--border)">Lakers vs Celtics →</div>
-          <div style="padding:8px 14px;font-size:12px;color:var(--dark-gray);cursor:pointer">Warriors vs Heat →</div>
-        </div>
+      <div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">⚽ Soccer</div>
+      <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:12px">
+        <div style="padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;font-weight:600;background:var(--brand-light);color:var(--brand);border:1.5px solid rgba(255,90,0,0.25)">🌍 FIFA WC Qualifiers EU</div>
+        <div style="padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;color:var(--dark-gray)">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</div>
+        <div style="padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;color:var(--dark-gray)">🇪🇸 La Liga</div>
+        <div style="padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;color:var(--dark-gray)">🇩🇪 Bundesliga</div>
+        <div style="padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;color:var(--dark-gray)">🇮🇹 Serie A</div>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">🎾 Tennis</div>
+      <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:12px">
+        <div style="padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;color:var(--dark-gray)">ATP Marrakech</div>
+        <div style="padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;color:var(--dark-gray)">WTA Charleston</div>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">🏀 Basketball</div>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <div style="padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;color:var(--dark-gray)">NBA Regular Season</div>
+        <div style="padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:12px;color:var(--dark-gray)">EuroLeague</div>
       </div>
     </div>
 
-    <!-- Match Odds Panel -->
-    <div class="grow">
-      <!-- Match Header -->
-      <div class="card mb-12 overflow-hidden">
-        <div class="match-header">
-          <div class="text-xs" style="color:rgba(255,255,255,0.6);margin-bottom:4px">FIFA — World Cup Qualifiers Europe</div>
-          <div class="flex items-center justify-between">
-            <div class="text-xl font-bold">Sweden <span style="color:var(--brand)">vs</span> Poland</div>
-            <div class="text-right">
-              <div class="text-xs" style="color:rgba(255,255,255,0.6)">Starts in</div>
-              <div class="font-bold text-brand">4h 12m</div>
-            </div>
+    <!-- CENTRE: Signal Form -->
+    <div style="flex:1;padding:16px 20px;overflow-y:auto">
+
+      <!-- Strategy Selector (multi-strategy support) -->
+      <div class="card p-16" style="margin-bottom:16px;border-left:3px solid var(--brand)">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="font-size:13px;font-weight:700;white-space:nowrap">📋 Strategy:</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button style="padding:6px 14px;border-radius:var(--radius-pill);font-size:12px;font-weight:700;background:var(--brand);color:#fff;border:none;cursor:pointer">Value Football</button>
+            <button style="padding:6px 14px;border-radius:var(--radius-pill);font-size:12px;font-weight:600;background:var(--bg);color:var(--dark-gray);border:1.5px solid var(--border);cursor:pointer">Asian Handicap Edge</button>
+            <button style="padding:6px 14px;border-radius:var(--radius-pill);font-size:12px;font-weight:600;background:var(--bg);color:var(--brand);border:1.5px dashed rgba(255,90,0,0.4);cursor:pointer">+ Add Strategy</button>
           </div>
-          <div class="text-xs mt-4" style="color:rgba(255,255,255,0.5)">Wednesday, April 1, 2026 · 2:45 AM</div>
+          <div style="margin-left:auto;font-size:11px;color:var(--mid-gray)">Signal will be tagged to: <strong style="color:var(--brand)">Value Football</strong></div>
         </div>
-        <div class="p-16">
-          <div class="tab-bar" style="margin-bottom:12px">
-            <div class="tab-item active">Match</div>
-            <div class="tab-item">1st Half</div>
-            <div class="tab-item">To Qualify</div>
-            <div class="tab-item">Corners</div>
-            <div class="tab-item">Cards</div>
-          </div>
+      </div>
 
-          <!-- 1X2 -->
-          <div class="mb-12">
-            <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">1X2</div>
-            <div class="grid-3 gap-8">
-              <button class="odds-btn selected" style="background:var(--brand);border-color:var(--brand)">
-                <div class="text-xs mb-2" style="opacity:0.8">Sweden (1)</div>
-                <div>2.10</div>
-                <div class="text-xs mt-1" style="opacity:0.6">— stable</div>
-              </button>
-              <button class="odds-btn">
-                <div class="text-xs mb-2" style="opacity:0.8">Draw (X)</div>
-                <div>3.39</div>
-                <div class="text-xs mt-1" style="opacity:0.6">— stable</div>
-              </button>
-              <button class="odds-btn">
-                <div class="text-xs mb-2" style="opacity:0.8">Poland (2)</div>
-                <div>3.82</div>
-                <div class="text-xs mt-1 text-brand">↑ rising</div>
-              </button>
-            </div>
-          </div>
+      <!-- Event & Market Selection -->
+      <div class="card p-20" style="margin-bottom:16px">
+        <div style="font-size:14px;font-weight:700;margin-bottom:16px">📍 Event &amp; Market</div>
 
-          <!-- Handicap -->
-          <div class="mb-12">
-            <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">Handicap</div>
-            <div class="grid-2 gap-8">
-              <button class="odds-btn" style="background:rgba(255,255,255,0.05)">
-                <div class="text-xs mb-2" style="opacity:0.8">Sweden -0.50</div>
-                <div>2.11</div>
-              </button>
-              <button class="odds-btn" style="background:rgba(255,255,255,0.05)">
-                <div class="text-xs mb-2" style="opacity:0.8">Poland +0.50</div>
-                <div>1.82</div>
-              </button>
-            </div>
+        <!-- Selected Event -->
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
+          <div style="font-size:24px">⚽</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700">Sweden vs Poland</div>
+            <div style="font-size:11px;color:var(--mid-gray)">FIFA World Cup Qualifiers Europe · Wed Apr 1, 2026 · 2:45 AM</div>
           </div>
+          <div style="font-size:11px;color:var(--brand);cursor:pointer">Change ›</div>
+        </div>
 
-          <!-- Total Goals -->
+        <!-- Market Tabs -->
+        <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:14px;width:fit-content">
+          <button style="padding:7px 14px;font-size:12px;font-weight:600;background:var(--brand);color:#fff;border:none;cursor:pointer">Match (1X2)</button>
+          <button style="padding:7px 14px;font-size:12px;font-weight:600;background:#fff;color:var(--mid-gray);border:none;cursor:pointer">1st Half</button>
+          <button style="padding:7px 14px;font-size:12px;font-weight:600;background:#fff;color:var(--mid-gray);border:none;cursor:pointer">Handicap</button>
+          <button style="padding:7px 14px;font-size:12px;font-weight:600;background:#fff;color:var(--mid-gray);border:none;cursor:pointer">Totals</button>
+          <button style="padding:7px 14px;font-size:12px;font-weight:600;background:#fff;color:var(--mid-gray);border:none;cursor:pointer">Player Props</button>
+        </div>
+
+        <!-- Odds Grid -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+          <button class="odds-btn" style="background:var(--brand);color:#fff;border-color:var(--brand)">
+            <div style="font-size:11px;margin-bottom:4px;opacity:0.85">Sweden (1)</div>
+            <div style="font-size:18px;font-weight:800">2.10</div>
+            <div style="font-size:10px;margin-top:4px;opacity:0.85">46% implied</div>
+          </button>
+          <button class="odds-btn">
+            <div style="font-size:11px;margin-bottom:4px;opacity:0.7">Draw (X)</div>
+            <div style="font-size:18px;font-weight:800">3.39</div>
+            <div style="font-size:10px;margin-top:4px;opacity:0.7">28% implied</div>
+          </button>
+          <button class="odds-btn">
+            <div style="font-size:11px;margin-bottom:4px;opacity:0.7">Poland (2)</div>
+            <div style="font-size:18px;font-weight:800">3.82</div>
+            <div style="font-size:10px;margin-top:4px;opacity:0.7">25% implied</div>
+          </button>
+        </div>
+
+        <!-- Signal Detail Fields -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px">
           <div>
-            <div class="text-xs font-bold text-muted mb-8" style="letter-spacing:0.06em;text-transform:uppercase">Total Goals</div>
-            <div class="grid-2 gap-8">
-              <button class="odds-btn" style="background:rgba(255,255,255,0.05)">
-                <div class="text-xs mb-2" style="opacity:0.8">Over 2.5</div>
-                <div>2.04 <span style="color:#F87171;font-size:11px">↓</span></div>
-              </button>
-              <button class="odds-btn" style="background:rgba(255,255,255,0.05)">
-                <div class="text-xs mb-2" style="opacity:0.8">Under 2.5</div>
-                <div>1.85</div>
-              </button>
+            <label class="form-label">Selection <span style="color:var(--red)">*</span></label>
+            <input type="text" class="form-input" value="Sweden" placeholder="e.g. Sweden, Over 2.5, Berrettini" />
+          </div>
+          <div>
+            <label class="form-label">Market <span style="color:var(--red)">*</span></label>
+            <input type="text" class="form-input" value="Match Result (1X2)" placeholder="e.g. 1X2, Handicap, Total Goals" />
+          </div>
+          <div>
+            <label class="form-label">Event <span style="color:var(--red)">*</span></label>
+            <input type="text" class="form-input" value="Sweden vs Poland" placeholder="Event name" />
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px">
+          <div>
+            <label class="form-label">Target Price (Odds) <span style="color:var(--red)">*</span></label>
+            <input type="number" class="form-input" value="2.10" step="0.01" style="font-size:16px;font-weight:700" />
+            <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">Minimum acceptable odds</div>
+          </div>
+          <div>
+            <label class="form-label">Points Recommended <span style="color:var(--red)">*</span></label>
+            <input type="number" class="form-input" value="2" min="0.5" max="10" step="0.5" style="font-size:16px;font-weight:700" />
+            <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">% of theoretical bank (100pts)</div>
+          </div>
+          <div>
+            <label class="form-label">Your Confidence</label>
+            <select class="form-input">
+              <option>⭐ Standard</option>
+              <option>⭐⭐ Medium</option>
+              <option selected>⭐⭐⭐ High</option>
+              <option>⭐⭐⭐⭐ Very High</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Signal Type</label>
+            <select class="form-input">
+              <option>Pre-match</option>
+              <option>In-Play / Live</option>
+              <option>Futures / Outright</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Kelly Ratio Toggle -->
+        <div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.25);border-radius:var(--radius-md);padding:14px;margin-bottom:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#92400E">📐 Apply Kelly Ratio on Higher Price?</div>
+              <div style="font-size:11px;color:var(--mid-gray);margin-top:2px">Recommended when odds are significantly above fair value. Kelly adjusts stake size to optimal fraction based on edge.</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:12px;color:var(--mid-gray)">No</span>
+              <div style="width:40px;height:22px;background:var(--brand);border-radius:var(--radius-pill);position:relative;cursor:pointer">
+                <div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;box-shadow:0 1px 4px rgba(0,0,0,0.2)"></div>
+              </div>
+              <span style="font-size:12px;font-weight:700;color:var(--brand)">Yes</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;font-size:12px">
+            <div style="background:#fff;padding:10px;border-radius:var(--radius-sm);border:1px solid rgba(245,158,11,0.2)">
+              <div style="color:var(--mid-gray);margin-bottom:2px">Your Edge Estimate</div>
+              <div style="font-weight:700">+8.5%</div>
+            </div>
+            <div style="background:#fff;padding:10px;border-radius:var(--radius-sm);border:1px solid rgba(245,158,11,0.2)">
+              <div style="color:var(--mid-gray);margin-bottom:2px">Kelly Fraction</div>
+              <div style="font-weight:700;color:var(--brand)">4.05% of bank</div>
+            </div>
+            <div style="background:#fff;padding:10px;border-radius:var(--radius-sm);border:1px solid rgba(245,158,11,0.2)">
+              <div style="color:var(--mid-gray);margin-bottom:2px">Adjusted Points</div>
+              <div style="font-weight:700;color:var(--brand)">4.05 pts (was 2pts)</div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Bet Slip -->
-    <div style="width:280px;flex-shrink:0">
-      <div class="bet-slip">
-        <div class="text-sm font-bold mb-12">🎯 My Bet Slip</div>
-
-        <!-- Selected bet -->
-        <div class="p-12 mb-12" style="background:var(--brand-light);border:1.5px solid rgba(255,90,0,0.25);border-radius:var(--radius-md)">
-          <div class="text-xs text-muted mb-4">Sweden vs Poland</div>
-          <div class="font-bold">Sweden (1X2)</div>
-          <div class="text-xl font-bold text-brand mt-4">@ 2.10</div>
-        </div>
-
-        <!-- Stake -->
-        <label class="form-label">Stake (Units) <span style="color:var(--brand);cursor:pointer">ⓘ</span></label>
-        <input type="number" class="form-input mb-8" value="2" style="font-size:16px;font-weight:700;padding:10px 14px" />
-        <div class="stake-quick-btns mb-12">
-          <button class="stake-btn">0.5U</button>
-          <button class="stake-btn active">1U</button>
-          <button class="stake-btn">2U</button>
-          <button class="stake-btn">5U</button>
-          <button class="stake-btn">10U</button>
+        <!-- In-Play Trigger Mode -->
+        <div style="background:rgba(217,48,37,0.04);border:1px solid rgba(217,48,37,0.15);border-radius:var(--radius-md);padding:14px;margin-bottom:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--red)">⚡ In-Play Trigger Mode</div>
+              <div style="font-size:11px;color:var(--mid-gray);margin-top:2px">Signal will be held and pushed to followers in real-time when you manually trigger it during the event.</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:12px;color:var(--mid-gray)">Off</span>
+              <div style="width:40px;height:22px;background:var(--border);border-radius:var(--radius-pill);position:relative;cursor:pointer">
+                <div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;box-shadow:0 1px 4px rgba(0,0,0,0.2)"></div>
+              </div>
+              <span style="font-size:12px;color:var(--mid-gray)">On</span>
+            </div>
+          </div>
+          <div style="font-size:11px;color:var(--mid-gray);background:#fff;padding:10px;border-radius:var(--radius-sm);border:1px solid rgba(217,48,37,0.1)">When enabled, this signal is queued but not sent. You trigger it live from your dashboard during the event. Followers receive an instant push notification and have 60 seconds to confirm execution.</div>
         </div>
 
         <!-- Analysis -->
-        <label class="form-label">Analysis (Optional)</label>
-        <textarea class="form-input mb-12" style="font-size:12px;min-height:72px">Sweden have strong home form and Poland are missing key midfielders. Value at 2.10 with positive CLV expected.</textarea>
-
-        <!-- Visibility -->
-        <label class="form-label">Tip Visibility <span class="badge badge-gold" style="margin-left:4px;font-size:10px">Key Feature</span></label>
-        <div class="visibility-toggle">
-          <button class="vis-btn">🆓 Free Tip<br/><span style="font-size:10px;font-weight:400">Visible to all</span></button>
-          <button class="vis-btn active-premium">🔒 Premium Tip<br/><span style="font-size:10px;font-weight:400">Subscribers only</span></button>
+        <div style="margin-bottom:14px">
+          <label class="form-label">Analysis / Rationale <span style="font-size:10px;color:var(--mid-gray)">(optional but recommended)</span></label>
+          <textarea class="form-input" style="min-height:80px" placeholder="Explain your reasoning without revealing your full methodology. E.g. 'Sweden have strong home form and Poland are missing key midfielders. Value at 2.10 with positive CLV expected based on line movement.'"></textarea>
         </div>
 
-        <!-- Summary -->
-        <div class="p-12 mb-12" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
-          <div class="fee-row" style="font-size:12px"><span class="text-muted">Stake</span><span>2 Units</span></div>
-          <div class="fee-row" style="font-size:12px"><span class="text-muted">Odds</span><span>2.10</span></div>
-          <div class="fee-row" style="font-size:12px"><span class="text-muted">Gross Return</span><span>4.20 Units</span></div>
-          <div class="fee-row" style="font-size:12px"><span class="text-muted">Execution Fee (0.3%)</span><span class="text-red">-0.006U</span></div>
-          <div class="fee-row total" style="font-size:13px"><span>Net Profit (if won)</span><span class="text-green">+2.19 Units</span></div>
+        <!-- Visibility -->
+        <div style="margin-bottom:0">
+          <label class="form-label">Signal Visibility <span class="badge badge-gold" style="margin-left:4px;font-size:10px">Key Feature</span></label>
+          <div class="visibility-toggle">
+            <button class="vis-btn">🆓 Free Signal<br/><span style="font-size:10px;font-weight:400">Visible to all followers</span></button>
+            <button class="vis-btn active-premium">🔒 Premium Signal<br/><span style="font-size:10px;font-weight:400">Subscribers only</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Signal Summary & Publish -->
+    <div style="width:280px;flex-shrink:0;padding:16px">
+      <div class="bet-slip">
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px">🎯 Signal Summary</div>
+
+        <!-- Strategy tag -->
+        <div style="background:rgba(255,90,0,0.08);border:1px solid rgba(255,90,0,0.2);border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:10px;font-size:12px">
+          <span style="color:var(--mid-gray)">Strategy:</span> <strong style="color:var(--brand)">Value Football</strong>
+        </div>
+
+        <!-- Signal card -->
+        <div style="background:var(--brand-light);border:1.5px solid rgba(255,90,0,0.25);border-radius:var(--radius-md);padding:12px;margin-bottom:12px">
+          <div style="font-size:11px;color:var(--mid-gray);margin-bottom:4px">⚽ FIFA WC Qualifiers Europe</div>
+          <div style="font-size:13px;font-weight:700">Sweden vs Poland</div>
+          <div style="font-size:12px;color:var(--mid-gray);margin-top:2px">Match Result (1X2)</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+            <div>
+              <div style="font-size:11px;color:var(--mid-gray)">Selection</div>
+              <div style="font-size:15px;font-weight:800;color:var(--brand)">Sweden</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--mid-gray)">Target Price</div>
+              <div style="font-size:20px;font-weight:800;color:var(--brand)">@ 2.10</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Points & Kelly -->
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px;margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+            <span style="color:var(--mid-gray)">Points Recommended</span><span style="font-weight:700">2 pts</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+            <span style="color:var(--mid-gray)">Kelly Adjusted</span><span style="font-weight:700;color:var(--brand)">4.05 pts ↑</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+            <span style="color:var(--mid-gray)">% of 100pt bank</span><span style="font-weight:700">4.05%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;border-top:1px solid var(--border);padding-top:8px;margin-top:4px">
+            <span style="color:var(--mid-gray)">Visibility</span><span style="font-weight:700;color:var(--brand)">🔒 Premium</span>
+          </div>
+        </div>
+
+        <!-- Follower impact estimate -->
+        <div style="background:rgba(31,122,57,0.06);border:1px solid rgba(31,122,57,0.2);border-radius:var(--radius-md);padding:12px;margin-bottom:12px;font-size:12px">
+          <div style="font-weight:700;margin-bottom:6px;color:var(--green)">📣 Follower Impact</div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--mid-gray)">Active subscribers</span><span>5</span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--mid-gray)">Auto-bet followers</span><span>3</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--mid-gray)">Est. total exposure</span><span style="font-weight:700">~750 USDC</span></div>
         </div>
 
         <button class="btn-primary w-full" style="padding:14px;font-size:14px;border-radius:var(--radius-md)">
-          🚀 Publish Premium Tip
+          🚀 Publish Premium Signal
         </button>
-        <div class="text-center text-xs text-muted mt-6">Subscribers will be notified instantly</div>
+        <div style="text-align:center;font-size:11px;color:var(--mid-gray);margin-top:6px">5 subscribers notified instantly</div>
+        <button class="btn-secondary w-full mt-8" style="padding:10px;font-size:13px">
+          💾 Save as Draft
+        </button>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -2060,144 +2194,551 @@
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════
-     SCREEN 7 — ANALYST ONBOARDING
+     SCREEN 7 — ANALYST ONBOARDING (5-STEP WIZARD)
 ════════════════════════════════════════════════════════════════ -->
 <div class="screen" id="s7">
-  <div class="flex justify-center" style="padding:20px 0">
-    <div style="max-width:640px;width:100%">
+  <div style="max-width:900px;margin:0 auto;padding:24px 16px">
 
-      <!-- Progress Steps -->
-      <div class="card p-24 mb-20">
-        <div class="text-xl font-bold mb-4">Become a Gainr Analyst</div>
-        <div class="text-sm text-muted mb-20">Share your edge. Earn when others follow your verified picks.</div>
+    <!-- Page Header -->
+    <div style="margin-bottom:24px">
+      <div style="font-size:22px;font-weight:800;color:var(--black);margin-bottom:4px">Become a Gainr Analyst</div>
+      <div style="font-size:14px;color:var(--mid-gray)">Join a marketplace of verified signal producers. Earn revenue when Followers allocate funds to your strategies.</div>
+    </div>
 
-        <div class="flex items-center gap-0 mb-24" style="position:relative">
-          <div style="position:absolute;top:16px;left:0;right:0;height:2px;background:var(--border);z-index:0"></div>
-          <div style="position:absolute;top:16px;left:0;width:25%;height:2px;background:var(--brand);z-index:1"></div>
-          <!-- Step 1 -->
-          <div style="flex:1;text-align:center;position:relative;z-index:2">
-            <div style="width:32px;height:32px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 8px">1</div>
-            <div class="text-xs font-bold text-brand">Profile Setup</div>
-          </div>
-          <!-- Step 2 -->
-          <div style="flex:1;text-align:center;position:relative;z-index:2">
-            <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--mid-gray);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 8px">2</div>
-            <div class="text-xs text-muted">KYC Verification</div>
-          </div>
-          <!-- Step 3 -->
-          <div style="flex:1;text-align:center;position:relative;z-index:2">
-            <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--mid-gray);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 8px">3</div>
-            <div class="text-xs text-muted">Post Free Tips</div>
-          </div>
-          <!-- Step 4 -->
-          <div style="flex:1;text-align:center;position:relative;z-index:2">
-            <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--mid-gray);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 8px">4</div>
-            <div class="text-xs text-muted">PRO Qualification</div>
-          </div>
-          <!-- Step 5 -->
-          <div style="flex:1;text-align:center;position:relative;z-index:2">
-            <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--mid-gray);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 8px">5</div>
-            <div class="text-xs text-muted">Earn Revenue</div>
-          </div>
-        </div>
-
-        <!-- Step 1 Form -->
-        <div class="text-sm font-bold mb-16" style="color:var(--brand)">Step 1: Create Your Analyst Profile</div>
-        <div class="grid-2 gap-16 mb-16">
-          <div>
-            <label class="form-label">Display Name</label>
-            <input type="text" class="form-input" placeholder="e.g. AiTips, FootballPro" />
-          </div>
-          <div>
-            <label class="form-label">Primary Sport</label>
-            <select class="form-input">
-              <option>⚽ Football / Soccer</option>
-              <option>🎾 Tennis</option>
-              <option>🏀 Basketball</option>
-              <option>⚾ Baseball</option>
-              <option>🏈 US Football</option>
-            </select>
-          </div>
-        </div>
-        <div class="mb-16">
-          <label class="form-label">Bio / Strategy Description</label>
-          <textarea class="form-input" placeholder="Describe your betting strategy, specialisation, and edge..."></textarea>
-        </div>
-        <div class="mb-16">
-          <label class="form-label">Subscription Type</label>
-          <div class="grid-2 gap-12">
-            <div class="p-16 cursor-pointer" style="border:2px solid var(--brand);border-radius:var(--radius-md);background:var(--brand-light)">
-              <div class="font-bold mb-4 text-brand">PRO Analyst</div>
-              <div class="text-xs text-muted">Charge subscribers. Earn 67% of revenue. Requires 400+ bets &amp; 4%+ ROI.</div>
-            </div>
-            <div class="p-16 cursor-pointer" style="border:1.5px solid var(--border);border-radius:var(--radius-md)">
-              <div class="font-bold mb-4">Free Analyst</div>
-              <div class="text-xs text-muted">Share tips freely. Build reputation. Upgrade to PRO anytime.</div>
-            </div>
-          </div>
-        </div>
-        <button class="btn-primary w-full" style="padding:14px;font-size:15px;border-radius:var(--radius-md)">Continue to KYC →</button>
+    <!-- Step Progress Bar -->
+    <div style="display:flex;align-items:center;gap:0;margin-bottom:32px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 20px" id="wizard-progress">
+      <div class="wizard-step active" id="wstep1" onclick="gotoStep(1)">
+        <div class="wizard-step-num">1</div>
+        <div class="wizard-step-label">Identity &amp; Profile</div>
       </div>
-
-      <!-- PRO Requirements Info -->
-      <div class="card p-24">
-        <div class="text-sm font-bold mb-16">PRO Analyst Requirements</div>
-        <div class="grid-2 gap-12">
-          <div class="p-16" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
-            <div style="font-size:24px;margin-bottom:8px">📊</div>
-            <div class="font-bold text-sm mb-4">400+ Verified Bets</div>
-            <div class="text-xs text-muted">Minimum bet history required for statistical significance</div>
-          </div>
-          <div class="p-16" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
-            <div style="font-size:24px;margin-bottom:8px">📈</div>
-            <div class="font-bold text-sm mb-4">4%+ ROI (Yield)</div>
-            <div class="text-xs text-muted">Sustained positive return on investment over the sample</div>
-          </div>
-          <div class="p-16" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
-            <div style="font-size:24px;margin-bottom:8px">✅</div>
-            <div class="font-bold text-sm mb-4">KYC Verified</div>
-            <div class="text-xs text-muted">Identity verification via zkMe privacy-preserving protocol</div>
-          </div>
-          <div class="p-16" style="background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
-            <div style="font-size:24px;margin-bottom:8px">🔗</div>
-            <div class="font-bold text-sm mb-4">On-Chain Verified Stats</div>
-            <div class="text-xs text-muted">All bets hashed to Solana blockchain for tamper-proof records</div>
-          </div>
-        </div>
-
-        <!-- Revenue Tiers -->
-        <div class="divider"></div>
-        <div class="text-sm font-bold mb-12">Revenue Tiers (Auto-Calculated by ROI)</div>
-        <table class="data-table">
-          <thead>
-            <tr><th>Tier</th><th>ROI Range</th><th>Monthly Price</th><th>Analyst Earns (67%)</th><th>Single Tip</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="badge badge-bronze">Tier 1</span></td>
-              <td>4% – 6%</td>
-              <td class="font-bold">$34.95/mo</td>
-              <td class="positive">$23.42/subscriber</td>
-              <td>$4.99</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-silver">Tier 2</span></td>
-              <td>6% – 8%</td>
-              <td class="font-bold">$44.95/mo</td>
-              <td class="positive">$30.12/subscriber</td>
-              <td>$6.99</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-gold">Tier 3</span></td>
-              <td>8%+</td>
-              <td class="font-bold">$59.95/mo</td>
-              <td class="positive">$40.17/subscriber</td>
-              <td>$9.99</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="wizard-connector"></div>
+      <div class="wizard-step" id="wstep2" onclick="gotoStep(2)">
+        <div class="wizard-step-num">2</div>
+        <div class="wizard-step-label">Strategy Setup</div>
+      </div>
+      <div class="wizard-connector"></div>
+      <div class="wizard-step" id="wstep3" onclick="gotoStep(3)">
+        <div class="wizard-step-num">3</div>
+        <div class="wizard-step-label">KYC Verification</div>
+      </div>
+      <div class="wizard-connector"></div>
+      <div class="wizard-step" id="wstep4" onclick="gotoStep(4)">
+        <div class="wizard-step-num">4</div>
+        <div class="wizard-step-label">Qualification Period</div>
+      </div>
+      <div class="wizard-connector"></div>
+      <div class="wizard-step" id="wstep5" onclick="gotoStep(5)">
+        <div class="wizard-step-num">5</div>
+        <div class="wizard-step-label">Go PRO &amp; Earn</div>
       </div>
     </div>
+
+    <!-- STEP 1: Identity & Profile -->
+    <div class="wizard-panel" id="wpanel1">
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:20px">
+        <div class="card p-24">
+          <div style="font-size:16px;font-weight:700;margin-bottom:4px">Step 1 — Identity &amp; Profile</div>
+          <div style="font-size:12px;color:var(--mid-gray);margin-bottom:20px">Your public identity on the platform. Choose carefully — your nom de plume becomes your brand.</div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <label class="form-label">Nom de Plume <span style="color:var(--red)">*</span> <span style="font-size:10px;color:var(--mid-gray)">(unique, public-facing)</span></label>
+              <input type="text" class="form-input" placeholder="e.g. AiTips, FootballPro, SharpEdge" />
+              <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">This is your analyst brand name. Cannot be changed after verification.</div>
+            </div>
+            <div>
+              <label class="form-label">Real Name <span style="color:var(--red)">*</span> <span style="font-size:10px;color:var(--mid-gray)">(private, KYC only)</span></label>
+              <input type="text" class="form-input" placeholder="Full legal name" />
+              <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">Held securely. Never shown publicly. Required for KYC.</div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <label class="form-label">Analyst Background <span style="color:var(--red)">*</span></label>
+            <textarea class="form-input" style="min-height:80px" placeholder="Describe your professional background, experience in sports betting/trading, and relevant credentials. This is shown on your public profile."></textarea>
+            <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">Shown publicly on your analyst profile. Be specific — followers use this to evaluate credibility.</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <label class="form-label">Primary Sport(s) <span style="color:var(--red)">*</span></label>
+              <select class="form-input">
+                <option>⚽ Football / Soccer</option>
+                <option>🎾 Tennis</option>
+                <option>🏀 Basketball</option>
+                <option>⚾ Baseball</option>
+                <option>🏈 US Football</option>
+                <option>⛳ Golf</option>
+                <option>🥊 MMA / Boxing</option>
+                <option>🏏 Cricket</option>
+                <option>🎮 Esports</option>
+                <option>🏒 Ice Hockey</option>
+                <option>🏎️ Motorsport</option>
+                <option>🌐 Multi-sport</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Primary Market Type <span style="color:var(--red)">*</span></label>
+              <select class="form-input">
+                <option>Match Result (1X2)</option>
+                <option>Handicap / Spread</option>
+                <option>Totals (Over/Under)</option>
+                <option>Player Props</option>
+                <option>Futures / Outrights</option>
+                <option>In-Play / Live</option>
+                <option>Mixed</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:20px">
+            <label class="form-label">Profile Photo <span style="font-size:10px;color:var(--mid-gray)">(optional)</span></label>
+            <div style="border:2px dashed var(--border);border-radius:var(--radius-md);padding:24px;text-align:center;cursor:pointer;background:var(--bg)">
+              <div style="font-size:28px;margin-bottom:8px">📷</div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:4px">Upload a profile photo</div>
+              <div style="font-size:11px;color:var(--mid-gray)">JPG or PNG, max 2MB. Shown on leaderboard and profile page.</div>
+            </div>
+          </div>
+
+          <button class="btn-primary w-full" style="padding:14px;font-size:15px;border-radius:var(--radius-md)" onclick="gotoStep(2)">Continue to Strategy Setup →</button>
+        </div>
+
+        <!-- Right: Why this matters -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card p-20" style="border-left:3px solid var(--brand)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">🎭 Why a Nom de Plume?</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">Your nom de plume protects your IP while building a public track record. Followers see your performance under this name — your real identity is only held for KYC compliance.</div>
+          </div>
+          <div class="card p-20" style="border-left:3px solid #7C3AED">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">🎓 We Take This Seriously</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">Gainr vets every analyst. Full background details are held securely and reviewed by our team. This ensures you compete against genuine, like-minded professionals — not bots or lucky streaks.</div>
+          </div>
+          <div class="card p-20" style="border-left:3px solid var(--green)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">🔒 Data Security</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">KYC data is encrypted at rest and never shared with third parties. Identity verification uses zkMe's privacy-preserving protocol — we verify without storing raw documents.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Strategy Setup -->
+    <div class="wizard-panel" id="wpanel2" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:20px">
+        <div class="card p-24">
+          <div style="font-size:16px;font-weight:700;margin-bottom:4px">Step 2 — Strategy Setup</div>
+          <div style="font-size:12px;color:var(--mid-gray);margin-bottom:20px">Define your strategy or strategies. Each strategy has its own track record, bank, and subscriber base. You can add more strategies after onboarding.</div>
+
+          <!-- Strategy 1 -->
+          <div style="border:1.5px solid var(--brand);border-radius:var(--radius-md);padding:20px;margin-bottom:16px;background:var(--brand-light)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+              <div style="font-size:14px;font-weight:700;color:var(--brand)">Strategy #1</div>
+              <span class="badge badge-pro">Primary</span>
+            </div>
+
+            <div style="margin-bottom:14px">
+              <label class="form-label">Strategy Name <span style="color:var(--red)">*</span></label>
+              <input type="text" class="form-input" placeholder="e.g. Value Football, Asian Handicap Edge, In-Play Tennis" />
+              <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">Shown publicly alongside your nom de plume. Make it descriptive but protect your IP.</div>
+            </div>
+
+            <div style="margin-bottom:14px">
+              <label class="form-label">Strategy Description <span style="color:var(--red)">*</span> <span style="font-size:10px;color:var(--mid-gray)">(public bio — do not reveal your edge)</span></label>
+              <textarea class="form-input" style="min-height:90px" placeholder="Describe your approach at a high level. E.g. 'Focuses on value identification in European football markets using statistical models and line movement analysis. Specialises in Asian Handicap markets.'"></textarea>
+              <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">This is shown on your public profile. Give followers enough to evaluate fit — without giving away your IP.</div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+              <div>
+                <label class="form-label">Theoretical Bank Size (Points) <span style="color:var(--red)">*</span></label>
+                <input type="number" class="form-input" placeholder="e.g. 100" value="100" />
+                <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">The notional bank all stakes are measured against. Standard is 100 points. All signals are expressed as a % of this bank.</div>
+              </div>
+              <div>
+                <label class="form-label">Typical Stake Range (% of bank)</label>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                  <input type="number" class="form-input" placeholder="Min %" value="1" />
+                  <input type="number" class="form-input" placeholder="Max %" value="5" />
+                </div>
+                <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">Typical range for your signals. Followers use this to size their pots.</div>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+              <div>
+                <label class="form-label">Bet Frequency</label>
+                <select class="form-input">
+                  <option>1–3 signals/week</option>
+                  <option>4–7 signals/week</option>
+                  <option>8–15 signals/week</option>
+                  <option>15+ signals/week</option>
+                  <option>Opportunistic (irregular)</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Includes In-Play Signals?</label>
+                <select class="form-input">
+                  <option>Pre-match only</option>
+                  <option>Mostly pre-match, some in-play</option>
+                  <option>Mixed (pre-match &amp; in-play)</option>
+                  <option>Primarily in-play</option>
+                </select>
+                <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">In-play signals require real-time trigger capability.</div>
+              </div>
+            </div>
+
+            <div>
+              <label class="form-label">Target Average Odds Range</label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <input type="number" class="form-input" placeholder="Min odds e.g. 1.50" value="1.50" step="0.01" />
+                <input type="number" class="form-input" placeholder="Max odds e.g. 5.00" value="4.00" step="0.01" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Add another strategy -->
+          <div style="border:1.5px dashed var(--border);border-radius:var(--radius-md);padding:16px;text-align:center;cursor:pointer;margin-bottom:20px;background:var(--bg)" onclick="this.style.display='none'">
+            <div style="font-size:22px;margin-bottom:6px">➕</div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Add a Second Strategy</div>
+            <div style="font-size:11px;color:var(--mid-gray)">Each strategy has its own independent track record and subscriber base. Followers can allocate separate pots to each.</div>
+          </div>
+
+          <button class="btn-primary w-full" style="padding:14px;font-size:15px;border-radius:var(--radius-md)" onclick="gotoStep(3)">Continue to KYC Verification →</button>
+          <button class="btn-secondary w-full mt-8" style="padding:10px" onclick="gotoStep(1)">← Back</button>
+        </div>
+
+        <!-- Right: Strategy info -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card p-20" style="border-left:3px solid var(--brand)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">📊 Bank Size Explained</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">A theoretical bank of <strong>100 points</strong> means a 2-point stake = 2% of bank. This standardises comparison across analysts regardless of real money amounts. Followers scale their actual USDC allocation to match.</div>
+          </div>
+          <div class="card p-20" style="border-left:3px solid #F59E0B">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">🔀 Multi-Strategy Support</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">If you run multiple strategies, each signal must be tagged to a strategy. Followers can subscribe to individual strategies and allocate separate pots — giving them granular control over their exposure.</div>
+          </div>
+          <div class="card p-20" style="border-left:3px solid var(--red)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">⚡ In-Play Signals</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">In-play represents 50%+ of sports betting volume. If your strategy includes live signals, you'll have access to a real-time trigger interface to push signals to followers instantly.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: KYC Verification -->
+    <div class="wizard-panel" id="wpanel3" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:20px">
+        <div class="card p-24">
+          <div style="font-size:16px;font-weight:700;margin-bottom:4px">Step 3 — Identity Verification (KYC)</div>
+          <div style="font-size:12px;color:var(--mid-gray);margin-bottom:20px">We require full KYC to prevent gaming the qualification system and ensure you're competing against genuine analysts. All data is encrypted and never shared.</div>
+
+          <div style="background:rgba(255,90,0,0.06);border:1px solid rgba(255,90,0,0.2);border-radius:var(--radius-md);padding:16px;margin-bottom:20px">
+            <div style="font-size:13px;font-weight:700;color:var(--brand);margin-bottom:6px">⚠️ Why Strict KYC?</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">Without rigorous identity verification, bad actors could open multiple accounts and run random strategies until one hits a short-term profitable streak by chance — then monetise it. Our KYC prevents this and protects the integrity of every analyst's track record.</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <label class="form-label">Date of Birth <span style="color:var(--red)">*</span></label>
+              <input type="date" class="form-input" />
+            </div>
+            <div>
+              <label class="form-label">Nationality <span style="color:var(--red)">*</span></label>
+              <select class="form-input">
+                <option>Select country...</option>
+                <option>United Kingdom</option>
+                <option>United States</option>
+                <option>Australia</option>
+                <option>Canada</option>
+                <option>Ireland</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <label class="form-label">Government-Issued ID <span style="color:var(--red)">*</span></label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div style="border:2px dashed var(--border);border-radius:var(--radius-md);padding:20px;text-align:center;cursor:pointer;background:var(--bg)">
+                <div style="font-size:24px;margin-bottom:6px">🪪</div>
+                <div style="font-size:12px;font-weight:600;margin-bottom:4px">Front of ID</div>
+                <div style="font-size:11px;color:var(--mid-gray)">Passport, Driver's Licence, or National ID</div>
+              </div>
+              <div style="border:2px dashed var(--border);border-radius:var(--radius-md);padding:20px;text-align:center;cursor:pointer;background:var(--bg)">
+                <div style="font-size:24px;margin-bottom:6px">🪪</div>
+                <div style="font-size:12px;font-weight:600;margin-bottom:4px">Back of ID</div>
+                <div style="font-size:11px;color:var(--mid-gray)">Required for Driver's Licence and National ID</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <label class="form-label">Proof of Address <span style="color:var(--red)">*</span> <span style="font-size:10px;color:var(--mid-gray)">(dated within 3 months)</span></label>
+            <div style="border:2px dashed var(--border);border-radius:var(--radius-md);padding:20px;text-align:center;cursor:pointer;background:var(--bg)">
+              <div style="font-size:24px;margin-bottom:6px">📄</div>
+              <div style="font-size:12px;font-weight:600;margin-bottom:4px">Upload Document</div>
+              <div style="font-size:11px;color:var(--mid-gray)">Bank statement, utility bill, or official government letter</div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <label class="form-label">Liveness Check <span style="color:var(--red)">*</span></label>
+            <div style="border:1.5px solid var(--border);border-radius:var(--radius-md);padding:20px;display:flex;align-items:center;gap:16px;background:var(--bg)">
+              <div style="font-size:36px">🤳</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;margin-bottom:4px">Selfie Verification</div>
+                <div style="font-size:12px;color:var(--mid-gray);line-height:1.6">Take a live selfie via your camera. Powered by zkMe's privacy-preserving protocol — we verify your identity without storing biometric data.</div>
+                <button class="btn-secondary mt-8" style="padding:8px 16px;font-size:12px">Start Liveness Check</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:20px">
+            <label class="form-label">Betting Experience Declaration <span style="color:var(--red)">*</span></label>
+            <select class="form-input" style="margin-bottom:8px">
+              <option>Select experience level...</option>
+              <option>1–2 years recreational bettor</option>
+              <option>3–5 years serious bettor / trader</option>
+              <option>5+ years professional bettor / trader</option>
+              <option>Former bookmaker / exchange employee</option>
+              <option>Sports analyst / data scientist</option>
+            </select>
+            <textarea class="form-input" style="min-height:72px" placeholder="Optional: Describe any relevant professional experience, qualifications, or notable track records (e.g. Betfair forum, Tipstrr history, trading background)."></textarea>
+          </div>
+
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:20px">
+            <input type="checkbox" style="margin-top:3px;accent-color:var(--brand)" />
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.6">I confirm that all information provided is accurate and I consent to identity verification. I understand that creating multiple accounts to game the qualification system will result in permanent bans for all associated accounts.</div>
+          </div>
+
+          <button class="btn-primary w-full" style="padding:14px;font-size:15px;border-radius:var(--radius-md)" onclick="gotoStep(4)">Submit KYC &amp; Continue →</button>
+          <button class="btn-secondary w-full mt-8" style="padding:10px" onclick="gotoStep(2)">← Back</button>
+        </div>
+
+        <!-- Right: KYC info -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card p-20" style="border-left:3px solid var(--green)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">🔐 Privacy-First KYC</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">Powered by <strong>zkMe</strong>. We verify your identity using zero-knowledge proofs — confirming you are who you say you are without storing raw document images on our servers.</div>
+          </div>
+          <div class="card p-20" style="border-left:3px solid #7C3AED">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">⏱️ Verification Timeline</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">
+              <div style="margin-bottom:6px">📸 Automated checks: <strong>~2 minutes</strong></div>
+              <div style="margin-bottom:6px">👤 Manual review: <strong>24–48 hours</strong></div>
+              <div>📧 You'll receive an email when approved.</div>
+            </div>
+          </div>
+          <div class="card p-20" style="background:rgba(217,48,37,0.04);border:1px solid rgba(217,48,37,0.15)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--red)">🚫 Anti-Gaming Policy</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">Each person may hold only one analyst account. Device fingerprinting, IP analysis, and document matching are used to detect duplicate registrations. Violations result in permanent bans.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: Qualification Period -->
+    <div class="wizard-panel" id="wpanel4" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:20px">
+        <div class="card p-24">
+          <div style="font-size:16px;font-weight:700;margin-bottom:4px">Step 4 — Free Signal Qualification Period</div>
+          <div style="font-size:12px;color:var(--mid-gray);margin-bottom:20px">Before charging followers, you must build a verified track record. Post free signals until you hit the PRO qualification thresholds.</div>
+
+          <!-- Progress tracker (mock) -->
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;margin-bottom:20px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:16px">📊 Your Qualification Progress</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+              <div>
+                <div style="font-size:11px;color:var(--mid-gray);margin-bottom:4px">Signals Posted</div>
+                <div style="font-size:22px;font-weight:800;color:var(--black)">47 <span style="font-size:13px;color:var(--mid-gray);font-weight:400">/ 400 required</span></div>
+                <div style="background:var(--border);border-radius:var(--radius-pill);height:6px;margin-top:8px">
+                  <div style="background:var(--brand);border-radius:var(--radius-pill);height:6px;width:11.75%"></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:var(--mid-gray);margin-bottom:4px">Current ROI (Yield)</div>
+                <div style="font-size:22px;font-weight:800;color:var(--green)">+6.2% <span style="font-size:13px;color:var(--mid-gray);font-weight:400">/ 4% required</span></div>
+                <div style="background:var(--border);border-radius:var(--radius-pill);height:6px;margin-top:8px">
+                  <div style="background:var(--green);border-radius:var(--radius-pill);height:6px;width:100%"></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+              <div style="text-align:center;padding:12px;background:#fff;border-radius:var(--radius-md);border:1px solid var(--border)">
+                <div style="font-size:18px;font-weight:700">47</div>
+                <div style="font-size:11px;color:var(--mid-gray)">Total Signals</div>
+              </div>
+              <div style="text-align:center;padding:12px;background:#fff;border-radius:var(--radius-md);border:1px solid var(--border)">
+                <div style="font-size:18px;font-weight:700;color:var(--green)">27</div>
+                <div style="font-size:11px;color:var(--mid-gray)">Won</div>
+              </div>
+              <div style="text-align:center;padding:12px;background:#fff;border-radius:var(--radius-md);border:1px solid var(--border)">
+                <div style="font-size:18px;font-weight:700">57.4%</div>
+                <div style="font-size:11px;color:var(--mid-gray)">Win Rate</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- What to do during qualification -->
+          <div style="margin-bottom:20px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:12px">📋 Qualification Rules</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:var(--bg);border-radius:var(--radius-md)">
+                <span style="font-size:18px">📊</span>
+                <div>
+                  <div style="font-size:12px;font-weight:700;margin-bottom:2px">Minimum 400 Verified Signals</div>
+                  <div style="font-size:11px;color:var(--mid-gray)">Required for statistical significance. Signals must be submitted before the event starts and verified against closing odds.</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:var(--bg);border-radius:var(--radius-md)">
+                <span style="font-size:18px">📈</span>
+                <div>
+                  <div style="font-size:12px;font-weight:700;margin-bottom:2px">Sustained 4%+ ROI (Yield)</div>
+                  <div style="font-size:11px;color:var(--mid-gray)">Measured at Pinnacle closing odds. Must be maintained across the full sample — not just a hot streak.</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:var(--bg);border-radius:var(--radius-md)">
+                <span style="font-size:18px">🔗</span>
+                <div>
+                  <div style="font-size:12px;font-weight:700;margin-bottom:2px">On-Chain Verification</div>
+                  <div style="font-size:11px;color:var(--mid-gray)">All signals are hashed to the Solana blockchain at submission time. This prevents backdating and ensures tamper-proof records.</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:var(--bg);border-radius:var(--radius-md)">
+                <span style="font-size:18px">⚡</span>
+                <div>
+                  <div style="font-size:12px;font-weight:700;margin-bottom:2px">Analyst Can Follow Own Strategy</div>
+                  <div style="font-size:11px;color:var(--mid-gray)">You may allocate your own funds to your strategy. As the signal originator, you are always first in the execution queue — your bets execute before any follower's auto-bet.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-primary w-full" style="padding:14px;font-size:15px;border-radius:var(--radius-md)" onclick="gotoStep(5)">Preview PRO Earnings →</button>
+          <button class="btn-secondary w-full mt-8" style="padding:10px" onclick="gotoStep(3)">← Back</button>
+        </div>
+
+        <!-- Right: Timeline -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card p-20">
+            <div style="font-size:13px;font-weight:700;margin-bottom:12px">⏱️ Estimated Timeline</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;font-size:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+                <span>1–3 signals/week</span><span style="font-weight:700;color:var(--mid-gray)">~2–3 years</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+                <span>4–7 signals/week</span><span style="font-weight:700;color:#F59E0B">~1–1.5 years</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+                <span>8–15 signals/week</span><span style="font-weight:700;color:var(--brand)">~6–9 months</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;padding:8px 0">
+                <span>15+ signals/week</span><span style="font-weight:700;color:var(--green)">~3–4 months</span>
+              </div>
+            </div>
+          </div>
+          <div class="card p-20" style="border-left:3px solid var(--brand)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">💡 Build Your Audience Early</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">Free followers can follow you during qualification. When you go PRO, they'll receive a conversion offer. The bigger your free audience, the faster your paid subscriber base grows.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: Go PRO & Earn -->
+    <div class="wizard-panel" id="wpanel5" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:20px">
+        <div class="card p-24">
+          <div style="font-size:16px;font-weight:700;margin-bottom:4px">Step 5 — PRO Status &amp; Revenue</div>
+          <div style="font-size:12px;color:var(--mid-gray);margin-bottom:20px">Once you hit qualification thresholds, PRO status is automatically granted. Your subscription price is auto-calculated based on your ROI tier.</div>
+
+          <!-- PRO Badge Unlock -->
+          <div style="text-align:center;padding:32px 20px;background:linear-gradient(135deg,rgba(255,90,0,0.08),rgba(255,90,0,0.02));border:2px solid rgba(255,90,0,0.2);border-radius:var(--radius-md);margin-bottom:20px">
+            <div style="font-size:48px;margin-bottom:12px">🏆</div>
+            <div style="font-size:20px;font-weight:800;color:var(--brand);margin-bottom:6px">PRO Analyst Unlocked</div>
+            <div style="font-size:13px;color:var(--mid-gray);margin-bottom:16px">You've hit 400 signals with 6.2% ROI — qualifying for Tier 2 pricing</div>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#fff;padding:8px 20px;border-radius:var(--radius-pill);font-weight:700;font-size:14px">
+              <span>AiTips</span> <span class="badge" style="background:rgba(255,255,255,0.25);color:#fff;font-size:10px">PRO</span> <span>🥇 GOLD</span>
+            </div>
+          </div>
+
+          <!-- Revenue Tiers -->
+          <div style="margin-bottom:20px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:12px">💰 Auto-Calculated Subscription Pricing</div>
+            <table class="data-table">
+              <thead>
+                <tr><th>Tier</th><th>ROI Range</th><th>Monthly Price</th><th>Your Earnings (67%)</th><th>Single Signal</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge badge-bronze">Tier 1</span></td>
+                  <td>4% – 6%</td>
+                  <td style="font-weight:700">$34.95/mo</td>
+                  <td style="color:var(--green);font-weight:700">$23.42/sub</td>
+                  <td>$4.99</td>
+                </tr>
+                <tr style="background:rgba(255,90,0,0.04);outline:2px solid var(--brand);outline-offset:-2px">
+                  <td><span class="badge badge-silver">Tier 2</span> <span style="font-size:10px;color:var(--brand);font-weight:700">← YOU</span></td>
+                  <td style="font-weight:700;color:var(--brand)">6% – 8%</td>
+                  <td style="font-weight:700">$44.95/mo</td>
+                  <td style="color:var(--green);font-weight:700">$30.12/sub</td>
+                  <td>$6.99</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-gold">Tier 3</span></td>
+                  <td>8%+</td>
+                  <td style="font-weight:700">$59.95/mo</td>
+                  <td style="color:var(--green);font-weight:700">$40.17/sub</td>
+                  <td>$9.99</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size:11px;color:var(--mid-gray);margin-top:8px">Pricing is reviewed monthly. If ROI drops below 4%, PRO status is suspended and subscribers receive a pro-rated refund.</div>
+          </div>
+
+          <!-- Revenue projection -->
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;margin-bottom:20px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:12px">📈 Revenue Projection (Tier 2)</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+              <div style="text-align:center;padding:12px;background:#fff;border-radius:var(--radius-md)">
+                <div style="font-size:11px;color:var(--mid-gray);margin-bottom:4px">10 subscribers</div>
+                <div style="font-size:18px;font-weight:700;color:var(--green)">$301/mo</div>
+              </div>
+              <div style="text-align:center;padding:12px;background:#fff;border-radius:var(--radius-md)">
+                <div style="font-size:11px;color:var(--mid-gray);margin-bottom:4px">50 subscribers</div>
+                <div style="font-size:18px;font-weight:700;color:var(--green)">$1,506/mo</div>
+              </div>
+              <div style="text-align:center;padding:12px;background:#fff;border-radius:var(--radius-md)">
+                <div style="font-size:11px;color:var(--mid-gray);margin-bottom:4px">200 subscribers</div>
+                <div style="font-size:18px;font-weight:700;color:var(--green)">$6,024/mo</div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:var(--mid-gray);margin-top:8px;text-align:center">+ 7.5% performance carry on follower profits above their cost of subscription</div>
+          </div>
+
+          <button class="btn-primary w-full" style="padding:14px;font-size:15px;border-radius:var(--radius-md)" onclick="showScreen('s4', document.querySelectorAll('.screen-tab')[3])">🚀 Start Posting Signals →</button>
+          <button class="btn-secondary w-full mt-8" style="padding:10px" onclick="gotoStep(4)">← Back</button>
+        </div>
+
+        <!-- Right: What happens next -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card p-20" style="border-left:3px solid var(--green)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">✅ What Happens at PRO Unlock</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">
+              <div style="margin-bottom:6px">1. PRO badge appears on your profile</div>
+              <div style="margin-bottom:6px">2. Subscription pricing auto-set by ROI tier</div>
+              <div style="margin-bottom:6px">3. Free followers receive upgrade offer</div>
+              <div style="margin-bottom:6px">4. You appear on the PRO leaderboard</div>
+              <div>5. Revenue starts flowing on first subscription</div>
+            </div>
+          </div>
+          <div class="card p-20" style="border-left:3px solid var(--brand)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">⚡ Analyst Follows Own Strategy</div>
+            <div style="font-size:12px;color:var(--dark-gray);line-height:1.7">You can allocate your own USDC to your strategy. As the signal originator, your execution is always first in the queue — you never get worse fills than your followers.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -2693,140 +3234,352 @@
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════
-     SCREEN 10 — PORTFOLIO
+     SCREEN 10 — PORTFOLIO (FOLLOWER / INVESTOR VIEW)
 ════════════════════════════════════════════════════════════════ -->
 <div class="screen" id="s10">
-  <div style="max-width:1200px;margin:0 auto;padding:24px">
+  <div style="padding:20px 24px">
 
-    <!-- Portfolio Header -->
-    <div class="section-header">
+    <!-- Page Header -->
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
       <div>
-        <div class="section-title">My Portfolio</div>
-        <div class="section-subtitle">Track your open positions, P&amp;L, and betting history across all markets.</div>
+        <div style="font-size:20px;font-weight:800;margin-bottom:4px">My Portfolio</div>
+        <div style="font-size:13px;color:var(--mid-gray)">Track your strategy pots, P&amp;L, and betting history across all analyst subscriptions.</div>
       </div>
-      <div style="display:flex;gap:8px">
-        <button class="btn-secondary">📤 Export CSV</button>
-        <div style="display:flex;align-items:center;gap:8px;background:var(--brand-light);border-radius:var(--radius-pill);padding:8px 14px;font-size:12px;font-weight:600;color:var(--brand)">🤖 Bets placed via analyst subscriptions only</div>
-      </div>
-    </div>
-
-    <!-- Summary KPI Cards -->
-    <div class="grid-4 mb-20">
-      <div class="card p-20">
-        <div style="font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Total Wagered</div>
-        <div style="font-size:28px;font-weight:800">12,450 <span style="font-size:14px;color:var(--mid-gray)">USDC</span></div>
-        <div style="font-size:12px;color:var(--mid-gray);margin-top:4px">↑ 840 USDC this week</div>
-      </div>
-      <div class="card p-20">
-        <div style="font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Net P&amp;L</div>
-        <div style="font-size:28px;font-weight:800;color:var(--green)">+1,284 <span style="font-size:14px">USDC</span></div>
-        <div style="font-size:12px;color:var(--green);margin-top:4px">↑ +10.31% ROI overall</div>
-      </div>
-      <div class="card p-20">
-        <div style="font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Open Positions</div>
-        <div style="font-size:28px;font-weight:800">7</div>
-        <div style="font-size:12px;color:var(--mid-gray);margin-top:4px">3 live · 4 pre-match</div>
-      </div>
-      <div class="card p-20">
-        <div style="font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Win Rate</div>
-        <div style="font-size:28px;font-weight:800">54.2%</div>
-        <div style="font-size:12px;color:var(--mid-gray);margin-top:4px">Based on 240 settled bets</div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div style="background:rgba(31,122,57,0.08);border:1px solid rgba(31,122,57,0.2);border-radius:var(--radius-md);padding:8px 14px;font-size:12px;font-weight:700;color:var(--green)">🤖 Bets placed via analyst subscriptions only</div>
+        <button class="btn-secondary" style="padding:8px 14px;font-size:12px">📤 Export CSV</button>
       </div>
     </div>
 
-    <!-- P&L Chart + Breakdown -->
+    <!-- Account Balance Bar -->
+    <div class="card p-20" style="margin-bottom:20px;background:linear-gradient(135deg,rgba(255,90,0,0.04),rgba(255,90,0,0.01))">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+        <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+          <div>
+            <div style="font-size:11px;color:var(--mid-gray);margin-bottom:2px">Account Balance (Unallocated)</div>
+            <div style="font-size:24px;font-weight:800;color:var(--black)">2,450 <span style="font-size:14px;color:var(--mid-gray)">USDC</span></div>
+          </div>
+          <div style="width:1px;height:40px;background:var(--border)"></div>
+          <div>
+            <div style="font-size:11px;color:var(--mid-gray);margin-bottom:2px">Total Allocated to Strategies</div>
+            <div style="font-size:24px;font-weight:800;color:var(--brand)">12,450 <span style="font-size:14px;color:var(--mid-gray)">USDC</span></div>
+          </div>
+          <div style="width:1px;height:40px;background:var(--border)"></div>
+          <div>
+            <div style="font-size:11px;color:var(--mid-gray);margin-bottom:2px">Total Portfolio Value</div>
+            <div style="font-size:24px;font-weight:800;color:var(--green)">14,900 <span style="font-size:14px;color:var(--mid-gray)">USDC</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn-primary" style="padding:10px 18px;font-size:13px">💰 Deposit USDC</button>
+          <button class="btn-secondary" style="padding:10px 18px;font-size:13px">🏦 Withdraw to Bank</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI Row -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
+      <div class="card p-16" style="text-align:center">
+        <div style="font-size:11px;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Total Wagered</div>
+        <div style="font-size:22px;font-weight:800">12,450</div>
+        <div style="font-size:12px;color:var(--mid-gray)">USDC</div>
+        <div style="font-size:11px;color:var(--brand);margin-top:4px">↑ 840 this week</div>
+      </div>
+      <div class="card p-16" style="text-align:center">
+        <div style="font-size:11px;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Net P&amp;L</div>
+        <div style="font-size:22px;font-weight:800;color:var(--green)">+1,284</div>
+        <div style="font-size:12px;color:var(--mid-gray)">USDC</div>
+        <div style="font-size:11px;color:var(--green);margin-top:4px">+10.31% ROI overall</div>
+      </div>
+      <div class="card p-16" style="text-align:center">
+        <div style="font-size:11px;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Open Positions</div>
+        <div style="font-size:22px;font-weight:800">7</div>
+        <div style="font-size:12px;color:var(--mid-gray)">active bets</div>
+        <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">3 live · 4 pre-match</div>
+      </div>
+      <div class="card p-16" style="text-align:center">
+        <div style="font-size:11px;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Win Rate</div>
+        <div style="font-size:22px;font-weight:800">54.2%</div>
+        <div style="font-size:12px;color:var(--mid-gray)">across all strategies</div>
+        <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">Based on 240 settled bets</div>
+      </div>
+    </div>
+
+    <!-- Strategy Pots Section -->
+    <div style="font-size:16px;font-weight:700;margin-bottom:14px">📦 My Strategy Pots</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+
+      <!-- Pot 1: AiTips / Value Football -->
+      <div class="card p-20" style="border-top:3px solid var(--brand)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div class="tipster-avatar">A</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700">AiTips <span class="badge badge-pro">PRO</span></div>
+            <div style="font-size:11px;color:var(--mid-gray)">Strategy: Value Football</div>
+          </div>
+          <span class="badge badge-gold" style="font-size:10px">🥇 GOLD</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="background:var(--bg);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">Pot Value</div>
+            <div style="font-size:16px;font-weight:700">6,840 <span style="font-size:11px;color:var(--mid-gray)">USDC</span></div>
+          </div>
+          <div style="background:rgba(31,122,57,0.06);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">P&amp;L</div>
+            <div style="font-size:16px;font-weight:700;color:var(--green)">+840 USDC</div>
+          </div>
+          <div style="background:var(--bg);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">ROI</div>
+            <div style="font-size:14px;font-weight:700;color:var(--green)">+14.0%</div>
+          </div>
+          <div style="background:var(--bg);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">Win Rate</div>
+            <div style="font-size:14px;font-weight:700">57.3%</div>
+          </div>
+        </div>
+        <canvas id="pot1Chart" height="60" style="margin-bottom:12px"></canvas>
+        <div style="display:flex;gap:8px">
+          <button class="btn-secondary" style="flex:1;padding:8px;font-size:12px" onclick="showScreen('s2', document.querySelectorAll('.screen-tab')[1])">View Profile</button>
+          <button class="btn-secondary" style="flex:1;padding:8px;font-size:12px">+ Add Funds</button>
+          <button style="padding:8px 12px;font-size:12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:#fff;cursor:pointer;color:var(--mid-gray)" title="Withdraw from pot">↩ Withdraw</button>
+        </div>
+        <div style="font-size:11px;color:var(--mid-gray);margin-top:8px;text-align:center">$44.95/mo · Renews Apr 28 · 🤖 Auto-Betting ON</div>
+      </div>
+
+      <!-- Pot 2: Luminaar / Asian Handicap -->
+      <div class="card p-20" style="border-top:3px solid #7C3AED">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div class="tipster-avatar" style="background:rgba(139,92,246,0.1);color:#7C3AED">L</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700">Luminaar <span class="badge badge-pro">PRO</span></div>
+            <div style="font-size:11px;color:var(--mid-gray)">Strategy: Asian Handicap Edge</div>
+          </div>
+          <span class="badge badge-gold" style="font-size:10px">🥇 GOLD</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="background:var(--bg);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">Pot Value</div>
+            <div style="font-size:16px;font-weight:700">4,210 <span style="font-size:11px;color:var(--mid-gray)">USDC</span></div>
+          </div>
+          <div style="background:rgba(31,122,57,0.06);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">P&amp;L</div>
+            <div style="font-size:16px;font-weight:700;color:var(--green)">+410 USDC</div>
+          </div>
+          <div style="background:var(--bg);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">ROI</div>
+            <div style="font-size:14px;font-weight:700;color:var(--green)">+10.8%</div>
+          </div>
+          <div style="background:var(--bg);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">Win Rate</div>
+            <div style="font-size:14px;font-weight:700">52.1%</div>
+          </div>
+        </div>
+        <canvas id="pot2Chart" height="60" style="margin-bottom:12px"></canvas>
+        <div style="display:flex;gap:8px">
+          <button class="btn-secondary" style="flex:1;padding:8px;font-size:12px">View Profile</button>
+          <button class="btn-secondary" style="flex:1;padding:8px;font-size:12px">+ Add Funds</button>
+          <button style="padding:8px 12px;font-size:12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:#fff;cursor:pointer;color:var(--mid-gray)" title="Withdraw from pot">↩ Withdraw</button>
+        </div>
+        <div style="font-size:11px;color:var(--mid-gray);margin-top:8px;text-align:center">$44.95/mo · Renews May 3 · ✋ Manual</div>
+      </div>
+
+      <!-- Pot 3: Sportbettingfund / Free -->
+      <div class="card p-20" style="border-top:3px solid var(--green)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div class="tipster-avatar" style="background:rgba(16,185,129,0.1);color:#047857">S</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700">Sportbettingfund <span class="badge badge-free">FREE</span></div>
+            <div style="font-size:11px;color:var(--mid-gray)">Strategy: General Value</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="background:var(--bg);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">Pot Value</div>
+            <div style="font-size:16px;font-weight:700">1,400 <span style="font-size:11px;color:var(--mid-gray)">USDC</span></div>
+          </div>
+          <div style="background:rgba(217,48,37,0.06);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">P&amp;L</div>
+            <div style="font-size:16px;font-weight:700;color:var(--red)">+34 USDC</div>
+          </div>
+          <div style="background:var(--bg);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">ROI</div>
+            <div style="font-size:14px;font-weight:700;color:var(--green)">+2.5%</div>
+          </div>
+          <div style="background:var(--bg);padding:10px;border-radius:var(--radius-sm)">
+            <div style="font-size:10px;color:var(--mid-gray)">Win Rate</div>
+            <div style="font-size:14px;font-weight:700">49.8%</div>
+          </div>
+        </div>
+        <canvas id="pot3Chart" height="60" style="margin-bottom:12px"></canvas>
+        <div style="display:flex;gap:8px">
+          <button class="btn-secondary" style="flex:1;padding:8px;font-size:12px">View Profile</button>
+          <button class="btn-secondary" style="flex:1;padding:8px;font-size:12px">+ Add Funds</button>
+          <button style="padding:8px 12px;font-size:12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:#fff;cursor:pointer;color:var(--mid-gray)" title="Withdraw from pot">↩ Withdraw</button>
+        </div>
+        <div style="font-size:11px;color:var(--mid-gray);margin-top:8px;text-align:center">Free · 🤖 Auto-Betting ON</div>
+      </div>
+
+    </div>
+
+    <!-- Add new strategy pot CTA -->
+    <div style="border:2px dashed var(--border);border-radius:var(--radius-md);padding:20px;text-align:center;cursor:pointer;margin-bottom:24px;background:var(--bg)" onclick="showScreen('s1', document.querySelectorAll('.screen-tab')[0])">
+      <div style="font-size:22px;margin-bottom:6px">➕</div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px">Allocate Funds to Another Strategy</div>
+      <div style="font-size:12px;color:var(--mid-gray)">Browse the leaderboard to find a new analyst and create a new strategy pot</div>
+    </div>
+
+    <!-- Charts Row -->
     <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px">
       <div class="card p-20">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
           <div style="font-size:14px;font-weight:700">Cumulative P&amp;L</div>
-          <div style="display:flex;gap:6px">
-            <div class="chip active" style="font-size:11px;padding:4px 10px">7D</div>
-            <div class="chip" style="font-size:11px;padding:4px 10px">30D</div>
-            <div class="chip" style="font-size:11px;padding:4px 10px">90D</div>
-            <div class="chip" style="font-size:11px;padding:4px 10px">All</div>
+          <div style="display:flex;gap:4px">
+            <button style="padding:4px 10px;border-radius:var(--radius-sm);font-size:11px;font-weight:700;background:var(--brand);color:#fff;border:none;cursor:pointer">7D</button>
+            <button style="padding:4px 10px;border-radius:var(--radius-sm);font-size:11px;background:#fff;color:var(--mid-gray);border:1px solid var(--border);cursor:pointer">30D</button>
+            <button style="padding:4px 10px;border-radius:var(--radius-sm);font-size:11px;background:#fff;color:var(--mid-gray);border:1px solid var(--border);cursor:pointer">90D</button>
+            <button style="padding:4px 10px;border-radius:var(--radius-sm);font-size:11px;background:#fff;color:var(--mid-gray);border:1px solid var(--border);cursor:pointer">All</button>
           </div>
         </div>
-        <canvas id="portfolioChart" height="140"></canvas>
+        <canvas id="portfolioChart" height="120"></canvas>
       </div>
       <div class="card p-20">
         <div style="font-size:14px;font-weight:700;margin-bottom:16px">Bet Breakdown</div>
-        <div style="position:relative;display:flex;justify-content:center;margin-bottom:16px">
-          <canvas id="portfolioDonut" width="140" height="140"></canvas>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center">
-            <div style="font-size:18px;font-weight:800">54%</div>
-            <div style="font-size:10px;color:var(--mid-gray)">Win Rate</div>
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div class="fee-row"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:var(--green);border-radius:2px;display:inline-block"></span><span class="text-muted">Won</span></span><span class="font-bold">130 bets</span></div>
-          <div class="fee-row"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:#86EFAC;border-radius:2px;display:inline-block"></span><span class="text-muted">Half Won</span></span><span class="font-bold">4 bets</span></div>
-          <div class="fee-row"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:var(--border);border-radius:2px;display:inline-block"></span><span class="text-muted">Refunded</span></span><span class="font-bold">12 bets</span></div>
-          <div class="fee-row"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:var(--red);border-radius:2px;display:inline-block"></span><span class="text-muted">Lost</span></span><span class="font-bold">94 bets</span></div>
+        <canvas id="portfolioDonut" height="140"></canvas>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:12px">
+          <div style="display:flex;justify-content:space-between"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:#1F7A39;border-radius:2px;display:inline-block"></span>Won</span><span style="font-weight:700">130 bets</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:#86EFAC;border-radius:2px;display:inline-block"></span>Half Won</span><span style="font-weight:700">4 bets</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:#D1D5DB;border-radius:2px;display:inline-block"></span>Refunded</span><span style="font-weight:700">12 bets</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:#D93025;border-radius:2px;display:inline-block"></span>Lost</span><span style="font-weight:700">94 bets</span></div>
         </div>
       </div>
     </div>
 
-    <!-- Open Positions -->
-    <div class="card mb-16">
-      <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
-        <div style="font-size:14px;font-weight:700">Open Positions <span style="font-size:12px;font-weight:400;color:var(--mid-gray);margin-left:6px">7 active</span></div>
-        <div style="display:flex;gap:8px">
-          <div class="chip active" style="font-size:11px">All</div>
-          <div class="chip" style="font-size:11px">🔴 Live</div>
-          <div class="chip" style="font-size:11px">📅 Pre-match</div>
-          <div class="chip" style="font-size:11px">🤖 Auto-Bet</div>
-        </div>
-      </div>
+    <!-- Strategy Performance Breakdown -->
+    <div class="card p-20" style="margin-bottom:20px">
+      <div style="font-size:14px;font-weight:700;margin-bottom:16px">📊 Performance by Strategy</div>
       <div style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <table class="data-table">
           <thead>
-            <tr style="background:var(--bg)">
-              <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Match</th>
-              <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Selection</th>
-              <th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Odds</th>
-              <th style="padding:10px 12px;text-align:right;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Stake</th>
-              <th style="padding:10px 12px;text-align:right;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Potential</th>
-              <th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Status</th>
-              <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Analyst</th>
-              <th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Source</th>
+            <tr>
+              <th>Analyst / Strategy</th>
+              <th>Period</th>
+              <th>Bets</th>
+              <th>Win Rate</th>
+              <th>ROI vs Bank</th>
+              <th>Margin on Turnover</th>
+              <th>Avg Price Rec.</th>
+              <th>Avg Price Won</th>
+              <th>P&amp;L (USDC)</th>
             </tr>
           </thead>
           <tbody>
-            <tr style="border-top:1px solid var(--border)">
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div class="tipster-avatar" style="width:24px;height:24px;font-size:10px">A</div>
+                  <div>
+                    <div style="font-weight:700;font-size:12px">AiTips</div>
+                    <div style="font-size:10px;color:var(--mid-gray)">Value Football</div>
+                  </div>
+                </div>
+              </td>
+              <td style="font-size:12px">All time</td>
+              <td style="font-weight:700">130</td>
+              <td style="color:var(--green);font-weight:700">57.3%</td>
+              <td style="color:var(--green);font-weight:700">+14.0%</td>
+              <td style="color:var(--green);font-weight:700">+8.4%</td>
+              <td>2.18</td>
+              <td>2.31</td>
+              <td style="color:var(--green);font-weight:700">+840</td>
+            </tr>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div class="tipster-avatar" style="width:24px;height:24px;font-size:10px;background:rgba(139,92,246,0.1);color:#7C3AED">L</div>
+                  <div>
+                    <div style="font-weight:700;font-size:12px">Luminaar</div>
+                    <div style="font-size:10px;color:var(--mid-gray)">Asian Handicap Edge</div>
+                  </div>
+                </div>
+              </td>
+              <td style="font-size:12px">All time</td>
+              <td style="font-weight:700">82</td>
+              <td style="color:var(--green);font-weight:700">52.1%</td>
+              <td style="color:var(--green);font-weight:700">+10.8%</td>
+              <td style="color:var(--green);font-weight:700">+6.2%</td>
+              <td>1.95</td>
+              <td>2.04</td>
+              <td style="color:var(--green);font-weight:700">+410</td>
+            </tr>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div class="tipster-avatar" style="width:24px;height:24px;font-size:10px;background:rgba(16,185,129,0.1);color:#047857">S</div>
+                  <div>
+                    <div style="font-weight:700;font-size:12px">Sportbettingfund</div>
+                    <div style="font-size:10px;color:var(--mid-gray)">General Value</div>
+                  </div>
+                </div>
+              </td>
+              <td style="font-size:12px">All time</td>
+              <td style="font-weight:700">28</td>
+              <td style="color:var(--mid-gray);font-weight:700">49.8%</td>
+              <td style="color:var(--green);font-weight:700">+2.5%</td>
+              <td style="color:var(--green);font-weight:700">+1.8%</td>
+              <td>2.05</td>
+              <td>2.12</td>
+              <td style="color:var(--green);font-weight:700">+34</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <span style="font-size:12px;color:var(--mid-gray)">Filter period:</span>
+        <button style="padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700;background:var(--brand);color:#fff;border:none;cursor:pointer">All time</button>
+        <button style="padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;background:#fff;color:var(--mid-gray);border:1px solid var(--border);cursor:pointer">Last 30 days</button>
+        <button style="padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;background:#fff;color:var(--mid-gray);border:1px solid var(--border);cursor:pointer">Last 90 days</button>
+        <button style="padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;background:#fff;color:var(--mid-gray);border:1px solid var(--border);cursor:pointer">Last 12 months</button>
+        <button style="padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;background:#fff;color:var(--mid-gray);border:1px solid var(--border);cursor:pointer">Custom range</button>
+      </div>
+    </div>
+
+    <!-- Open Positions -->
+    <div class="card p-20" style="margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div style="font-size:14px;font-weight:700">Open Positions <span style="font-size:12px;color:var(--mid-gray);font-weight:400">7 active</span></div>
+        <div style="display:flex;gap:6px">
+          <button style="padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700;background:var(--brand);color:#fff;border:none;cursor:pointer">All</button>
+          <button style="padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;background:#fff;color:var(--mid-gray);border:1px solid var(--border);cursor:pointer">🔴 Live</button>
+          <button style="padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;background:#fff;color:var(--mid-gray);border:1px solid var(--border);cursor:pointer">⏳ Pre-match</button>
+          <button style="padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;background:#fff;color:var(--mid-gray);border:1px solid var(--border);cursor:pointer">🤖 Auto-Bet</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="data-table">
+          <thead>
+            <tr><th>Event</th><th>Selection</th><th>Odds</th><th>Stake</th><th>Pot. Return</th><th>Status</th><th>Analyst / Strategy</th><th>Source</th></tr>
+          </thead>
+          <tbody>
+            <tr>
               <td style="padding:12px 16px">
                 <div style="font-weight:600">Sweden vs Poland</div>
-                <div style="font-size:11px;color:var(--mid-gray)">⚽ FIFA WCQ · 🔴 LIVE 12'</div>
+                <div style="font-size:11px;color:var(--mid-gray)">⚽ FIFA WC Qual · Apr 1 · 2:45 AM</div>
               </td>
               <td style="padding:12px"><span style="background:var(--light-gray);color:var(--mid-gray);padding:3px 8px;border-radius:var(--radius-sm);font-size:11px;font-weight:700">🔒 Analyst Pick</span></td>
               <td style="padding:12px;text-align:center;font-weight:700">2.10</td>
-              <td style="padding:12px;text-align:right">100 USDC</td>
-              <td style="padding:12px;text-align:right;color:var(--green);font-weight:600">+110 USDC</td>
-              <td style="padding:12px;text-align:center"><span style="background:rgba(217,48,37,0.1);color:var(--red);padding:3px 8px;border-radius:var(--radius-pill);font-size:11px;font-weight:700">🔴 LIVE</span></td>
+              <td style="padding:12px;text-align:right">200 USDC</td>
+              <td style="padding:12px;text-align:right;color:var(--green);font-weight:600">+210 USDC</td>
+              <td style="padding:12px;text-align:center"><span style="background:rgba(217,48,37,0.1);color:var(--red);padding:3px 8px;border-radius:var(--radius-pill);font-size:11px;font-weight:700">🔴 Live 1st 12'</span></td>
               <td style="padding:12px">
                 <div style="display:flex;align-items:center;gap:6px">
                   <div class="tipster-avatar" style="width:20px;height:20px;font-size:9px">A</div>
-                  <span style="font-size:12px">AiTips</span>
+                  <div>
+                    <div style="font-size:12px;font-weight:600">AiTips</div>
+                    <div style="font-size:10px;color:var(--mid-gray)">Value Football</div>
+                  </div>
                 </div>
               </td>
               <td style="padding:12px;text-align:center"><span style="font-size:11px;color:var(--mid-gray)">🤖 Auto</span></td>
-            </tr>
-            <tr style="border-top:1px solid var(--border)">
-              <td style="padding:12px 16px">
-                <div style="font-weight:600">Berrettini vs Buse</div>
-                <div style="font-size:11px;color:var(--mid-gray)">🎾 ATP Marrakech · 🔴 LIVE Set 2</div>
-              </td>
-              <td style="padding:12px"><span style="background:var(--light-gray);color:var(--mid-gray);padding:3px 8px;border-radius:var(--radius-sm);font-size:11px;font-weight:700">🔒 Analyst Pick</span></td>
-              <td style="padding:12px;text-align:center;font-weight:700">1.52</td>
-              <td style="padding:12px;text-align:right">200 USDC</td>
-              <td style="padding:12px;text-align:right;color:var(--green);font-weight:600">+104 USDC</td>
-              <td style="padding:12px;text-align:center"><span style="background:rgba(217,48,37,0.1);color:var(--red);padding:3px 8px;border-radius:var(--radius-pill);font-size:11px;font-weight:700">🔴 LIVE</span></td>
-              <td style="padding:12px">
-                <div style="display:flex;align-items:center;gap:6px">
-                  <div class="tipster-avatar" style="width:20px;height:20px;font-size:9px;background:rgba(139,92,246,0.1);color:#7C3AED">L</div>
-                  <span style="font-size:12px">Luminaar</span>
-                </div>
-              </td>
-              <td style="padding:12px;text-align:center"><span style="font-size:11px;color:var(--mid-gray)">✋ Manual</span></td>
             </tr>
             <tr style="border-top:1px solid var(--border)">
               <td style="padding:12px 16px">
@@ -2841,242 +3594,112 @@
               <td style="padding:12px">
                 <div style="display:flex;align-items:center;gap:6px">
                   <div class="tipster-avatar" style="width:20px;height:20px;font-size:9px">A</div>
-                  <span style="font-size:12px">AiTips</span>
+                  <div>
+                    <div style="font-size:12px;font-weight:600">AiTips</div>
+                    <div style="font-size:10px;color:var(--mid-gray)">Value Football</div>
+                  </div>
                 </div>
               </td>
               <td style="padding:12px;text-align:center"><span style="font-size:11px;color:var(--mid-gray)">🤖 Auto</span></td>
             </tr>
-            <tr style="border-top:1px solid var(--border)">
-              <td style="padding:12px 16px">
-                <div style="font-weight:600">Masters Tournament</div>
-                <div style="font-size:11px;color:var(--mid-gray)">⛳ Golf · Apr 9 · Final Round</div>
-              </td>
-              <td style="padding:12px"><span style="background:var(--light-gray);color:var(--mid-gray);padding:3px 8px;border-radius:var(--radius-sm);font-size:11px;font-weight:700">🔒 Analyst Pick</span></td>
-              <td style="padding:12px;text-align:center;font-weight:700">5.90</td>
-              <td style="padding:12px;text-align:right">50 USDC</td>
-              <td style="padding:12px;text-align:right;color:var(--green);font-weight:600">+245 USDC</td>
-              <td style="padding:12px;text-align:center"><span style="background:rgba(245,158,11,0.12);color:#B45309;padding:3px 8px;border-radius:var(--radius-pill);font-size:11px;font-weight:700">⏳ Pre-match</span></td>
-              <td style="padding:12px">
-                <div style="display:flex;align-items:center;gap:6px">
-                  <div class="tipster-avatar" style="width:20px;height:20px;font-size:9px">A</div>
-                  <span style="font-size:12px">AiTips</span>
-                </div>
-              </td>
-              <td style="padding:12px;text-align:center"><span style="font-size:11px;color:var(--mid-gray)">✋ Manual</span></td>
-            </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- Subscriptions & Analysts -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-      <div class="card p-20">
-        <div style="font-size:14px;font-weight:700;margin-bottom:16px">Active Subscriptions</div>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:var(--radius-md)">
-            <div class="tipster-avatar">A</div>
-            <div style="flex:1">
-              <div style="font-weight:700;font-size:13px">AiTips <span class="badge badge-pro">PRO</span></div>
-              <div style="font-size:11px;color:var(--mid-gray)">Monthly · Renews Apr 28</div>
-            </div>
-            <div style="text-align:right">
-              <div style="font-size:13px;font-weight:700;color:var(--brand)">$34.95/mo</div>
-              <div style="font-size:10px;color:var(--green)">🤖 Auto-Betting ON</div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:var(--radius-md)">
-            <div class="tipster-avatar" style="background:rgba(139,92,246,0.1);color:#7C3AED">L</div>
-            <div style="flex:1">
-              <div style="font-weight:700;font-size:13px">Luminaar <span class="badge badge-pro">PRO</span></div>
-              <div style="font-size:11px;color:var(--mid-gray)">Monthly · Renews May 3</div>
-            </div>
-            <div style="text-align:right">
-              <div style="font-size:13px;font-weight:700;color:var(--brand)">$44.95/mo</div>
-              <div style="font-size:10px;color:var(--mid-gray)">✋ Manual betting</div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:var(--radius-md)">
-            <div class="tipster-avatar" style="background:rgba(16,185,129,0.1);color:#047857">S</div>
-            <div style="flex:1">
-              <div style="font-weight:700;font-size:13px">Sportbettingfund <span class="badge badge-free">FREE</span></div>
-              <div style="font-size:11px;color:var(--mid-gray)">Free tier · Following</div>
-            </div>
-            <div style="text-align:right">
-              <div style="font-size:13px;font-weight:700;color:var(--green)">Free</div>
-              <div style="font-size:10px;color:var(--mid-gray)">✋ Manual betting</div>
-            </div>
-          </div>
+    <!-- Withdrawal Flow -->
+    <div class="card p-20" style="margin-bottom:20px;border:1.5px solid var(--border)">
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px">💸 Withdraw Funds</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+        <div style="background:var(--bg);border-radius:var(--radius-md);padding:16px;border:1px solid var(--border)">
+          <div style="font-size:12px;font-weight:700;margin-bottom:8px;color:var(--brand)">Step 1 — Withdraw from Strategy Pot</div>
+          <div style="font-size:11px;color:var(--mid-gray);margin-bottom:12px">Move funds from a strategy pot back to your unallocated account balance.</div>
+          <select class="form-input" style="font-size:12px;margin-bottom:8px">
+            <option>Select strategy pot...</option>
+            <option>AiTips / Value Football (6,840 USDC)</option>
+            <option>Luminaar / Asian Handicap (4,210 USDC)</option>
+            <option>Sportbettingfund / General (1,400 USDC)</option>
+          </select>
+          <input type="number" class="form-input" style="font-size:13px;margin-bottom:8px" placeholder="Amount (USDC)" />
+          <div style="font-size:10px;color:var(--mid-gray);margin-bottom:8px">Note: Withdrawals settle after all open positions in this strategy are resolved.</div>
+          <button class="btn-secondary w-full" style="font-size:12px;padding:8px">↩ Withdraw to Balance</button>
         </div>
-        <button class="btn-secondary w-full mt-12" style="font-size:12px">Browse More Analysts →</button>
-      </div>
-
-      <div class="card p-20">
-        <div style="font-size:14px;font-weight:700;margin-bottom:16px">Performance by Analyst</div>
-        <table style="width:100%;border-collapse:collapse;font-size:12px">
-          <thead>
-            <tr style="border-bottom:1px solid var(--border)">
-              <th style="padding:6px 0;text-align:left;color:var(--mid-gray);font-weight:600">Analyst</th>
-              <th style="padding:6px 8px;text-align:right;color:var(--mid-gray);font-weight:600">Bets</th>
-              <th style="padding:6px 8px;text-align:right;color:var(--mid-gray);font-weight:600">P&amp;L</th>
-              <th style="padding:6px 8px;text-align:right;color:var(--mid-gray);font-weight:600">ROI</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom:1px solid var(--border)">
-              <td style="padding:10px 0">
-                <div style="display:flex;align-items:center;gap:6px">
-                  <div class="tipster-avatar" style="width:22px;height:22px;font-size:9px">A</div>
-                  <span style="font-weight:600">AiTips</span>
-                </div>
-              </td>
-              <td style="padding:10px 8px;text-align:right">142</td>
-              <td style="padding:10px 8px;text-align:right;color:var(--green);font-weight:700">+842 USDC</td>
-              <td style="padding:10px 8px;text-align:right;color:var(--green);font-weight:700">+8.2%</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border)">
-              <td style="padding:10px 0">
-                <div style="display:flex;align-items:center;gap:6px">
-                  <div class="tipster-avatar" style="width:22px;height:22px;font-size:9px;background:rgba(139,92,246,0.1);color:#7C3AED">L</div>
-                  <span style="font-weight:600">Luminaar</span>
-                </div>
-              </td>
-              <td style="padding:10px 8px;text-align:right">68</td>
-              <td style="padding:10px 8px;text-align:right;color:var(--green);font-weight:700">+521 USDC</td>
-              <td style="padding:10px 8px;text-align:right;color:var(--green);font-weight:700">+11.4%</td>
-            </tr>
-            <tr>
-              <td style="padding:10px 0">
-                <div style="display:flex;align-items:center;gap:6px">
-                  <div class="tipster-avatar" style="width:22px;height:22px;font-size:9px;background:rgba(16,185,129,0.1);color:#047857">S</div>
-                  <span style="font-weight:600">Sportbettingfund</span>
-                </div>
-              </td>
-              <td style="padding:10px 8px;text-align:right">30</td>
-              <td style="padding:10px 8px;text-align:right;color:var(--red);font-weight:700">-79 USDC</td>
-              <td style="padding:10px 8px;text-align:right;color:var(--red);font-weight:700">-3.8%</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style="display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--mid-gray)">→</div>
+        <div style="background:var(--bg);border-radius:var(--radius-md);padding:16px;border:1px solid var(--border)">
+          <div style="font-size:12px;font-weight:700;margin-bottom:8px;color:var(--brand)">Step 2 — Withdraw to Bank</div>
+          <div style="font-size:11px;color:var(--mid-gray);margin-bottom:12px">Withdraw your unallocated balance back to your original deposit method.</div>
+          <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;margin-bottom:8px;font-size:12px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--mid-gray)">Available balance</span><span style="font-weight:700">2,450 USDC</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--mid-gray)">Withdrawal method</span><span style="font-weight:700">Bank Transfer (****4521)</span></div>
+          </div>
+          <input type="number" class="form-input" style="font-size:13px;margin-bottom:8px" placeholder="Amount (USDC)" />
+          <button class="btn-primary w-full" style="font-size:12px;padding:8px">🏦 Withdraw to Bank</button>
+        </div>
       </div>
     </div>
 
-    <!-- Bet History Table -->
-    <div class="card">
-      <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
-        <div style="font-size:14px;font-weight:700">Bet History <span style="font-size:12px;font-weight:400;color:var(--mid-gray);margin-left:6px">240 settled bets</span></div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <div class="chip active" style="font-size:11px">All</div>
-          <div class="chip" style="font-size:11px">✅ Won</div>
-          <div class="chip" style="font-size:11px">❌ Lost</div>
-          <div class="chip" style="font-size:11px">↩️ Refunded</div>
-          <div class="chip" style="font-size:11px">🤖 Auto-Bet</div>
-        </div>
+    <!-- Bet History -->
+    <div class="card p-20">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div style="font-size:14px;font-weight:700">Bet History</div>
+        <button class="btn-secondary" style="font-size:12px;padding:6px 12px" onclick="showScreen('s1', document.querySelectorAll('.screen-tab')[0])">Browse More Analysts →</button>
       </div>
       <div style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <table class="data-table">
           <thead>
-            <tr style="background:var(--bg)">
-              <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Date</th>
-              <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Match</th>
-              <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Selection</th>
-              <th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Odds</th>
-              <th style="padding:10px 12px;text-align:right;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Stake</th>
-              <th style="padding:10px 12px;text-align:right;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">P&amp;L</th>
-              <th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Result</th>
-              <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em">Analyst</th>
-            </tr>
+            <tr><th>Date</th><th>Event</th><th>Selection</th><th>Odds</th><th>Stake</th><th>P&amp;L</th><th>Result</th><th>Analyst / Strategy</th></tr>
           </thead>
           <tbody>
-            <tr style="border-top:1px solid var(--border)">
-              <td style="padding:12px 16px;color:var(--mid-gray);font-size:12px">Mar 31, 2026</td>
-              <td style="padding:12px"><div style="font-weight:600">Dzumhur vs Jianu</div><div style="font-size:11px;color:var(--mid-gray)">🎾 ATP Bucharest</div></td>
-              <td style="padding:12px">Dzumhur Win</td>
-              <td style="padding:12px;text-align:center;font-weight:700">1.30</td>
-              <td style="padding:12px;text-align:right">100 USDC</td>
-              <td style="padding:12px;text-align:right;color:var(--green);font-weight:700">+30 USDC</td>
-              <td style="padding:12px;text-align:center"><span style="background:var(--green-light);color:var(--green);padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700">✅ WON</span></td>
-              <td style="padding:12px">
-                <div style="display:flex;align-items:center;gap:6px">
-                  <div class="tipster-avatar" style="width:20px;height:20px;font-size:9px">A</div>
-                  <span style="font-size:12px">AiTips</span>
-                </div>
-              </td>
+            <tr>
+              <td style="padding:10px 12px;font-size:11px;color:var(--mid-gray)">Mar 31</td>
+              <td style="padding:10px 12px"><div style="font-size:12px;font-weight:600">WTA Charleston Doubles</div><div style="font-size:10px;color:var(--mid-gray)">🎾 Tennis</div></td>
+              <td style="padding:10px 12px"><span style="background:var(--light-gray);color:var(--mid-gray);padding:2px 7px;border-radius:var(--radius-sm);font-size:10px;font-weight:700">🔒 Analyst Pick</span></td>
+              <td style="padding:10px 12px;font-weight:700">2.84</td>
+              <td style="padding:10px 12px;text-align:right">100 USDC</td>
+              <td style="padding:10px 12px;text-align:right;color:var(--green);font-weight:700">+184 USDC</td>
+              <td style="padding:10px 12px;text-align:center"><span style="background:rgba(31,122,57,0.1);color:var(--green);padding:2px 8px;border-radius:var(--radius-pill);font-size:10px;font-weight:700">WON</span></td>
+              <td style="padding:10px 12px;font-size:11px">Sportbettingfund / General</td>
             </tr>
             <tr style="border-top:1px solid var(--border)">
-              <td style="padding:12px 16px;color:var(--mid-gray);font-size:12px">Mar 30, 2026</td>
-              <td style="padding:12px"><div style="font-weight:600">Toronto Blue Jays vs Rockies</div><div style="font-size:11px;color:var(--mid-gray)">⚾ MLB</div></td>
-              <td style="padding:12px">Blue Jays -1.50 HDP</td>
-              <td style="padding:12px;text-align:center;font-weight:700">1.86</td>
-              <td style="padding:12px;text-align:right">50 USDC</td>
-              <td style="padding:12px;text-align:right;color:var(--red);font-weight:700">-50 USDC</td>
-              <td style="padding:12px;text-align:center"><span style="background:var(--red-light);color:var(--red);padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700">❌ LOST</span></td>
-              <td style="padding:12px">
-                <div style="display:flex;align-items:center;gap:6px">
-                  <div class="tipster-avatar" style="width:20px;height:20px;font-size:9px;background:rgba(139,92,246,0.1);color:#7C3AED">L</div>
-                  <span style="font-size:12px">Luminaar</span>
-                </div>
-              </td>
+              <td style="padding:10px 12px;font-size:11px;color:var(--mid-gray)">Mar 31</td>
+              <td style="padding:10px 12px"><div style="font-size:12px;font-weight:600">Toronto Blue Jays vs Colorado Rockies</div><div style="font-size:10px;color:var(--mid-gray)">⚾ MLB</div></td>
+              <td style="padding:10px 12px"><span style="background:var(--light-gray);color:var(--mid-gray);padding:2px 7px;border-radius:var(--radius-sm);font-size:10px;font-weight:700">🔒 Analyst Pick</span></td>
+              <td style="padding:10px 12px;font-weight:700">1.86</td>
+              <td style="padding:10px 12px;text-align:right">250 USDC</td>
+              <td style="padding:10px 12px;text-align:right;color:var(--red);font-weight:700">-250 USDC</td>
+              <td style="padding:10px 12px;text-align:center"><span style="background:rgba(217,48,37,0.1);color:var(--red);padding:2px 8px;border-radius:var(--radius-pill);font-size:10px;font-weight:700">LOST</span></td>
+              <td style="padding:10px 12px;font-size:11px">AiTips / Value Football</td>
             </tr>
             <tr style="border-top:1px solid var(--border)">
-              <td style="padding:12px 16px;color:var(--mid-gray);font-size:12px">Mar 30, 2026</td>
-              <td style="padding:12px"><div style="font-weight:600">KK FMP Beograd vs KK Zadar</div><div style="font-size:11px;color:var(--mid-gray)">🏀 ABA Adriatic League</div></td>
-              <td style="padding:12px">KK Zadar +2.50 HDP</td>
-              <td style="padding:12px;text-align:center;font-weight:700">1.85</td>
-              <td style="padding:12px;text-align:right">75 USDC</td>
-              <td style="padding:12px;text-align:right;color:var(--green);font-weight:700">+63.75 USDC</td>
-              <td style="padding:12px;text-align:center"><span style="background:var(--green-light);color:var(--green);padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700">✅ WON</span></td>
-              <td style="padding:12px">
-                <div style="display:flex;align-items:center;gap:6px">
-                  <div class="tipster-avatar" style="width:20px;height:20px;font-size:9px">A</div>
-                  <span style="font-size:12px">AiTips</span>
-                </div>
-              </td>
+              <td style="padding:10px 12px;font-size:11px;color:var(--mid-gray)">Mar 30</td>
+              <td style="padding:10px 12px"><div style="font-size:12px;font-weight:600">KK FMP Beograd vs KK Zadar</div><div style="font-size:10px;color:var(--mid-gray)">🏀 ABA League</div></td>
+              <td style="padding:10px 12px"><span style="background:var(--light-gray);color:var(--mid-gray);padding:2px 7px;border-radius:var(--radius-sm);font-size:10px;font-weight:700">🔒 Analyst Pick</span></td>
+              <td style="padding:10px 12px;font-weight:700">1.85</td>
+              <td style="padding:10px 12px;text-align:right">200 USDC</td>
+              <td style="padding:10px 12px;text-align:right;color:var(--green);font-weight:700">+170 USDC</td>
+              <td style="padding:10px 12px;text-align:center"><span style="background:rgba(31,122,57,0.1);color:var(--green);padding:2px 8px;border-radius:var(--radius-pill);font-size:10px;font-weight:700">WON</span></td>
+              <td style="padding:10px 12px;font-size:11px">Luminaar / Asian Handicap</td>
             </tr>
             <tr style="border-top:1px solid var(--border)">
-              <td style="padding:12px 16px;color:var(--mid-gray);font-size:12px">Mar 29, 2026</td>
-              <td style="padding:12px"><div style="font-weight:600">Andreescu vs Galfi</div><div style="font-size:11px;color:var(--mid-gray)">🎾 WTA Charleston</div></td>
-              <td style="padding:12px">Andreescu Win</td>
-              <td style="padding:12px;text-align:center;font-weight:700">2.84</td>
-              <td style="padding:12px;text-align:right">40 USDC</td>
-              <td style="padding:12px;text-align:right;color:var(--green);font-weight:700">+73.60 USDC</td>
-              <td style="padding:12px;text-align:center"><span style="background:var(--green-light);color:var(--green);padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700">✅ WON</span></td>
-              <td style="padding:12px">
-                <div style="display:flex;align-items:center;gap:6px">
-                  <div class="tipster-avatar" style="width:20px;height:20px;font-size:9px;background:rgba(16,185,129,0.1);color:#047857">S</div>
-                  <span style="font-size:12px">Sportbettingfund</span>
-                </div>
-              </td>
-            </tr>
-            <tr style="border-top:1px solid var(--border)">
-              <td style="padding:12px 16px;color:var(--mid-gray);font-size:12px">Mar 29, 2026</td>
-              <td style="padding:12px"><div style="font-weight:600">Norway vs Switzerland</div><div style="font-size:11px;color:var(--mid-gray)">⚽ Intl Friendlies</div></td>
-              <td style="padding:12px">Norway Win</td>
-              <td style="padding:12px;text-align:center;font-weight:700">2.48</td>
-              <td style="padding:12px;text-align:right">60 USDC</td>
-              <td style="padding:12px;text-align:right;color:var(--red);font-weight:700">-60 USDC</td>
-              <td style="padding:12px;text-align:center"><span style="background:var(--red-light);color:var(--red);padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700">❌ LOST</span></td>
-              <td style="padding:12px">
-                <div style="display:flex;align-items:center;gap:6px">
-                  <div class="tipster-avatar" style="width:20px;height:20px;font-size:9px">A</div>
-                  <span style="font-size:12px">AiTips</span>
-                </div>
-              </td>
+              <td style="padding:10px 12px;font-size:11px;color:var(--mid-gray)">Mar 29</td>
+              <td style="padding:10px 12px"><div style="font-size:12px;font-weight:600">Berrettini vs Buse</div><div style="font-size:10px;color:var(--mid-gray)">🎾 ATP Marrakech</div></td>
+              <td style="padding:10px 12px"><span style="background:var(--light-gray);color:var(--mid-gray);padding:2px 7px;border-radius:var(--radius-sm);font-size:10px;font-weight:700">🔒 Analyst Pick</span></td>
+              <td style="padding:10px 12px;font-weight:700">1.52</td>
+              <td style="padding:10px 12px;text-align:right">300 USDC</td>
+              <td style="padding:10px 12px;text-align:right;color:var(--mid-gray);font-weight:700">+0 USDC</td>
+              <td style="padding:10px 12px;text-align:center"><span style="background:rgba(107,114,128,0.1);color:var(--mid-gray);padding:2px 8px;border-radius:var(--radius-pill);font-size:10px;font-weight:700">REFUNDED</span></td>
+              <td style="padding:10px 12px;font-size:11px">AiTips / Value Football</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div style="padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:center">
-        <button class="btn-secondary" style="font-size:12px;padding:8px 24px">Load More History</button>
-      </div>
+      <button class="btn-secondary w-full mt-12" style="padding:10px">Load More History</button>
     </div>
 
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     JAVASCRIPT — Screen switching + Charts
-═══════════════════════════════════════════════════ -->
+
 <script>
   // ── Screen switching ──
   function showScreen(id, btn) {
@@ -3368,6 +3991,47 @@
 
   // Init on load
   window.addEventListener('load', initCharts);
+
+  // ── Analyst Onboarding Wizard ──────────────────────────────────────────
+  function gotoStep(n) {
+    for (let i = 1; i <= 5; i++) {
+      const panel = document.getElementById('wpanel' + i);
+      const step  = document.getElementById('wstep' + i);
+      if (panel) panel.style.display = (i === n) ? '' : 'none';
+      if (step) {
+        step.classList.remove('active', 'completed');
+        if (i < n) step.classList.add('completed');
+        if (i === n) step.classList.add('active');
+      }
+    }
+  }
+
+  // ── Strategy Pot Sparklines ────────────────────────────────────────────
+  function initPotCharts() {
+    const potData = {
+      pot1Chart: { data: [4200,4500,4800,5100,5400,5800,6200,6500,6840], color: '#FF5A00' },
+      pot2Chart: { data: [3400,3500,3600,3750,3900,4000,4100,4150,4210], color: '#7C3AED' },
+      pot3Chart: { data: [1200,1250,1180,1220,1300,1350,1380,1390,1400], color: '#1F7A39' },
+    };
+    Object.entries(potData).forEach(([id, cfg]) => {
+      const canvas = document.getElementById(id);
+      if (!canvas || canvas._chartInit) return;
+      canvas._chartInit = true;
+      new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: Array(cfg.data.length).fill(''),
+          datasets: [{ data: cfg.data, borderColor: cfg.color, borderWidth: 2,
+            fill: true, backgroundColor: cfg.color + '18',
+            pointRadius: 0, tension: 0.4 }]
+        },
+        options: { plugins: { legend: { display: false } },
+          scales: { x: { display: false }, y: { display: false } },
+          animation: false }
+      });
+    });
+  }
+
 </script>
 </body>
 </html>
