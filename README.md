@@ -21,10 +21,10 @@ Deploy to Vercel: import `alanyoungcy/gainr_tips`, framework = **Other**, no bui
 |---|--------|------|-------------|
 | s1 | Analyst Leaderboard | Investor | Top performers carousel, sortable table, sparklines, $GAINR tier badges, sport/type/min-bets filters |
 | s2 | Analyst Public Profile | Investor | Stats grid, donut betting summary, equity curve (5 tabs), locked bets paywall, Subscribe/Buy CTAs |
-| s3 | Subscribe / Buy Tips Modal | Investor | Monthly vs Single Tip toggle, 67/33 fee split, USDC wallet, Auto-Betting upsell |
+| s3 | Subscribe to Strategy Modal | Investor | Strategy subscription pricing, 67/33 fee split, USDC wallet, Auto-Betting upsell |
 | s4 | Post a Signal | Analyst | Strategy selector, match browser, odds selection, target price, Kelly ratio, in-play trigger, Free/Premium toggle |
 | s5 | Analyst Dashboard | Analyst | Revenue cards, equity curve, recent signals table, PRO status, Post New Signal CTA |
-| s6 | Tips Feed | Investor | Live tip stream, locked/free/PRO-only states, sport/type filters |
+| s6 | Signal Feed | Investor | Live signal stream, locked/free/PRO-only states, sport/type filters |
 | s7 | Analyst Onboarding | Analyst | 5-step wizard: Identity, Strategy, KYC, Qualification, PRO Earn |
 | s8 | Auto-Betting Setup | Investor | Analyst selection, sportsbook connection, capital/stake params, ZK Stealth toggle |
 | s9 | Markets | Investor | Sport categories, live market cards, no self-betting panel, analyst tip overlays |
@@ -90,7 +90,7 @@ flowchart TD
 
     PROF --> DECISION{Decision}
     DECISION -->|Follow Free| FOLLOW[Follow analyst\nFree signals only\nNo payment required]
-    DECISION -->|Subscribe| SUB[s3: Subscribe Modal\nChoose Monthly or Single Tip\nPay in USDC from wallet]
+    DECISION -->|Subscribe| SUB[s3: Subscribe Modal\nSubscribe to Strategy\nPay in USDC from wallet]
     DECISION -->|Browse more| LB
 
     SUB --> AUTOBET{Enable Auto-Betting?}
@@ -98,7 +98,7 @@ flowchart TD
     AUTOBET -->|No| MANUAL[Manual mode\nReceive signal alerts\nView picks in Tips Feed]
 
     AB --> EXEC[Bets auto-placed via ZK protocol\nFront-running prevented]
-    MANUAL --> FEED[s6: Tips Feed\nView analyst signals\nSubscribed picks unlocked]
+    MANUAL --> FEED[s6: Signal Feed\nView analyst signals\nSubscribed picks unlocked]
 
     EXEC --> PORT[s10: Portfolio\nTrack strategy pots\nView per-pot P&L and sparklines\nWithdraw from pot to balance to bank]
     FEED --> PORT
